@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "express": "3.1",
-    "connect": "*",
     "passport": "*",
     "passport-local": "*",
     "mongoose": "*",
@@ -11,7 +10,6 @@
     "underscore": "*",
     "connect-mongo": "~0.4.0",
     "socket.io": "~1.0.6",
-    "connect": "*",
     "express-mailer": "*",
     "jade": "*",
     "body-parser":"*",

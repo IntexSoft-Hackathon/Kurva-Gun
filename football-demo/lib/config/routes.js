@@ -10,6 +10,12 @@ module.exports = function (app, io) {
   app.post('/auth/users', users.create);
   app.get('/auth/users/:userId', users.show);
   app.put('/auth/users/:userId', users.update);
+  // Rating Routes
+  var rating = require('../controllers/rating');
+  app.get('/api/rating', rating.find);
+  app.post('/api/rating', rating.create);
+  app.get('/api/users/:userId', rating.show);
+  app.put('/api/users/:userId', rating.update);
 
   // Check if username is available
   app.get('/auth/check_username/:username', users.exists);
