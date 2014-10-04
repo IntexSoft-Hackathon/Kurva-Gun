@@ -4,3 +4,4 @@ football-demo/.sass-cache/*
 .idea/*
 football-demo/.idea/*
 startMongo.bat
+football-demo/data/*
