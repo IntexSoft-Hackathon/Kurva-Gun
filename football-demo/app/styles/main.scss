@@ -769,6 +769,20 @@ textarea.form-control {height: 50px !important;}
   left:0;
 }
 
+div.circle {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.circle.shadow {
+  -moz-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+  -webkit-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+  box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+}
+
 .login-view {
   position: relative;
   margin-top: 20px;
@@ -777,20 +791,6 @@ textarea.form-control {height: 50px !important;}
   .wrapper {
     position: relative;
     margin: auto;
-  }
-
-  div.circle {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .circle.shadow {
-    -moz-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
-    -webkit-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
-    box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
   }
 
   .profile-img {
@@ -893,4 +893,66 @@ textarea.form-control {height: 50px !important;}
 
   }
 
+}
+
+.profile {
+  .header {
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+  }
+
+  .content {
+    margin:0;
+    background-color: #e7e6e6;
+    padding: 45px;
+    .description {
+      margin:0;
+      .name {
+        font-weight: bold;
+        font-size: 30pt;
+      }
+      .text {
+        color:#5e5e5e;
+        font-size: 10.4pt;
+        b {
+          color: #000000;
+          font-weight: bold;
+        }
+      }
+    }
+    .achievements {
+      margin:0;
+    }
+  }
+
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-content {
+  background: #fff;
+  color: #444;
+  font-family: 'Helvetica Neue',sans-serif;
+  font-size: 1.1em;
+  line-height: 1.5em;
+  margin: 0 auto;
+  max-width: 660px;
+  padding: 0;
+  position: relative;
+  width: 60%;
+}
+
+.ngdialog-overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-animation: ngdialog-fadein 0.5s;
+  animation: ngdialog-fadein 0.5s;
 }
