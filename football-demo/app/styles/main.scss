@@ -1,0 +1,772 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+@import '../bower_components/sass-bootstrap/lib/bootstrap';
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+html{
+  min-height:100%;
+  position:relative
+}
+body {
+    font-family: "Ubuntu Regular";
+    color: #333;
+    height:100%;
+}
+
+.signup-well {
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-control { margin-bottom: 10px; }
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.account-wall {
+  margin-top: 20px;
+  padding: 40px 0px 20px 0px;
+  background-color: #f4f3f3;
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+.login-title {
+  color: #555;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+}
+.profile-img {
+  width: 135px;
+  height: 148px;
+  margin: 0 auto 10px;
+  display: block;
+}
+.need-help {
+  margin-top: 10px;
+}
+.new-account {
+  display: block;
+  margin-top: 30px;
+  color: #2db490;
+  font-size: 19px;
+  text-decoration: underline;
+}
+
+.login-button {
+  background-color: #2db490;
+  border-radius: 2px;
+  color: #FFFFFF;
+  font-size: 19px;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+  cursor: pointer;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+
+
+/*NavBar styles*/
+
+.navbar {
+  min-height: 90px;
+  background-color: #353636;
+  border: none;
+}
+
+.navbar-nav.nav-main > li > a, .navbar-nav.nav-main > li > img {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+.navbar-brand {
+  float: left !important;
+  padding: 10px 15px 0px 15px !important;
+  font-size: 18px !important;
+  line-height: 20px !important;
+}
+
+.navbar-style {
+ /* -webkit-box-shadow: 0 2px 5px #519433 !important;
+  box-shadow: 0 2px 5px #519433 !important;*/
+  background-color: #353636;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: 90px;
+  position: relative;
+}
+
+.navbar-style .activeMenu,.navbar-style li>a:focus {
+  background-color: #2db490 !important;
+  color:#FFFFFF !important;
+}
+
+.navbar-style .navbar-nav>li>a:hover {
+  color: #ffffff !important;
+  background-color: #2db490 !important;
+}
+
+.navbar-style .navbar-nav>li>a {
+  color: #ffffff;
+}
+
+.navbar-sub-style {
+  background-color: #2db490 !important;
+  min-height: 50px !important;
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+.navbar-sub-style .navbar-nav>li>a:hover{
+  color: #2db490 !important;
+  background-color: #FFFFFF !important;
+}
+
+.navbar-sub-style .activeMenu, .navbar-sub-style li>a:focus {
+  background-color: #FFFFFF !important;
+  color:#2db490 !important;
+}
+
+.navbar-sub-style .navbar-nav>li>a {
+  color: #FFFFFF ;
+  font-size: 19px;
+}
+
+.navbar .login-link {
+  font-size: 16px;
+}
+/*Projects View*/
+.table .even{
+  background-color: white;
+  color: black;
+}
+
+.table .odd{
+  background-color: #F5F5F5;
+  color: black;
+}
+
+.table .active-row{
+  background-color: #d5efe8;
+  color: black;
+}
+
+.table tr {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:1;
+}
+
+.projects-layout .accordion-style{
+  width: 340px;
+  position: absolute;
+  right: 0;
+}
+
+.calendar-layout .accordion-style{
+  width: 300px;
+  margin-right: 15px;
+  position: fixed;
+  right: 0;
+  bottom: 15px;
+  z-index: 9998;
+}
+
+.checklist-tree-view-style {
+  margin-top: 10px;
+}
+
+.checklist-tree-view-style > .panel-heading {
+  background-color: silver !important;
+}
+
+.checklist-tree-view-style .odd, .checklist-execute .odd{
+  background-color: white;
+  color: black;
+}
+
+.checklist-tree-view-style .even, .checklist-execute .even{
+  background-color: #F5F5F5;
+  color: black;
+}
+
+.form-control[readonly] {
+  cursor: default;
+  background-color: #eeeeee;
+}
+
+.statusFilter img:hover, .status img:hover {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(0%);
+  filter: gray;
+}
+
+.statusFilter img.active, .status img.active {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(0%);
+}
+
+.statusFilter img, .status img {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(100%);
+}
+
+.checklist-execute .default{
+  background-color: white;
+}
+
+.checklist-execute .ok{
+  background-color: rgba(131, 255, 31, 0.2) !important;
+}
+
+.checklist-execute .fail{
+  background-color: rgba(255,0,0,0.2) !important;
+}
+
+.checklist-execute .bug{
+  background-color: rgba(255, 253, 0, 0.3) !important;
+}
+
+.checklist-execute .blocked{
+  background-color: rgba(183, 2, 255, 0.2) !important;
+}
+
+.angular-google-map-container { height: 400px; }
+
+.checklist-tree-view .folder {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:1;
+}
+
+.checklist-tree-view .checklist {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:1;
+}
+
+.highlight {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:1;
+}
+.item {
+  display:table;
+  width: 100%;
+  height: 25px;
+}
+
+.img-center {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.angular-ui-tree-placeholder {
+  background: #c0ffd1;
+  border: 2px dashed rgba(0, 0, 0, 0.97);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+pre {
+  display: block;
+  padding: 8px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.42857;
+  word-break: break-word;
+  word-wrap: break-word;
+  color: #333333;
+  background-color: whitesmoke;
+  border: none;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.editable-wrap {
+  position:relative;
+  z-index:1000;
+  display: block !important;
+}
+
+.editable-buttons {
+  z-index:1001;
+  display: block !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.form-control {
+  padding: 6px 6px;
+}
+
+.editable-wrap .editable-controls>input, .editable-wrap .editable-controls>select, .editable-wrap .editable-controls>textarea {
+  width:100%;
+}
+
+.editable-wrap .editable-controls, .editable-wrap .editable-error {
+  width:100%;
+}
+
+.ta-toolbar.btn-toolbar .btn{
+  padding: 1px 6px !important;
+  font-size: 14px !important;
+}
+
+.ta-root{
+  display: block !important;
+  white-space: normal !important;
+}
+
+.ta-editor.ta-html {
+  display: none !important;
+}
+
+.btn-toolbar > .btn + .btn, .btn-toolbar > .btn + .btn-group, .btn-toolbar > .btn-group + .btn, .btn-toolbar > .btn-group + .btn-group {
+  margin-left: 2px !important;
+}
+
+.ta-editor {
+  min-height: 200px !important;
+  height: 200px !important;
+  overflow: auto;
+}
+
+.collapse-line {
+  height: 100%;
+  width:10px;
+  position: absolute;
+  right:0;
+  top:0;
+  background-color: #2db490
+}
+
+.collapse-line i {
+  position: relative;
+  top: calc(50% - 10px);
+  left: 0;
+  font-size: 10px;
+}
+
+.overview {
+  padding:0;
+  min-height:38px;
+  height: 100%;
+  margin-bottom: 0px;
+  position: relative;
+}
+
+.checklist {
+  height: 100%;
+  position: absolute;
+  width:100%;
+}
+
+.folder {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.checklist-header {
+  margin:10px 10px 0px 10px;
+  padding:8px 0;
+  border: 1px solid #e0e0e0;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  font-family: "Ubuntu Medium";
+  height: 35px;
+
+}
+
+.checklist-fields {
+  padding: 5px 10px;
+  margin:0;
+  border: 1px solid #e0e0e0;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  font-family: "Ubuntu Medium";
+  height: 30px;
+
+}
+
+.steps.scroll-wrapper {
+  overflow: hidden;
+  margin: 0px 10px 5px 10px;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  position: relative;
+}
+
+.steps.scroll-wrapper .step {
+  padding: 15px 0;
+  margin:0px 0px 2px 0px;
+  position: relative;
+  background-color: #FFFFFF;
+}
+
+.steps .form-control {
+  border: none;
+}
+
+.issues.scroll-wrapper {
+  overflow: hidden;
+  margin: 0px 10px 5px 10px;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  position: relative;
+}
+
+.issues.scroll-wrapper .issue {
+  padding: 15px 0;
+  margin:0px 0px 2px 0px;
+  position: relative;
+  background-color: #FFFFFF;
+}
+
+.issues .form-control {
+  border: none;
+}
+
+.issues-form {
+  margin: 0px 5px 0 5px;
+  position: absolute;
+  width: 99%;
+  height: calc(100% - 15px);
+}
+
+.checklist-execute {
+  margin: 0px 5px 0 5px;
+  position: absolute;
+  width: 99%;
+  height: calc(100% - 15px);
+}
+
+.fc-content {
+  height: calc(100% - 45px);;
+  width:100%;
+}
+
+.fc-content .floatThead-wrapper {
+  height: calc(100% - 45px);
+  width:100%;
+}
+
+.fc-content .floatThead-wrapper .fc-view {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width:100%;
+}
+
+.fc-content .floatThead-wrapper .fc-view .fc-border-separate{
+  table-layout: fixed;
+}
+
+.floatThead-container {
+  position: absolute;
+  margin-top: 0px;
+  top:0px;
+  z-index: 1001;
+  padding: 0;
+}
+
+.floatThead-table {
+  table-layout: fixed;
+}
+
+.progress-badge {
+  background-color: #FFA500;
+}
+
+.notstart-badge {
+  background-color: #808080;
+}
+
+.end-badge {
+  background-color: #008000;
+}
+
+p {
+  margin: 0 0 5px;
+}
+
+.form-signin {
+
+  .form-control {
+    padding-left: 50px !important;
+    font-size: 14px;
+  }
+
+  .form-control + .icon {
+    position: absolute;
+    left: 15px;
+    top: 7px;
+    z-index: 2;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+
+/*
+splash screen support
+*/
+
+.splash {
+
+  position: absolute;
+  background: #61b52c url('../media/background.png') repeat;
+  color: white;
+  width:100%;
+  height:100%;
+  z-index: 100000;
+
+  .wrapper{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 327px
+  }
+
+  .logo {
+    margin: 0 auto 10px;
+    display: block;
+    height: 327px;
+    width: 381px;
+    background: transparent url('../media/logo.png') no-repeat;
+  }
+
+  .loading {
+    background: transparent url('../media/ajax-loader.gif') no-repeat;
+  }
+}
+
+/* add font*/
+@font-face {
+  font-family: "Ubuntu Medium";
+  src: /*local("Ubuntu Medium"),*/
+  url("media/fonts/Ubuntu-M.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu Regular";
+  src: /*local("Ubuntu Regular"),*/
+  url("media/fonts/Ubuntu-R.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu Light";
+  src: /*local("Ubuntu Light"),*/
+  url("media/fonts/Ubuntu-L.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu Bold";
+  src: /*local("Ubuntu Bold"),*/
+  url("media/fonts/Ubuntu-B.ttf");
+}
+
+.form-control {
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  height: 34px;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: #D5EFE8;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px #D5EFE8, 0 0 8px #D5EFE8;
+  box-shadow: inset 0 1px 1px #D5EFE8, 0 0 8px #D5EFE8;
+}
+
+::selection {
+  background: #D5EFE8; /* Safari */
+}
+
+::-moz-selection {
+  background: #D5EFE8; /* Firefox */
+}
+
+.input[readonly] {
+  background-color: #f4f3f3;
+}
+
+.checkbox{
+  width: 100%;
+  position: relative;
+  margin-top: 0px;
+}
+
+.checkbox label {
+  cursor: pointer;
+  position: absolute;
+  color:#2db490;
+  width: 15px;
+  height: 15px;
+  top: 1px;
+  left: 0;
+  background: #ffffff;
+  border:1px solid #e0e0e0;
+}
+
+.checkbox label:after {
+}
+
+/**
+ * Create the hover event of the tick
+ */
+.checkbox label:hover::after {
+  opacity: 0.5;
+}
+
+/**
+ * Create the checkbox state for the tick
+ */
+.checkbox input[type=checkbox]:checked + label:after {
+  opacity: 1;
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 5px;
+  background: transparent;
+  top: 3px;
+  left: 2px;
+  border: 3px solid #2db490;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+div.checkbox > input[type=checkbox] {
+  visibility: hidden;
+}
+.fc-header {
+  margin-top: 5px;
+  height: 80px;
+}
+
+textarea { resize: none; }
+textarea.form-control {height: 50px !important;}
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.498039);
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 0, 0, 0.498039);
+}
+
+.tab-content {
+  height: calc(100% - 41px);
+  border: 1px solid #d6d5d5;
+  border-top: none;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: #555555;
+  background-color: transparent;
+  border: 1px solid #dddddd;
+  border-bottom-color: whitesmoke;;
+  cursor: default;
+}
+
+.nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 1.42857;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color:#a2a2a2;
+}
+
+.nav > li > a:hover {
+  background-color: #D5EFE8;
+}

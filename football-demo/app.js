@@ -1,70 +1,98 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+'use strict';
 
-// New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/football-demo');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+// Module dependencies.
+var express = require('express'),
+    http = require('http'),
+    passport = require('passport'),
+    path = require('path'),
+    fs = require('fs'),
+    mongoStore = require('connect-mongo')(express),
+    config = require('./lib/config/config');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+var db = require('./lib/db/mongo').db;
+
+// Bootstrap models
+var modelsPath = path.join(__dirname, 'lib/models');
+fs.readdirSync(modelsPath).forEach(function (file) {
+  require(modelsPath + '/' + file);
+});
+
+var pass = require('./lib/config/pass');
+
+// App Configuration
+app.configure('development', function(){
+  app.use(express.static(path.join(__dirname, '.tmp')));
+  app.use(express.static(path.join(__dirname, 'app')));
+  app.use(express.errorHandler());
+  app.set('views', __dirname + '/app/views');
+});
+
+app.configure('production', function(){
+  app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico')));
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.set('views', __dirname + '/views');
+
+});
+
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'jade');
+app.use(express.logger('dev'));
 
-app.use(favicon());
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// cookieParser should be above session
+app.use(express.cookieParser());
 
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
+// bodyParser should be above methodOverride
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+
+// express/mongo session storage
+app.use(express.session({
+  secret: 'MEAN',
+  store: new mongoStore({
+    url: config.db,
+    collection: 'sessions'
+  })
+}));
+
+// use passport session
+app.use(passport.initialize());
+app.use(passport.session());
+
+//routes should be at the last
+app.use(app.router);
+
+//mailer
+var mailer = require('express-mailer');
+
+mailer.extend(app, {
+  from: 'no-reply@example.com',
+  host: 'smtp.gmail.com', // hostname
+  secureConnection: true, // use SSL
+  port: 465, // port for secure SMTP
+  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
+  auth: {
+    user: 'vadim.chadyuk@gmail.com',
+    pass: 'Phoenixhp08081991CVS'
+  }
 });
 
-app.use('/', routes);
-app.use('/users', users);
 
+// Start server
+var port = process.env.PORT || 3000;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+// Connect to database
 
-/// catch 404 and forwarding to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+//Bootstrap routes
+require('./lib/config/routes')(app, io);
+
+process.on('uncaughtException', function(err) {
+  throw err;
 });
 
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+server.listen(port, function () {
+  //console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });
-
-module.exports = app;
