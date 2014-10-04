@@ -897,13 +897,30 @@ div.circle {
 
 .profile {
   .header {
+     height: 65px;
+     background-color: #f8d907;
+     font-size: 15pt;
+     text-align: center;
+     font-weight: bold;
+     margin: 0;
+     border-bottom: 1px solid #b4b4b4;
+   }
+  .footer {
     height: 65px;
-    background-color: #f8d907;
+    background-color: #e7e6e6;
     font-size: 15pt;
     text-align: center;
     font-weight: bold;
     margin: 0;
     border-bottom: 1px solid #b4b4b4;
+    .new-game-button{
+      background-color: #61b52c;
+      border-radius: 5px;
+      color: #FFFFFF;
+      font-size: 16px;
+      width:415px;
+      margin:0 auto;
+    }
   }
 
   .content {
@@ -929,7 +946,6 @@ div.circle {
       margin:0;
     }
   }
-
 }
 
 .ngdialog.ngdialog-theme-plain .ngdialog-content {
@@ -955,4 +971,18 @@ div.circle {
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
+}
+
+.two{
+   background: #fff;
+ }
+.four{
+  background: #61b52c;
+}
+
+.player-img {
+  width: 125px;
+  height: 125px;
+  margin: 0 auto 10px;
+  display: block;
 }
