@@ -18,25 +18,25 @@ passport.deserializeUser(function (id, done) {
 
 // Use local strategy
 passport.use(new LocalStrategy({
-      usernameField: 'email',
+      usernameField: 'username',
       passwordField: 'password'
     },
-    function (email, password, done) {
-      User.findOne({email: email}, function (err, user) {
+    function (username, password, done) {
+      User.findOne({username: username}, function (err, user) {
         if (err) {
           return done(err);
         }
         if (!user) {
           return done(null, false, {
             'errors': {
-              'email': {type: 'Email is not registered.'}
+              'username': {type: 'Пользователь не зарегистрирован!'}
             }
           });
         }
         if (!user.authenticate(password)) {
           return done(null, false, {
             'errors': {
-              'password': {type: 'Password is incorrect.'}
+              'password': {type: 'Неправильный пароль!'}
             }
           });
         }

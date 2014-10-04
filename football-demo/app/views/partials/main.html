@@ -1,6 +1,38 @@
-<div class="row-fluid projects-layout" style="margin-left: 10px !important;margin-right: 5px !important;" ng-init="findOne()">
-  <div class="col-md-6 col-md-offset-3 well">
-    <h2 ng-show="currentUser" class="text-center">Hello, {{currentUser.username}}!</h2>
-    <img ng-src="media/exterminate.png" width="100%">
+<div class="row-fluid dashboard" ng-init="findOne()">
+  <div class="container">
+      <div class="head-table">
+          ЛИДЕРЫ
+          <img src="media/cup.png">
+          РЕЙТИНГ
+      </div>
+      <div class="table-th">
+          <div class="col-sm-1">МЕСТО</div>
+          <div class="col-sm-4">ИГРОК</div>
+          <div class="col-sm-1">ИГРЫ</div>
+          <div class="col-sm-2">ПОБЕДЫ</div>
+          <div class="col-sm-2">ПОРАЖЕНИЯ</div>
+          <div class="col-sm-2">ОЧКИ</div>
+      </div>
+      <div class="table-content">
+          <div class="position" ng-click="openDetails()">
+              <div class="col-sm-1">1</div>
+              <div class="col-sm-4 player">ИГРОК</div>
+              <div class="col-sm-1">2</div>
+              <div class="col-sm-2">2</div>
+              <div class="col-sm-2">0</div>
+              <div class="col-sm-2">5</div>
+          </div>
+          <div class="position">
+              <div class="col-sm-1">2</div>
+              <div class="col-sm-4 player">ИГРОК 2</div>
+              <div class="col-sm-1">2</div>
+              <div class="col-sm-2">2</div>
+              <div class="col-sm-2">0</div>
+              <div class="col-sm-2">5</div>
+          </div>
+      </div>
+      <div class="table-footer">
+          <button class="btn btn-lg btn-block new-game-button" type="submit" ng-disabled="form.$invalid">НОВАЯ ИГРА</button>
+      </div>
   </div>
 </div>

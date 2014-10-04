@@ -10,12 +10,14 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 }
 html{
   min-height:100%;
-  position:relative
+  position:relative;
+
 }
 body {
     font-family: "Ubuntu Regular";
     color: #333;
-    height:100%;
+    min-height:100%;
+    background: #61b52c url('../media/background.png') repeat;
 }
 
 .signup-well {
@@ -69,7 +71,7 @@ body {
   -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
-  border-radius: 2px;
+  border-radius: 4px;
 }
 .login-title {
   color: #555;
@@ -548,23 +550,6 @@ p {
   margin: 0 0 5px;
 }
 
-.form-signin {
-
-  .form-control {
-    padding-left: 50px !important;
-    font-size: 14px;
-  }
-
-  .form-control + .icon {
-    position: absolute;
-    left: 15px;
-    top: 7px;
-    z-index: 2;
-    width: 25px;
-    height: 25px;
-  }
-}
-
 
 /*
 splash screen support
@@ -586,7 +571,7 @@ splash screen support
     right: 0;
     left: 0;
     margin: auto;
-    height: 327px
+    height: 427px
   }
 
   .logo {
@@ -594,11 +579,14 @@ splash screen support
     display: block;
     height: 327px;
     width: 381px;
+    max-width: 100%;
     background: transparent url('../media/logo.png') no-repeat;
   }
 
   .loading {
-    background: transparent url('../media/ajax-loader.gif') no-repeat;
+    margin: 0 auto 10px;
+    display: block;
+    width:32px;
   }
 }
 
@@ -643,10 +631,10 @@ splash screen support
 }
 
 .form-control:focus {
-  border-color: #D5EFE8;
+  border-color: #61b52c;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px #D5EFE8, 0 0 8px #D5EFE8;
-  box-shadow: inset 0 1px 1px #D5EFE8, 0 0 8px #D5EFE8;
+  -webkit-box-shadow: inset 0 1px 1px #61b52c, 0 0 8px #61b52c;
+  box-shadow: inset 0 1px 1px #61b52c, 0 0 8px #61b52c;
 }
 
 ::selection {
@@ -769,4 +757,140 @@ textarea.form-control {height: 50px !important;}
 
 .nav > li > a:hover {
   background-color: #D5EFE8;
+}
+
+.main-view {
+  position: absolute;
+  top: 90px;
+  height: calc(100% - 90px);
+  max-width: 1200px;
+  margin:0 auto;
+  right:0;
+  left:0;
+}
+
+.login-view {
+  position: relative;
+  margin-top: 20px;
+  height: 100%;
+
+  .wrapper {
+    position: relative;
+    margin: auto;
+  }
+
+  div.circle {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .circle.shadow {
+    -moz-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+    -webkit-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+    box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+  }
+
+  .profile-img {
+    margin-top: 15px;
+  }
+
+  input {
+    border-radius: 5px !important;
+    border: 1px solid #61b52c;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .login-button {
+    background-color: #61b52c;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+
+  p.another {
+    font-size: 16px;
+    color: #61b52c;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+}
+
+.dashboard {
+  margin: 0;
+
+  .container {
+    padding: 70px 120px;
+
+    .head-table {
+      height: 65px;
+      background-color: #f8d907;
+      display: block;
+      font-size:15pt;
+      text-align: center;
+      padding-top: 8px;
+      font-weight: bold;
+    }
+
+    .table-th {
+      height: 65px;
+      background-color: #e7e6e6;
+
+      div {
+        text-align: center;
+        padding: 20px 0;
+        border: 1px solid #7d7d7d;
+        height: 100%;
+        font-size: 13.11pt;
+        font-weight: bold;
+      }
+    }
+    .table-content {
+      background-color: white;
+      .position {
+        height: 65px;
+        div {
+          text-align: center;
+          padding-top: 10px;
+          border: 1px solid #7d7d7d;
+          height: 100%;
+          font-size: 26.7pt;
+          font-weight: bold;
+        }
+
+        div.player {
+          font-size: 11.59pt;
+          text-align: left;
+          padding-left: 10px;
+          padding-top: 20px;
+        }
+
+        div:last-child {
+          color:#61b52c;
+        }
+
+      }
+    }
+
+    .table-footer {
+      background-color: #e7e6e6;
+      height: 100px;
+      padding-top: 30px;
+      .new-game-button{
+        background-color: #61b52c;
+        border-radius: 5px;
+        color: #FFFFFF;
+        font-size: 16px;
+        width:415px;
+        margin:0 auto;
+      }
+    }
+
+  }
+
 }

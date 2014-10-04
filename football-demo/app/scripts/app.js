@@ -7,7 +7,8 @@ var app = angular.module('webapp', [
   'ngRoute',
   'http-auth-interceptor',
   'ui.bootstrap',
-  'ngTable'
+  'ngTable',
+  'ngDialog'
 ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider

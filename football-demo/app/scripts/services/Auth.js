@@ -10,7 +10,7 @@ app.factory('Auth', function ($location, $rootScope, Session, User, $cookieStore
       var cb = callback || angular.noop;
       Session.save({
         provider: provider,
-        email: user.email,
+        username: user.username,
         password: user.password,
         rememberMe: user.rememberMe
       }, function (user) {

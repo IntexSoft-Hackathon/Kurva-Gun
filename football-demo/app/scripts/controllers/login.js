@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('tms')
-    .controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
+app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
       $scope.error = {};
       $scope.user = {};
 
       $scope.login = function (form) {
         Auth.login('password', {
-              'email': $scope.user.email,
+              'username': $scope.user.username,
               'password': $scope.user.password
             },
             function (err) {

@@ -1,16 +1,10 @@
 <div class="navbar navbar-default navbar-fixed-top" ng-controller="NavbarCtrl" ng-init="findProject();checkLocation();">
     <div class="row navbar-style">
         <div class="navbar-header pull-left" style="position: absolute;margin:-0.5% 0 0 0">
-          <a href="/" style="position: absolute">
-            <img class="navbar-logo navbar-brand" style="padding:0 !important;" src='../../media/logo-symbol.png' title="IntexSoft QA" ng-style="{'width': currentUser ? '61px' : '130px','height': currentUser ? '71px' : '142px', 'margin': currentUser ? '15px 0' : '15px 0'}">
-          </a>
+            <img class="navbar-logo navbar-brand" style="padding:0 !important;max-width: 100%" src='../../media/logo_symbol.png' ng-style="{'width': '348px','height': '141px', 'margin': currentUser ? '15px 0' : '15px 0'}">
         </div>
         <div class="nav navbar-nav pull-right" style="position: absolute;height: 100%;width: 100%">
             <ul class="nav navbar-nav nav-main" ng-show="currentUser" style="position: absolute;top:0;right: 0;bottom: 0;margin: auto;height: 90px">>
-                <li><a ng-class="links[0].active ? 'activeMenu':''" href="/projects/" ng-click="changeLocation(0)">PROJECTS</a></li>
-                <li><a ng-class="links[1].active ? 'activeMenu':''" href="/calendar/iterations/" ng-click="changeLocation(1)">ITERATIONS CALENDAR</a></li>
-                <li><a ng-class="links[2].active ? 'activeMenu':''" href="/calendar/tasks/" ng-click="changeLocation(2)">TASK CALENDAR</a></li>
-                <li><a ng-class="links[3].active ? 'activeMenu':''" href="/map/" ng-click="changeLocation(3)">MAP DEMO</a></li>
                 <li class="dropdown">
                   <a class="dropdown-toggle" style="width:120px;font-size: 13px;padding-bottom: 25px;padding-top: 25px">Welcome, {{ currentUser.username }}</a>
                   <ul class="dropdown-menu">
@@ -19,24 +13,6 @@
                   </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav nav-main" ng-hide="currentUser" style="position: absolute;top:0;right: 0;bottom: 0;margin: auto;height: 90px">
-                <li> <img class="icon" src="media/login.png" style="display: inline"><a href="/login" class="login-link" style="display: inline">LOGIN</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row" style="background-color: #2db490; margin: 0" ng-show="currentUser">
-        <div class="navbar-sub-style">
-          <div class="row pull-left" style="margin-left: 0px;margin-right: 0px">
-              <input id="project" ui-select2="select2ProjectsOptions" ng-model="project" style="margin-top:7px;height:auto; width:230px;height: 35px" ng-change="open()">
-          </div>
-          <div class="nav navbar-nav pull-right">
-              <ul class="nav navbar-nav" ng-show="routeParams.projectId">
-                  <li><a ng-class="sublinks[0].active ? 'activeMenu':''" href="/projects/{{routeParams.projectId}}/" ng-click="subChangeLocation(0)">Overview</a></li>
-                  <li><a ng-class="sublinks[1].active ? 'activeMenu':''" href="/projects/{{routeParams.projectId}}/timelines/" ng-click="subChangeLocation(1)">TimeLines</a></li>
-                  <li><a ng-class="sublinks[2].active ? 'activeMenu':''" href="projects/{{routeParams.projectId}}/checklists/" ng-click="subChangeLocation(2)">Checklists</a></li1>
-                  <li><a ng-class="sublinks[3].active ? 'activeMenu':''" href="/projects/{{routeParams.projectId}}/issues/" ng-click="subChangeLocation(3)">Issues</a></li>
-              </ul>
-          </div>
         </div>
     </div>
 </div>

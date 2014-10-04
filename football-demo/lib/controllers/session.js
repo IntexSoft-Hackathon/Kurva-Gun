@@ -31,6 +31,12 @@ exports.login = function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
     var error = err || info;
     if (error) {
+      // if no user, then we register user(no error message send, just register)
+      if (error.errors.username){
+        var users = require('../controllers/users');
+        users.create(req, res, next);
+        return;
+      }
       return res.json(400, error);
     }
     req.logIn(user, function (err) {
