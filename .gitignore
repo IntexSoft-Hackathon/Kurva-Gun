@@ -1,4 +1,5 @@
-football-demo/node_modules
-football-demo/.tmp
-football-demo/.sass-cache
-.idea
+football-demo/node_modules/*
+football-demo/.tmp/*
+football-demo/.sass-cache/*
+.idea/*
+startMongo.bat
