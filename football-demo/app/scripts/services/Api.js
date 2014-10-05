@@ -7,10 +7,23 @@ app.factory('Api', function ($resource) {
           {
             'update': {
               method: 'PUT'
+            }
+          });
+
+    },
+    getGames: function(){
+      return $resource('/api/game/:id/', {id: '@_id'},
+          {
+            'update': {
+              method: 'PUT'
             },
-            checkProjectAccess:{
-              url:'/auth/projects/:projectId',
-              method: 'GET'
+            start:{
+              url:'/api/game/start',
+              method: 'POST'
+            },
+            exit:{
+              url:'/api/game/exit',
+              method: 'POST'
             }
           });
 

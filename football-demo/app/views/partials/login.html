@@ -4,7 +4,7 @@
             <div class="account-wall">
                 <p class="link" ng-click="signup = !signup">{{!signup ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ"}}</p>
                 <div class="circle shadow">
-                    <img class="profile-img" src="../../media/photo.png" ng-click ng-file-select="onFileSelect($files)" alt="">
+                    <img class="profile-img" ng-src="{{profileImage ? '../../media/' + profileImage : '../../media/photo.png'}}" ng-click ng-file-select="onFileSelect($files)" alt="">
                 </div>
                 <form class="form-signin"
                       name="form"

@@ -6,8 +6,14 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
    
 
   $scope.getUsers = function() {
-    Api.getUsers().query(function(users){
-      $scope.users = users;
+    Api.getGames().query(function(game){
+      if(!game || game.game_status !== 'IN_PROGRESS') {
+        Api.getUsers().query(function (users) {
+          $scope.users = users;
+        });
+      } else {
+        $location.path('game');
+      }
     });
 
   };

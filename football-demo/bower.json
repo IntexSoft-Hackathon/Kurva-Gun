@@ -15,8 +15,7 @@
     "jquery-ui":"*",
     "angular-resource":"*",
     "angular-route":"*",
-    "angular-cookies":"*",
-    "connect-multiparty":"*"
+    "angular-cookies":"*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

@@ -720,6 +720,14 @@ div.circle {
           font-size: 120pt;
           font-weight: bold;
           text-align: center;
+          .start-button {
+            margin-top:100px;
+            background-color: #cd5514;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 12pt;
+            color:#ffffff
+          }
         }
       }
 
@@ -804,6 +812,31 @@ div.circle {
       }
     }
 
+  }
+}
+
+.winner {
+  .header {
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 10px;
+  }
+
+  .close {
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+
+  .content {
+    margin: 0;
+    background-color: #e7e6e6;
+    height: 300px;
   }
 }
 

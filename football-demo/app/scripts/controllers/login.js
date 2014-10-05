@@ -62,6 +62,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, User, $location,
         }).progress(function(evt) {
         }).success(function(data, status, headers, config) {
           // file is uploaded successfully
+          $scope.profileImage = data.path;
           $scope.user.photo = data.path;
         });
       }

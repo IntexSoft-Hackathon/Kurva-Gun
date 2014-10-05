@@ -14,7 +14,8 @@
     "jade": "*",
     "body-parser":"*",
     "session": "*",
-    "serialport": "*"
+    "serialport": "*",
+    "imagemagick":"*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
