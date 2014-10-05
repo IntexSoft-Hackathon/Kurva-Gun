@@ -14,7 +14,7 @@ module.exports = function (app, io) {
   app.put('/auth/users/:userId', users.update);
   // Game Routes
   app.get('/api/game', game.find);
-  app.post('/api/game', game.create);
+  app.post('/api/game', game.find);
   app.get('/api/game/:userId', game.show);
   app.put('/api/game/:userId', game.update);
 

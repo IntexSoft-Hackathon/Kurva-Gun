@@ -97,6 +97,6 @@ process.on('uncaughtException', function(err) {
 });
 
 server.listen(port, function () {
-    require('./app/scripts/arduino/usbreader.js');
+    require('./lib/controllers/usbreader.js');
   //console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });

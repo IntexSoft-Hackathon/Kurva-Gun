@@ -13,7 +13,7 @@ var UserSchema = new Schema({
     count_games: {type: Number, default: 0},
     register_time: {type: Date},
     game_time: {type: Number},
-    level: {type: String, default: 0},
+    level: {type: String, default: "Джуниор"},
     achievements: {name: String, time: Date, description: String},
     hashedPassword: String, salt: String, name: String,
     active: { type: Boolean, default: true},

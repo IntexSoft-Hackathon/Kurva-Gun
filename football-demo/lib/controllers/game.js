@@ -1,36 +1,56 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+    Arduiono = require('./usbreader.js'),
     Game = mongoose.model('Game'),
-    ObjectId = mongoose.Types.ObjectId;
+    ObjectId = mongoose.Types.ObjectId,
+    io = require('../../app.js').io;
 
 /**
- * Find Game by id
+ * Start game
  */
-exports.game = function (req, res, next, id) {
-    Game.load(id, function (err, game) {
+exports.start = function (req, res) {
+    findCurrentGame().exec(function (err, game) {
         if (err) {
             return next(err);
         }
-        if (!game) {
-            return next(new Error('Failed to load checklist ' + id));
-        }
-        req.game = game;
-        next();
+        Arduiono.startGame();
+        game.start_time = new Date();
+        game.save();
+        res.json(game);
     });
 };
 
-/**
- * Create game
- */
-exports.create = function (req, res, next, id) {
-    var game = new Game({user:id});
+exports.stop = function () {
+    var currentGame = findCurrentGame();
+    Arduiono.stopGame();
+    currentGame.game_status = "FINISHED";
+    currentGame.end_time = new Date();
+    currentGame.save();
+};
 
-    game.save(function (err) {
-        if (err) {
-            throw err;
+exports.goal = function(team) {
+    var currentGame = findCurrentGame();
+    if (team === Arduiono.GOAL_WHITE_MESSAGE)
+    {
+        currentGame.team_blue.score++;
+        currentGame.team_blue.goals.push(new Date());
+        if (currentGame.team_blue.score === 10)
+        {
+            stop();
         }
-    });
+    }
+    else
+    {
+        currentGame.team_white.score++;
+        currentGame.team_white.goals.push(new Date());
+        if (currentGame.team_white.score === 10)
+        {
+            stop();
+        }
+    }
+    currentGame.save();
+    io.sockets.broadcast("game:update", game);
 };
 
 /**
@@ -65,6 +85,7 @@ exports.update = function (req, res) {
         if (err) {
             res.json(500, err);
         } else {
+            //io.sockets.broadcast("game:update", game);
             res.json(game);
         }
     });
@@ -75,11 +96,21 @@ exports.update = function (req, res) {
  *  returns all games
  */
 exports.find = function (req, res, next) {
-    Game.find({}).populate('user').exec(function (err, games) {
+    findCurrentGame().exec(function (err, game) {
         if (err) {
-            return next(new Error('Failed to load Game'));
+            return next(err);
         }
-        res.json(games);
+        if (!game)
+        {
+            game = new Game();
+            game.save();
+        }
+        res.json(game);
     });
 };
+
+function findCurrentGame()
+{
+    return Game.findOne({$or: [{game_status:"NEW"}, {game_status:"IN_PROGRESS"}]});
+}
 

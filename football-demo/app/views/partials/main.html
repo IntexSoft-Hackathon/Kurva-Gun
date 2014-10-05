@@ -6,12 +6,13 @@
           РЕЙТИНГ
       </div>
       <div class="table-th">
-          <div class="col-sm-1">МЕСТО</div>
+          <div  class="col-sm-1">МЕСТО</div>
           <div class="col-sm-4">ИГРОК</div>
           <div class="col-sm-1">ИГРЫ</div>
-          <div class="col-sm-2">ПОБЕДЫ</div>
-          <div class="col-sm-2">ПОРАЖЕНИЯ</div>
-          <div class="col-sm-2">ОЧКИ</div>
+          <div class="col-sm-1">ПОБЕДЫ</div>
+          <div class="col-sm-1">НЕУДАЧИ</div>
+          <div class="col-sm-3">УРОВЕНЬ</div>
+          <div class="col-sm-1">ОЧКИ</div>
       </div>
       <div class="table-content">
           <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails(user, $index + 1)">
@@ -25,9 +26,10 @@
                   </p>
               </div>
               <div class="col-sm-1">{{user.count_games}}</div>
-              <div class="col-sm-2">{{user.win}}</div>
-              <div class="col-sm-2">{{user.lost}}</div>
-              <div class="col-sm-2">{{user.experience}}</div>
+              <div class="col-sm-1">{{user.win}}</div>
+              <div class="col-sm-1">{{user.lost}}</div>
+              <div class="col-sm-3">{{user.level}}</div>
+              <div class="col-sm-1">{{user.experience}}</div>
           </div>
       </div>
       <div class="table-footer">

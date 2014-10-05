@@ -10,6 +10,8 @@
 // 1 - start game
 // 2 - stop game
 
+var Game = require('./game.js')
+
 var LISTENING_MESSGAE = "LISTENING";
 var SATRT_GAME_MESSAGE = "START";
 var STOP_GAME_MESSAGE= "STOP";
@@ -36,22 +38,19 @@ var serialPort = new SerialPort(PORT_NUMBER, {
     flowControl: false
 }, true);
 
+
 // open connection and listening port
 serialPort.on("open", function () {
 
     serialPort.on("data", function (arduinoMessage) {
         console.log(arduinoMessage);
-        if (arduinoMessage == LISTENING_MESSGAE) { // arduino is ready
+        if (arduinoMessage === LISTENING_MESSGAE) { // arduino is ready
             portIsReady = true;
-            startGame();
-        } else if (arduinoMessage == STOP_GAME_MESSAGE) { // stop command or timeout stop
-            eventEmitter.emit("gameIsStopt");
-        } else if (arduinoMessage == GOAL_WHITE_MESSAGE) { // goal in white gate (point for blue team)
-            eventEmitter.emit("goalForBlue");
-        } else if (arduinoMessage == GOAL_BLUE_MESSAGE) { // goal in blue gate (point for white team)
-            eventEmitter.emit("goalForWhite");
+        } else if (arduinoMessage === STOP_GAME_MESSAGE) { // stop command or timeout stop
+            Game.stop();
+        } else if (arduinoMessage === GOAL_WHITE_MESSAGE || arduinoMessage === GOAL_BLUE_MESSAGE) { // goal in white gate (point for blue team)
+            Game.goal(arduinoMessage);
         }
-
     });
 });
 
@@ -63,13 +62,13 @@ serialPort.on('error', function() {
     portIsReady = false;
 });
 
-function startGame() {
+exports.startGame = function() {
     if (portIsReady) {
         serialPort.write(START_GAME_COMMAND);
     }
 }
 
-function stopGame() {
+exports.stopGame = function() {
     if (portIsReady) {
         serialPort.write(STOP_GAME_COMMAND);
     }
