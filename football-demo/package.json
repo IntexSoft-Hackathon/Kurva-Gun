@@ -13,7 +13,8 @@
     "express-mailer": "*",
     "jade": "*",
     "body-parser":"*",
-    "session": "*"
+    "session": "*",
+    "serialport": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
