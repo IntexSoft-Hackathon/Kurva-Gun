@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, ngDialog, $location, Api) {
+app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
 
   $scope.ratings = {};
 
@@ -20,8 +20,7 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api) {
       closeByDocument: true
     });
     confirm.then(function () {
-
-        });
+    });
     };
 
     $scope.openNewGame = function(){
@@ -29,10 +28,16 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api) {
             template: 'views/partials/dialogs/newGame.html',
             className: 'ngdialog-theme-plain',
             scope: $scope,
-            showClose: true,
+            showClose: false,
             closeByDocument: true
         });
         newGame.then(function () {
+          $location.path('game');
         });
-    }
+    };
+
+    Socket.on('rating:new', function () {
+      $scope.getRatings();
+    });
+
 });

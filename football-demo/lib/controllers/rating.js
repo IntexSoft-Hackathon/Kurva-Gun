@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     Rating = mongoose.model('Rating'),
-    ObjectId = mongoose.Types.ObjectId;
+    ObjectId = mongoose.Types.ObjectId,
+    app = require('../../app.js');
 
 /**
  * Find Rating by id
@@ -32,6 +33,7 @@ exports.create = function (req, res, next, id) {
         if (err) {
             throw err;
         }
+        emitNewRating(app.io, rating);
     });
 };
 
@@ -86,4 +88,10 @@ exports.find = function (req, res, next) {
         res.json(ratings);
     });
 };
+
+var emitNewRating = function(io, data){
+  console.log('Emmited');
+  io.sockets.emit('rating:new', data);
+};
+
 

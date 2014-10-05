@@ -8,7 +8,8 @@ var app = angular.module('webapp', [
   'http-auth-interceptor',
   'ui.bootstrap',
   'ngTable',
-  'ngDialog'
+  'ngDialog',
+  'btford.socket-io'
 ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider

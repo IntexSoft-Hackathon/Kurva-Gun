@@ -1,28 +1,28 @@
-<div class="row profile">
+<div class="row new-game">
     <div class="row header">
         НОВАЯ
         <img src="media/ball_icon.png">
         ИГРА
+        <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
     </div>
     <div class="row content">
-        <div class="description row">
-            <div class="col-sm-6 two" ng-click="">
+            <div class="col-sm-6 two" ng-click="confirm()">
                 <div class="col-sm-5">
                     <img class="player-img" src="../../media/team-blue.png" alt="">
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-2 vs">
                    <div>VS</div>
                 </div>
                 <div class="col-sm-5">
                     <img class="player-img"  src="../../media/team_white.png" alt="">
                 </div>
             </div>
-            <div class="col-sm-6 four" ng-click="">
+            <div class="col-sm-6 four" ng-click="confirm()">
                 <div class="col-sm-5">
                     <img class="player-img" src="../../media/team-blue.png" alt="">
                     <img class="player-img" src="../../media/team-blue.png" alt="">
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-2 vs">
                     <div>VS</div>
                 </div>
                 <div class="col-sm-5">
@@ -30,11 +30,5 @@
                     <img class="player-img" src="../../media/team_white.png" alt="">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row footer">
-        <button class="btn btn-lg btn-block new-game-button" type="submit" ng-disabled="form.$invalid"
-                ng-click="openNewGame()">ИГРАТЬ
-        </button>
     </div>
 </div>

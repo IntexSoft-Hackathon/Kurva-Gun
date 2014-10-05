@@ -577,6 +577,7 @@ div.circle {
      font-weight: bold;
      margin: 0;
      border-bottom: 1px solid #b4b4b4;
+     padding-top: 5px;
    }
   .footer {
     height: 65px;
@@ -595,12 +596,13 @@ div.circle {
       width:415px;
       margin:0 auto;
     }
-    .close{
-      position: absolute;
-      right: 0;
-      top: 20px;
-    }
 
+  }
+
+  .close{
+    position: absolute;
+    right: 0;
+    top: 20px;
   }
 
   .content {
@@ -747,6 +749,61 @@ div.circle {
       }
 
     }
+  }
+}
+
+
+.new-game {
+  .header {
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 10px;
+  }
+
+  .close {
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+
+  .content {
+    margin: 0;
+    background-color: #e7e6e6;
+    height: 300px;
+
+    .two {
+      height: 100%;
+      div {
+        height: 100%;
+        text-align: center;
+        margin-top: 100px;
+      }
+
+      .vs {
+        margin-top: 40px;
+        font-size: 25pt;
+        font-weight: bold;
+      }
+    }
+    .four {
+      height: 100%;
+      div {
+        height: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .vs {
+        margin-top: 120px;
+        font-size: 25pt;
+        font-weight: bold;
+      }
+    }
+
   }
 }
 

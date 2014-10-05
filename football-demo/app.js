@@ -84,6 +84,9 @@ var port = process.env.PORT || 3000;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+
+exports.io = io;
+
 // Connect to database
 
 //Bootstrap routes
