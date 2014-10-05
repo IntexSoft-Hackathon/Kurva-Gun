@@ -1,17 +1,25 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, ngDialog) {
+app.controller('MainCtrl', function ($scope, ngDialog, $location, Api) {
 
-    $scope.openDetails = function(){
+  $scope.ratings = {};
 
-        var confirm = ngDialog.openConfirm({
-            template: 'views/partials/dialogs/playerDetails.html',
-            className: 'ngdialog-theme-plain',
-            scope: $scope,
-            showClose: true,
-            closeByDocument: true
-        });
-        confirm.then(function () {
+  $scope.getRatings = function() {
+    Api.getRatings().query(function(ratings){
+      $scope.ratings = ratings;
+    });
+
+  };
+
+  $scope.openDetails = function(){
+    var confirm = ngDialog.openConfirm({
+      template: 'views/partials/dialogs/playerDetails.html',
+      className: 'ngdialog-theme-plain',
+      scope: $scope,
+      showClose: false,
+      closeByDocument: true
+    });
+    confirm.then(function () {
 
         });
     };

@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 
 var RatingSchema = new Schema({
     user: {type: mongoose.Schema.ObjectId, ref: 'User'},
-    points: Number,
-    win: Number,
-    lost: Number,
-    count_games: Number
+    points: {type:Number, default:0},
+    win: {type:Number, default:0},
+    lost: {type:Number, default:0},
+    count_games: {type:Number, default:0}
 });
 
 RatingSchema

@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    ObjectId = mongoose.Types.ObjectId;
+    ObjectId = mongoose.Types.ObjectId,
+    rating = require('../controllers/rating');;
 
 /**
  * Find user by id
@@ -38,6 +39,7 @@ exports.create = function (req, res, next) {
       if (err) {
         return next(err);
       }
+      rating.create(req, res, next, newUser._id);
       return res.json(newUser.user_info);
     });
   });

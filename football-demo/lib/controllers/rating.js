@@ -25,15 +25,13 @@ exports.rating = function (req, res, next, id) {
  * requires: {ratingname, password, email}
  * returns: {email, password}
  */
-exports.create = function (req, res, next) {
-    var rating = new Rating(req.body);
+exports.create = function (req, res, next, id) {
+    var rating = new Rating({user:id});
 
     rating.save(function (err) {
         if (err) {
-            return res.json(400, err);
+            throw err;
         }
-
-        res.json(rating.rating_user_info);
     });
 };
 
@@ -81,7 +79,7 @@ exports.update = function (req, res) {
  *  returns all ratings
  */
 exports.find = function (req, res, next) {
-    Rating.find({}).exec(function (err, ratings) {
+    Rating.find({}).populate('user').exec(function (err, ratings) {
         if (err) {
             return next(new Error('Failed to load Rating'));
         }

@@ -3,7 +3,7 @@
 app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
       $scope.error = {};
       $scope.user = {};
-
+      $scope.signup = false;
       $scope.login = function (form) {
         Auth.login('password', {
               'username': $scope.user.username,
@@ -27,5 +27,25 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
                 $scope.error.other = err.message;
               }
             });
+      };
+
+      $scope.register = function (form) {
+        Auth.createUser({
+              username: $scope.user.username,
+              password: $scope.user.password
+            },
+            function (err) {
+              $scope.errors = {};
+
+              if (!err) {
+                $location.path('/');
+              } else {
+                angular.forEach(err.errors, function (error, field) {
+                  form[field].$setValidity('mongoose', false);
+                  $scope.errors[field] = error.type;
+                });
+              }
+            }
+        );
       };
     });

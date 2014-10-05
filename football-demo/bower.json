@@ -15,9 +15,7 @@
     "jquery-ui":"*",
     "angular-resource":"*",
     "angular-route":"*",
-    "angular-cookies":"*",
-    "ngDialog":"*",
-    "hammerjs":"*"
+    "angular-cookies":"*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

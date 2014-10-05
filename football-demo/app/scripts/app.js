@@ -24,6 +24,10 @@ var app = angular.module('webapp', [
             templateUrl: 'partials/signup.html',
             controller: 'SignupCtrl'
           })
+          .when('/game', {
+            templateUrl: 'partials/game.html',
+            controller: 'GameCtrl'
+          })
           .otherwise({
             redirectTo: '/'
           });
