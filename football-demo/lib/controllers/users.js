@@ -3,6 +3,7 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     ObjectId = mongoose.Types.ObjectId,
+    app = require('../../app.js'),
     fs = require('fs'),
     im = require('imagemagick');
 
@@ -40,6 +41,7 @@ exports.create = function (req, res, next) {
       if (err) {
         return next(err);
       }
+      emitNewUser(app.io, users);
       user.create(req, res, next, newUser._id);
       return res.json(newUser.user_info);
     });
@@ -115,6 +117,11 @@ exports.find = function (req, res, next) {
     }
     res.json(users);
   });
+};
+
+var emitNewUser = function(io, data){
+    console.log('Emmited');
+    io.sockets.emit('user:new', data);
 };
 
 /**

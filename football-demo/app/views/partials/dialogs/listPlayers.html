@@ -1,0 +1,19 @@
+<div class="row-fluid dashboard" ng-init="getUsers()">
+    <div class="container">
+        <div class="head-table">
+          ВЫБОР ИГРОКА
+        </div>
+        <div class="table-content">
+            <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails()">
+                <div class="col-sm-4 player">
+                    <div class="circle shadow">
+                        <img class="profile-img" src="../../media/photo.png" alt="">
+                    </div>
+                    <p>
+                        {{user.username}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

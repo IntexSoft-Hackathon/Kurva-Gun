@@ -39,7 +39,7 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
         });
     };
 
-    Socket.on('rating:new', function () {
+    Socket.on('user:new', function () {
       $scope.getUsers();
     });
 
