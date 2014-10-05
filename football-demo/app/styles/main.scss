@@ -840,6 +840,57 @@ div.circle {
   }
 }
 
+.player-list {
+  .header {
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 10px;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+  .content {
+    height: 500px;
+    background-color: #e7e6e6;
+    overflow-y: scroll;
+    margin: 0;
+    .position{
+      margin: 0;
+      .player{
+        border-bottom: 1px solid #b4b4b4;
+        margin: 0;
+        p {
+          margin-top: 35px;
+          margin-left: 120px;
+          font-weight: bold;
+          font-size: 14pt;
+        }
+      }
+      div.circle {
+        float:left;
+        width:96px;
+        height: 96px;
+        padding: 0;
+        img {
+          width:96px;
+          height: 96px;
+        }
+      }
+      .player {
+        margin: 0;
+      }
+    }
+  }
+
+}
+
 
 .ngdialog.ngdialog-theme-plain .ngdialog-content {
   background: #fff;
