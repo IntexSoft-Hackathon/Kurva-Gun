@@ -12,7 +12,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
 
     };
   $scope.getGame = function() {
-    Api.getGames().query(function(game){
+    Api.getGames().game(function(game){
       $scope.game = game;
     });
   };
@@ -33,19 +33,20 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
     Socket.on('user:new', function () {
         $scope.getUsers();
     });
+
   $scope.startOrCancel = function() {
-    if ($scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
-      Api.getGames().start(function(){}) ;
+    if ($scope.game.team_white && $scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
+      Api.getGames().start(function(){ }) ;
     } else {
-      Api.getGames().exit(function(){}) ;
+      Api.getGames().start(function(){ }) ;
     }
   };
 
   $scope.getButtonText = function() {
-    if ($scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4) {
-      return "Õ¿◊¿“‹ »√–”";
+    if ($scope.game.team_white && ($scope.game.team_white.players.length + $scope.game.team_blue.players.length) == 4) {
+      return "–ù–ê–ß–ê–¢–¨ –ò–ì–†–£";
     } else {
-      return "œŒ »Õ”“‹ »√–”";
+      return "–í–´–ô–¢–ò";
     }
   };
 
@@ -60,5 +61,9 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
     confirm.then(function () {
     });
   });
+
+  Socket.on('game:update', function(game){
+    $scope.game = game;
+  })
 
 });

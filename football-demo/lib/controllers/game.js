@@ -16,6 +16,7 @@ exports.start = function (req, res) {
         }
         Arduiono.startGame();
         game.start_time = new Date();
+        game.game_status = "IN_PROGRESS";
         game.save();
         res.json(game);
     });
@@ -50,7 +51,7 @@ exports.goal = function(team) {
         }
     }
     currentGame.save();
-    io.sockets.broadcast("game:update", game);
+    io.sockets.emit("game:update", game);
 };
 
 /**

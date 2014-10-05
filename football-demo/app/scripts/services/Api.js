@@ -19,12 +19,17 @@ app.factory('Api', function ($resource) {
             },
             start:{
               url:'/api/game/start',
-              method: 'POST'
+              method: 'POST',
+              isArray:false
             },
             exit:{
               url:'/api/game/exit',
               method: 'POST'
-            }
+            },
+            game:{
+            method:'GET',
+            isArray:false
+          }
           });
 
     },
@@ -33,12 +38,12 @@ app.factory('Api', function ($resource) {
 
       return $resource('/auth/users/:id/', {id: '@_id'},
           {
+              game:{
+                method:'GET',
+                isArray:false
+              },
               'update': {
                   method: 'PUT'
-              },
-              checkProjectAccess:{
-                  url:'/auth/projects/:projectId',
-                  method: 'GET'
               }
           });
 

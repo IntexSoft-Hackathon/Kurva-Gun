@@ -6,7 +6,7 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
    
 
   $scope.getUsers = function() {
-    Api.getGames().query(function(game){
+    Api.getGames().game(function(game){
       if(!game || game.game_status !== 'IN_PROGRESS') {
         Api.getUsers().query(function (users) {
           $scope.users = users;

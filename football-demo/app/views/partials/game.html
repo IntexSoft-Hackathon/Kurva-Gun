@@ -22,7 +22,7 @@
                   </div>
               </div>
               <div ng-if="game.game_status == 'IN_PROGRESS'" class="row result">
-                  0
+                  {{game.team_blue.score}}
               </div>
           </div>
           <div class="col-sm-2 center">
@@ -55,7 +55,7 @@
                   </div>
               </div>
               <div ng-if="game.game_status == 'IN_PROGRESS'" class="row result">
-                  0
+                  {{game.team_white.score}}
               </div>
           </div>
       </div>
