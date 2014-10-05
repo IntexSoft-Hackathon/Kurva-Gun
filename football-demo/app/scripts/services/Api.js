@@ -1,9 +1,9 @@
 app.factory('Api', function ($resource) {
 
   return {
-    getRatings: function(){
+    getUsers: function(){
 
-      return $resource('/api/rating/:id/', {id: '@user'},
+      return $resource('/auth/users/:id/', {id: '@_id'},
           {
             'update': {
               method: 'PUT'

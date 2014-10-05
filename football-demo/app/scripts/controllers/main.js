@@ -2,11 +2,12 @@
 
 app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
 
-  $scope.ratings = {};
+  $scope.users = {};
+   
 
-  $scope.getRatings = function() {
-    Api.getRatings().query(function(ratings){
-      $scope.ratings = ratings;
+  $scope.getUsers = function() {
+    Api.getUsers().query(function(users){
+      $scope.users = users;
     });
 
   };

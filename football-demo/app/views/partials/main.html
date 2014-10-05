@@ -1,4 +1,4 @@
-<div class="row-fluid dashboard" ng-init="getRatings()">
+<div class="row-fluid dashboard" ng-init="getUsers()">
   <div class="container">
       <div class="head-table">
           ЛИДЕРЫ
@@ -14,20 +14,20 @@
           <div class="col-sm-2">ОЧКИ</div>
       </div>
       <div class="table-content">
-          <div class="position" ng-repeat="rating in ratings | orderBy:'points'" ng-click="openDetails()">
+          <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails()">
               <div class="col-sm-1">{{$index + 1}}</div>
               <div class="col-sm-4 player">
                   <div class="circle shadow">
                       <img class="profile-img" src="../../media/photo.png" alt="">
                   </div>
                   <p>
-                  {{rating.user.username}}
+                  {{user.username}}
                   </p>
               </div>
-              <div class="col-sm-1">{{rating.count_games}}</div>
-              <div class="col-sm-2">{{rating.win}}</div>
-              <div class="col-sm-2">{{rating.lost}}</div>
-              <div class="col-sm-2">{{rating.points}}</div>
+              <div class="col-sm-1">{{user.count_games}}</div>
+              <div class="col-sm-2">{{user.win}}</div>
+              <div class="col-sm-2">{{user.lost}}</div>
+              <div class="col-sm-2">{{user.experience}}</div>
           </div>
       </div>
       <div class="table-footer">

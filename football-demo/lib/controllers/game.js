@@ -46,7 +46,7 @@ exports.show = function (req, res, next) {
         if (game) {
             res.send({id_user: game.id_user, start_time: game.start_time, end_time: game.end_time});
         } else {
-            res.send(404, 'RATING_NOT_FOUND');
+            res.send(404, 'GAME_NOT_FOUND');
         }
     });
 };
@@ -56,9 +56,11 @@ exports.show = function (req, res, next) {
  */
 exports.update = function (req, res) {
     var game = req.game;
-    game.id_user = req.body.id_user;
     game.start_time = req.body.start_time;
     game.end_time = req.body.end_time;
+    game.game_status = req.body.game_status;
+    game.team_white = req.body.team_white;
+    game.team_blue = req.body.team_blue;
     game.save(function (err) {
         if (err) {
             res.json(500, err);

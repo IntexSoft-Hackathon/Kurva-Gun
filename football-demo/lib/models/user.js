@@ -5,18 +5,18 @@ var mongoose = require('mongoose'),
     crypto = require('crypto');
 
 var UserSchema = new Schema({
-  email: {
-    type: String
-  },
-  username: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  hashedPassword: String,
-  salt: String,
-  name: String,
-  active: { type: Boolean, default: true}
+    email: {type: String},
+    username: {type: String, unique: true, required: true},
+    experience: {type: Number, default: 10},
+    win: {type: Number, default: 0},
+    lost: {type: Number, default: 0},
+    count_games: {type: Number, default: 0},
+    register_time: {type: Date},
+    game_time: {type: Number},
+    level: {type: String, default: 0},
+    achievements: {name: String, time: Date, description: String},
+    hashedPassword: String, salt: String, name: String,
+    active: { type: Boolean, default: true}
 });
 
 /**
@@ -36,7 +36,9 @@ UserSchema
 UserSchema
     .virtual('user_info')
     .get(function () {
-      return {'_id': this._id, 'username': this.username, 'email': this.email, 'name': this.name};
+        return {'_id': this._id, 'username': this.username, 'email': this.email, 'name': this.name,
+            'experience': this.experience, 'win': this.win, 'lost': this.lost, 'count_games': this.count_games,
+            'register_time': this.register_time, 'game_time': this.game_time, 'level': this.level, 'achievements': this.achievements};
     });
 
 /**
