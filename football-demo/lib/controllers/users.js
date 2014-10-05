@@ -3,7 +3,6 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     ObjectId = mongoose.Types.ObjectId,
-    rating = require('../controllers/rating'),
     fs = require('fs'),
     im = require('imagemagick');
 

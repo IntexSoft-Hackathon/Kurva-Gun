@@ -14,11 +14,11 @@
           <div class="col-sm-2">ОЧКИ</div>
       </div>
       <div class="table-content">
-          <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails()">
+          <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails(user, $index + 1)">
               <div class="col-sm-1">{{$index + 1}}</div>
               <div class="col-sm-4 player">
                   <div class="circle shadow">
-                      <img class="profile-img" ng-src="{{'../../media/'+ (rating.user.photo ? rating.user.photo : 'photo.png' )}}" alt="">
+                      <img class="profile-img" ng-src="{{'../../media/'+ (user.photo ? user.photo : 'photo.png' )}}" alt="">
                   </div>
                   <p>
                   {{user.username}}
