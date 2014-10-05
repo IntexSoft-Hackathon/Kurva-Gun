@@ -6,6 +6,8 @@ var path = require('path'),
 module.exports = function (app, io) {
   var users = require('../controllers/users');
   var rating = require('../controllers/rating');
+  var game = require('../controllers/game');
+  var achievement = require('../controllers/achievement');
   // User Routes
   app.get('/auth/users', users.find);
   app.post('/auth/users', users.create);
@@ -16,6 +18,16 @@ module.exports = function (app, io) {
   app.post('/api/rating', rating.create);
   app.get('/api/rating/:userId', rating.show);
   app.put('/api/rating/:userId', rating.update);
+  // Game Routes
+  app.get('/api/game', game.find);
+  app.post('/api/game', game.create);
+  app.get('/api/game/:userId', game.show);
+  app.put('/api/game/:userId', game.update);
+  // Rating Routes
+  app.get('/api/achievement', achievement.find);
+  app.post('/api/achievement', achievement.create);
+  app.get('/api/achievement/:userId', achievement.show);
+  app.put('/api/achievement/:userId', achievement.update);
 
   // Check if username is available
   app.get('/auth/check_username/:username', users.exists);
