@@ -9,6 +9,7 @@ module.exports = function (app, io) {
   // User Routes
   app.get('/auth/users', users.find);
   app.post('/auth/users', users.create);
+  app.post('/auth/users/uploadImage', users.uploadImage);
   app.get('/auth/users/:userId', users.show);
   app.put('/auth/users/:userId', users.update);
   // Game Routes

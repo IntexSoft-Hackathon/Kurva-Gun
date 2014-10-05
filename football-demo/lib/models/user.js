@@ -17,6 +17,7 @@ var UserSchema = new Schema({
     achievements: {name: String, time: Date, description: String},
     hashedPassword: String, salt: String, name: String,
     active: { type: Boolean, default: true}
+  photo:{type:String, default:"photo.png"}
 });
 
 /**

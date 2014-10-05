@@ -9,7 +9,8 @@ var app = angular.module('webapp', [
   'ui.bootstrap',
   'ngTable',
   'ngDialog',
-  'btford.socket-io'
+  'btford.socket-io',
+  'angularFileUpload'
 ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider

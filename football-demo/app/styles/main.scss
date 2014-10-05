@@ -817,8 +817,11 @@ div.circle {
   margin: 0 auto;
   min-width: 660px;
   padding: 0;
-  position: relative;
+  position: fixed;
   width: 60%;
+  top: 90px;
+  left: 0;
+  right: 0;
 }
 
 .ngdialog-overlay {

@@ -9,14 +9,14 @@
         <div class="description row">
           <div class="col-sm-4">
               <div class="circle shadow">
-                  <img style="margin-top: 15px" class="profile-img" src="../../media/photo.png" alt="">
+                  <img style="margin-top: 15px" class="profile-img" ng-src="{{'../../media/'+ (currentUser.user.photo ? currentUser.user.photo : 'photo.png' )}}" alt="">
               </div>
           </div>
           <div class="col-sm-8">
-              <p class="name">Александр Сивов</p>
-              <p class="text" style="padding-top: 45px">Выиграно игр: <b>60</b> из <b>120</b> </p>
-              <p class="text">% побед: <b>50</b></p>
-              <p class="text">Место в рейтинге:<b>3</b></p>
+              <p class="name">{{currentUser.user.username}}</p>
+              <p class="text" style="padding-top: 45px">Выиграно игр: <b>{{currentUser.win}}</b> из <b>{{currentUser.count_games}}</b> </p>
+              <p class="text">% побед: <b>{{ currentUser.count_games ? currentUser.win / currentUser.count_games * 100 : '0' }}</b></p>
+              <p class="text">Место в рейтинге:<b>{{currentUser.position}}</b></p>
           </div>
         </div>
         <div class="achievements row">

@@ -2,7 +2,10 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    ObjectId = mongoose.Types.ObjectId
+    ObjectId = mongoose.Types.ObjectId,
+    rating = require('../controllers/rating'),
+    fs = require('fs'),
+    im = require('imagemagick');
 
 /**
  * Find user by id
@@ -112,6 +115,42 @@ exports.find = function (req, res, next) {
       return next(new Error('Failed to load User'));
     }
     res.json(users);
+  });
+};
+
+/**
+ *  upload image profile
+ */
+exports.uploadImage = function (req, res, next) {
+  fs.readFile(req.files.file.path, function (err, data) {
+    var imageName = req.files.file.name;
+    /// If there's an error
+    if(!imageName){
+
+      console.log("There was an error");
+      res.redirect("/");
+      res.end();
+
+    } else {
+      var newPath = "./app/media/photos/fullsize/" + imageName;
+
+      var thumbPath = "./app/media/photos/thumbs/" + imageName;
+
+      /// write file to uploads/fullsize folder
+      fs.writeFile(newPath, data, function (err) {
+        /*console.log(err);
+        /// write file to uploads/thumbs folder
+        im.resize({
+          srcPath: newPath,
+          dstPath: thumbPath,
+          width:   120
+        }, function(err, stdout, stderr){
+          if (err) throw err;
+          console.log('resized image to fit within 200x200px');
+        });*/
+        res.json({path:"/photos/fullsize/" + imageName});
+      });
+    }
   });
 };
 

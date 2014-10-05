@@ -12,7 +12,9 @@ app.controller('MainCtrl', function ($scope, ngDialog, $location, Api, Socket) {
 
   };
 
-  $scope.openDetails = function(){
+  $scope.openDetails = function(user, position){
+    $scope.currentUser = user;
+    $scope.currentUser.position = position;
     var confirm = ngDialog.openConfirm({
       template: 'views/partials/dialogs/playerDetails.html',
       className: 'ngdialog-theme-plain',

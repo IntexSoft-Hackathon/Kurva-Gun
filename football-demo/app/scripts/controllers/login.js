@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
+app.controller('LoginCtrl', function ($scope, $rootScope, Auth, User, $location, $upload) {
       $scope.error = {};
       $scope.user = {};
       $scope.signup = false;
@@ -32,7 +32,8 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
       $scope.register = function (form) {
         Auth.createUser({
               username: $scope.user.username,
-              password: $scope.user.password
+              password: $scope.user.password,
+              photo: $scope.user.photo
             },
             function (err) {
               $scope.errors = {};
@@ -48,4 +49,21 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, $location) {
             }
         );
       };
+
+    $scope.onFileSelect = function($files) {
+      //$files: an array of files selected, each file has name, size, and type.
+      for (var i = 0; i < $files.length; i++) {
+        var file = $files[i];
+        console.log(file);
+        $scope.upload = $upload.upload({
+          url: '/auth/users/uploadImage', //upload.php script, node.js route, or servlet url
+          data: {myObj: $scope.myModelObj},
+          file: file
+        }).progress(function(evt) {
+        }).success(function(data, status, headers, config) {
+          // file is uploaded successfully
+          $scope.user.photo = data.path;
+        });
+      }
+    };
     });

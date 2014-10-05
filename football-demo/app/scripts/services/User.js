@@ -6,9 +6,9 @@ app.factory('User', function ($resource) {
         'update': {
           method: 'PUT'
         },
-      checkProjectAccess:{
-        url:'/auth/projects/:projectId',
-        method: 'GET'
+      uploadImage:{
+        url:'/auth/users/uploadImage',
+        method: 'POST'
       }
       });
 });
