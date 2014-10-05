@@ -5,4 +5,5 @@ football-demo/.sass-cache/*
 football-demo/.idea/*
 startMongo.bat
 football-demo/data/*
+data/*
 npm-debug.log
