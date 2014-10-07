@@ -9,7 +9,16 @@ var mongoose = require('mongoose'),
 var GOAL_WHITE_MESSAGE = "GOAL:WHITE";
 var GOAL_BLUE_MESSAGE = "GOAL:BLUE";
 
-var currentGame;
+var STATUS_NEW = "NEW";
+var STATUS_IN_PROGRESS = "IN_PROGRESS";
+var STATUS_FINISHED = "FINISHED";
+
+var GAME_START_EVENT = "game:start";
+var GAME_UPDATE_EVENT = "game:update";
+var GAME_END_EVENT = "game:end";
+
+var currentGame = null;
+updateCurrentGame();
 
 Arduino.on('game:goal', function(team){
   goal(team);
@@ -19,50 +28,70 @@ Arduino.on('game:goal', function(team){
  * Start game
  */
 exports.start = function (req, res) {
-    var game = currentGame ? currentGame : new Game();
-    game.save(function(err, game){
-      currentGame = game;
-      Arduino.start();
-      currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
-      currentGame.game_status = "IN_PROGRESS";
-      currentGame.save(function(error, currentGame){
-        res.json({status:'OK'});
-        io.sockets.emit("game:update", currentGame);
-      });
-    });
+    if (currentGame && currentGame.game_status === STATUS_NEW)
+    {
+        console.log("Start the game");
+        Arduino.start();
+        currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
+        currentGame.game_status = STATUS_IN_PROGRESS;
+        currentGame.save(function(error, game){
+            currentGame = game;
+            res.json({status:'OK'});
+            io.sockets.emit(GAME_START_EVENT, currentGame);
+            io.sockets.emit(GAME_UPDATE_EVENT, currentGame);
+            console.log("Game is started");
+        });
+    }
+    else
+    {
+        var game_status = currentGame ? currentGame.game_status : null;
+        console.error("Can't start the game. Current game is invalid state, game_status = " + game_status);
+        updateCurrentGame();
+    }
 };
 
-function stop() {
-      Arduino.stop();
-      currentGame.game_status = "FINISHED";
-      currentGame.end_time = new Date();
-      currentGame.save(function (err, currentGame) {
-        io.sockets.emit("game:update", currentGame);
-        io.sockets.emit("game:end", currentGame);
-      });
-      currentGame = null;
-};
+function stop(game) {
+    console.log("Stop the game");
+    Arduino.stop();
+    game.game_status = STATUS_FINISHED;
+    game.end_time = new Date();
+    game.save(function (err, game) {
+        io.sockets.emit(GAME_UPDATE_EVENT, game);
+        io.sockets.emit(GAME_END_EVENT, game);
+        updateCurrentGame();
+    });
+}
 
 function goal(team) {
-  if (currentGame) {
-    if (team == GOAL_WHITE_MESSAGE) {
-      currentGame.team_blue.score++;
-      currentGame.team_blue.goals.push({time: new Date()});
-      if (currentGame.team_blue.score === 10) {
-        return stop(currentGame);
-      }
-    } else if (team == GOAL_BLUE_MESSAGE) {
-      currentGame.team_white.score++;
-      currentGame.team_white.goals.push(new Date());
-      if (currentGame.team_white.score === 10) {
-        return stop(currentGame);
-      }
+    if (currentGame && currentGame.game_status == STATUS_IN_PROGRESS) {
+        console.log("Process goal message in gate = " + team);
+        if (team == GOAL_WHITE_MESSAGE) {
+            currentGame.team_blue.score++;
+            currentGame.team_blue.goals.push({time: new Date()});
+            console.log("Increment blue team score, new score = " + currentGame.team_blue.score);
+            if (currentGame.team_blue.score === 10) {
+                return stop(currentGame);
+            }
+        } else if (team == GOAL_BLUE_MESSAGE) {
+            currentGame.team_white.score++;
+            currentGame.team_white.goals.push({time: new Date()});
+            console.log("Increment white team score, new score = " + currentGame.team_white.score);
+            if (currentGame.team_white.score === 10) {
+                return stop(currentGame);
+            }
+        }
+        currentGame.save(function (err, game) {
+            currentGame = game;
+            console.log("Send update game event = " + game);
+            io.sockets.emit(GAME_UPDATE_EVENT, game);
+        });
     }
-    currentGame.save(function (err, currentGame) {
-      io.sockets.emit("game:update", currentGame);
-    });
-  }
-};
+    else {
+        var game_status = currentGame ? currentGame.game_status : null;
+        console.error("Can't process goal message. Current game is invalid state, game_status = " + game_status);
+        updateCurrentGame();
+    }
+}
 
 /**
  *  Show profile
@@ -96,7 +125,6 @@ exports.update = function (req, res) {
         if (err) {
             res.json(500, err);
         } else {
-            //io.sockets.broadcast("game:update", game);
             res.json(game);
         }
     });
@@ -106,8 +134,9 @@ exports.update = function (req, res) {
  *  Find All
  *  returns all games
  */
-exports.find = function (req, res, next) {
-  Game.findOne({game_status:"IN_PROGRESS"}).exec(function(err, game){
+exports.findStartedGame = function (req, res) {
+  console.log("Search for started games");
+  Game.findOne({game_status:STATUS_IN_PROGRESS}).exec(function(err, game){
     if (!game || err) {
       res.json({})
     }
@@ -115,3 +144,29 @@ exports.find = function (req, res, next) {
   });
 };
 
+function updateCurrentGame()
+{
+    currentGame = null;
+    findCurrentGame(function(game){
+        currentGame = game;
+    });
+}
+
+function findCurrentGame(func) {
+    return Game.findOne({$or: [
+        {game_status: STATUS_NEW},
+        {game_status: STATUS_IN_PROGRESS}
+    ]}).exec(function (err, game) {
+        if (!game)
+        {
+            game = new Game();
+            game.save(function(err, game){
+                func(game);
+            });
+        }
+        else
+        {
+            func(game);
+        }
+    });
+}

@@ -53,20 +53,23 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
     }
   };
 
-  Socket.on('game:end', function(){
-    var confirm = ngDialog.openConfirm({
-      template: 'views/partials/dialogs/winner.html',
-      className: 'ngdialog-theme-plain',
-      scope: $scope,
-      showClose: false,
-      closeByDocument: true
+    Socket.on('game:start', function (game) {
+        $scope.game = game;
     });
-    confirm.then(function () {
+
+    Socket.on('game:update', function (game) {
+        $scope.game = game;
     });
-  });
 
-  Socket.on('game:update', function(game){
-    $scope.game = game;
-  })
-
+    Socket.on('game:end', function () {
+        var confirm = ngDialog.openConfirm({
+            template: 'views/partials/dialogs/winner.html',
+            className: 'ngdialog-theme-plain',
+            scope: $scope,
+            showClose: false,
+            closeByDocument: true
+        });
+        confirm.then(function () {
+        });
+    });
 });

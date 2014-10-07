@@ -13,8 +13,8 @@ module.exports = function (app, io) {
   app.get('/auth/users/:userId', users.show);
   app.put('/auth/users/:userId', users.update);
   // Game Routes
-  app.get('/api/game', game.find);
-  app.post('/api/game', game.find);
+  app.get('/api/game', game.findStartedGame);
+  app.post('/api/game', game.findStartedGame);
   app.get('/api/game/:userId', game.show);
   app.put('/api/game/:userId', game.update);
   app.post('/api/game/start', game.start);
