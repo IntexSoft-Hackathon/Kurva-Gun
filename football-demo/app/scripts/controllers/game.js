@@ -2,9 +2,9 @@
 
 app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
 
-    $scope.users = {};
+  $scope.users = {};
   $scope.game = {};
-
+  $scope.selectedUser = {};
     $scope.getUsers = function() {
         Api.getUsers().query(function(users){
             $scope.users = users;
@@ -18,7 +18,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
   };
 
 
-    $scope.openListPlayers = function(){
+    $scope.openListPlayers = function(team){
         var confirm = ngDialog.openConfirm({
             template: 'views/partials/dialogs/listPlayers.html',
             className: 'ngdialog-theme-plain',
@@ -27,6 +27,9 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
             closeByDocument: true
         });
         confirm.then(function () {
+          if (team === "white"){
+            $scope.game.team_white.plaeyrs.push($scope.selectedUser);
+          }
         });
     };
 
@@ -36,9 +39,9 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
 
   $scope.startOrCancel = function() {
     if ($scope.game.team_white && $scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
-      Api.getGames().start(function(){ }) ;
+      Api.getGames().start(function(){}) ;
     } else {
-      Api.getGames().start(function(){ }) ;
+      Api.getGames().start(function(){}) ;
     }
   };
 

@@ -85,6 +85,10 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
+var arduino = require('./lib/controllers/arduino.js');
+
+exports.arduino = new arduino();
+
 exports.io = io;
 
 // Connect to database
@@ -97,6 +101,5 @@ process.on('uncaughtException', function(err) {
 });
 
 server.listen(port, function () {
-    require('./lib/controllers/usbreader.js');
   //console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });

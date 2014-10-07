@@ -41,8 +41,7 @@ exports.create = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      emitNewUser(app.io, users);
-      user.create(req, res, next, newUser._id);
+      emitNewUser(app.io, newUser);
       return res.json(newUser.user_info);
     });
   });
@@ -120,7 +119,6 @@ exports.find = function (req, res, next) {
 };
 
 var emitNewUser = function(io, data){
-    console.log('Emmited');
     io.sockets.emit('user:new', data);
 };
 
@@ -130,7 +128,6 @@ var emitNewUser = function(io, data){
 exports.uploadImage = function (req, res, next) {
   fs.readFile(req.files.file.path, function (err, data) {
     var imageName = req.files.file.name;
-    /// If there's an error
     if(!imageName){
 
       console.log("There was an error");

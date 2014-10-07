@@ -1,57 +1,67 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Arduiono = require('./usbreader.js'),
+    Arduino = require('../../app.js').arduino,
     Game = mongoose.model('Game'),
     ObjectId = mongoose.Types.ObjectId,
     io = require('../../app.js').io;
+
+var GOAL_WHITE_MESSAGE = "GOAL:WHITE";
+var GOAL_BLUE_MESSAGE = "GOAL:BLUE";
+
+var currentGame;
+
+Arduino.on('game:goal', function(team){
+  goal(team);
+});
 
 /**
  * Start game
  */
 exports.start = function (req, res) {
-    findCurrentGame().exec(function (err, game) {
-        if (err) {
-            return next(err);
-        }
-        Arduiono.startGame();
-        game.start_time = new Date();
-        game.game_status = "IN_PROGRESS";
-        game.save();
-        res.json(game);
+    var game = currentGame ? currentGame : new Game();
+    game.save(function(err, game){
+      currentGame = game;
+      Arduino.start();
+      currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
+      currentGame.game_status = "IN_PROGRESS";
+      currentGame.save(function(error, currentGame){
+        res.json({status:'OK'});
+        io.sockets.emit("game:update", currentGame);
+      });
     });
 };
 
-exports.stop = function () {
-    var currentGame = findCurrentGame();
-    Arduiono.stopGame();
-    currentGame.game_status = "FINISHED";
-    currentGame.end_time = new Date();
-    currentGame.save();
+function stop() {
+      Arduino.stop();
+      currentGame.game_status = "FINISHED";
+      currentGame.end_time = new Date();
+      currentGame.save(function (err, currentGame) {
+        io.sockets.emit("game:update", currentGame);
+        io.sockets.emit("game:end", currentGame);
+      });
+      currentGame = null;
 };
 
-exports.goal = function(team) {
-    var currentGame = findCurrentGame();
-    if (team === Arduiono.GOAL_WHITE_MESSAGE)
-    {
-        currentGame.team_blue.score++;
-        currentGame.team_blue.goals.push(new Date());
-        if (currentGame.team_blue.score === 10)
-        {
-            stop();
-        }
+function goal(team) {
+  if (currentGame) {
+    if (team == GOAL_WHITE_MESSAGE) {
+      currentGame.team_blue.score++;
+      currentGame.team_blue.goals.push({time: new Date()});
+      if (currentGame.team_blue.score === 10) {
+        return stop(currentGame);
+      }
+    } else if (team == GOAL_BLUE_MESSAGE) {
+      currentGame.team_white.score++;
+      currentGame.team_white.goals.push(new Date());
+      if (currentGame.team_white.score === 10) {
+        return stop(currentGame);
+      }
     }
-    else
-    {
-        currentGame.team_white.score++;
-        currentGame.team_white.goals.push(new Date());
-        if (currentGame.team_white.score === 10)
-        {
-            stop();
-        }
-    }
-    currentGame.save();
-    io.sockets.emit("game:update", game);
+    currentGame.save(function (err, currentGame) {
+      io.sockets.emit("game:update", currentGame);
+    });
+  }
 };
 
 /**
@@ -97,21 +107,11 @@ exports.update = function (req, res) {
  *  returns all games
  */
 exports.find = function (req, res, next) {
-    findCurrentGame().exec(function (err, game) {
-        if (err) {
-            return next(err);
-        }
-        if (!game)
-        {
-            game = new Game();
-            game.save();
-        }
-        res.json(game);
-    });
+  Game.findOne({game_status:"IN_PROGRESS"}).exec(function(err, game){
+    if (!game || err) {
+      res.json({})
+    }
+    res.json(game);
+  });
 };
-
-function findCurrentGame()
-{
-    return Game.findOne({$or: [{game_status:"NEW"}, {game_status:"IN_PROGRESS"}]});
-}
 

@@ -4,7 +4,7 @@
         <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
     </div>
     <div class="row content">
-        <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails()">
+        <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="selectedPlayer = user;confirm() ">
             <div class="col-sm-12 player">
                 <div class="circle shadow">
                     <img class="profile-img" ng-src="{{'../../media/'+user.photo}}" alt="">
