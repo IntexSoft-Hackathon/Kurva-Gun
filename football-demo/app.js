@@ -89,6 +89,9 @@ exports.io = io;
 var arduino = require('./lib/controllers/arduino.js');
 exports.arduino = new arduino();
 
+var userController = require('./lib/controllers/users');
+exports.userController= new userController();
+
 var gameController = require('./lib/controllers/game');
 exports.gameController = new gameController();
 

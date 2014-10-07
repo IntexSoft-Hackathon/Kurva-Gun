@@ -142,6 +142,16 @@ var GameController = function() {
         });
     };
 
+    self.findActiveGame = function (func) {
+        console.log("Search for active games");
+        Game.findOne({game_status:self.STATUS_IN_PROGRESS}).exec(function(err, game){
+            if (!game || err) {
+                game = null;
+            }
+            func(game);
+        });
+    };
+
     function updateCurrentGame()
     {
         currentGame = null;
