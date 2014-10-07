@@ -466,9 +466,8 @@ div.circle {
 .dashboard {
   margin: 0;
 
-  .container {
+  .dashboard-container {
     padding: 70px 10px;
-
     .head-table {
       height: 65px;
       background-color: #f8d907;
@@ -498,7 +497,7 @@ div.circle {
         height: 65px;
         div {
           text-align: center;
-          padding-top: 10px;
+          padding-top: 10px 0 0;
           border: 1px solid #7d7d7d;
           height: 100%;
           font-size: 26.7pt;
@@ -692,8 +691,14 @@ div.circle {
               height: 96px;
             }
           }
+          p {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+          }
         }
         .result {
+          line-height: 120px;
           font-size: 120pt;
           font-weight: bold;
           text-align: center;
@@ -739,17 +744,24 @@ div.circle {
         }
         .players {
           height: 15%;
-          div.circle {
-            width: 96px;
-            height: 96px;
-            padding: 0;
-            img {
+            div.circle {
               width: 96px;
               height: 96px;
+              padding: 0;
+              img {
+                width: 96px;
+                height: 96px;
+              }
             }
-          }
+
+            p {
+              text-align: center;
+              font-weight: bold;
+              font-size: 14pt;
+            }
         }
         .result {
+          line-height: 120px;
           font-size: 120pt;
           font-weight: bold;
           text-align: center;

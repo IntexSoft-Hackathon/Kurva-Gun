@@ -1,16 +1,18 @@
 'use strict';
 
-app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
+app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
 
   $scope.users = {};
   $scope.game = {};
-  $scope.selectedUser = {};
-    $scope.getUsers = function() {
-        Api.getUsers().query(function(users){
-            $scope.users = users;
-        });
+  $scope.selectedPlayer = {};
+  $scope.selectedPosition = 0;
 
-    };
+  $scope.getUsers = function() {
+      Api.getUsers().query(function(users){
+          $scope.users = users;
+      });
+
+  };
   $scope.getGame = function() {
     Api.getGames().game(function(game){
       $scope.game = game;
@@ -18,17 +20,20 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
   };
 
 
-    $scope.openListPlayers = function(team){
-        var confirm = ngDialog.openConfirm({
+    $scope.openListPlayers = function(team, position){
+      $scope.selectedPosition = position;
+      var confirm = ngDialog.openConfirm({
             template: 'views/partials/dialogs/listPlayers.html',
             className: 'ngdialog-theme-plain',
             scope: $scope,
             showClose: false,
             closeByDocument: true
         });
-        confirm.then(function () {
+        confirm.then(function (selectedPlayer) {
           if (team === "white"){
-            $scope.game.team_white.plaeyrs.push($scope.selectedUser);
+            $scope.game.team_white.players[$scope.selectedPosition] = selectedPlayer;
+          } else {
+            $scope.game.team_blue.players[$scope.selectedPosition] = selectedPlayer;
           }
         });
     };
@@ -38,10 +43,10 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
     });
 
   $scope.startOrCancel = function() {
-    if ($scope.game.team_white && $scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
-      Api.getGames().start(function(){}) ;
+    if ($scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
+      Api.getGames().start($scope.game, function(){}) ;
     } else {
-      Api.getGames().start(function(){}) ;
+      $location.path('players');
     }
   };
 

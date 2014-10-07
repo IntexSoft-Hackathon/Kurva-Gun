@@ -12,17 +12,19 @@
               <div class="row players">
                   <div class="col-sm-6">
                       <div class="circle shadow">
-                          <img class="profile-img" src="../../media/photo.png" ng-click="openListPlayers('blue')" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/' +(game.team_blue.players[0].photo||'photo.png')}}" ng-click="openListPlayers('blue', 0)" alt="">
                       </div>
+                      <p>{{game.team_blue.players[0].username}}</p>
                   </div>
                   <div class="col-sm-6">
                       <div class="circle shadow">
-                          <img class="profile-img" src="../../media/photo.png" ng-click="openListPlayers('blue')" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+ (game.team_blue.players[1].photo||'photo.png')}}" ng-click="openListPlayers('blue', 1)" alt="">
                       </div>
+                      <p>{{game.team_blue.players[1].username}}</p>
                   </div>
               </div>
               <div ng-if="game.game_status == 'IN_PROGRESS'" class="row result">
-                  {{game.team_blue.score}}
+                  <p>{{game.team_blue.score}}</p>
               </div>
           </div>
           <div class="col-sm-2 center">
@@ -45,17 +47,19 @@
               <div class="row players">
                   <div class="col-sm-6">
                       <div class="circle shadow">
-                          <img class="profile-img" src="../../media/photo.png" ng-click="openListPlayers('white')" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[0].photo||'photo.png')}}" ng-click="openListPlayers('white', 0)" alt="">
                       </div>
+                      <p>{{game.team_white.players[0].username}}</p>
                   </div>
                   <div class="col-sm-6">
                       <div class="circle shadow">
-                          <img class="profile-img" src="../../media/photo.png" ng-click="openListPlayers('white')" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[1].photo||'photo.png')}}"  ng-click="openListPlayers('white', 1)" alt="">
                       </div>
+                      <p>{{game.team_white.players[1].username}}</p>
                   </div>
               </div>
               <div ng-if="game.game_status == 'IN_PROGRESS'" class="row result">
-                  {{game.team_white.score}}
+                  <p>{{game.team_white.score}}</p>
               </div>
           </div>
       </div>

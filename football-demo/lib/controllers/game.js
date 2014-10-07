@@ -32,10 +32,14 @@ var GameController = function() {
             Arduino.start();
             currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
             currentGame.game_status = self.STATUS_IN_PROGRESS;
+            currentGame.team_white.players = [req.body.team_white.players[0]._id, req.body.team_white.players[1]._id];
+            currentGame.team_blue.players = [req.body.team_blue.players[0]._id, req.body.team_blue.players[1]._id];
             currentGame.save(function (error, game) {
                 currentGame = game;
                 res.json({status: 'OK'});
-                io.sockets.emit(self.GAME_START_EVENT, currentGame);
+                Game.populate(currentGame, {path:"team_white.players team_blue.players"}, function(err, currentGame){
+                  io.sockets.emit(self.GAME_START_EVENT, currentGame);
+                });
                 self.emit(self.GAME_START_EVENT, currentGame);
                 console.log("Game is started");
             });
@@ -134,9 +138,15 @@ var GameController = function() {
      */
     self.findStartedGame = function (req, res) {
         console.log("Search for started games");
-        Game.findOne({game_status:self.STATUS_IN_PROGRESS}).exec(function(err, game){
+        Game.findOne({$or: [
+          {game_status: self.STATUS_NEW},
+          {game_status: self.STATUS_IN_PROGRESS}
+        ]}).populate('team_white.players team_blue.players').exec(function(err, game){
             if (!game || err) {
-                res.json({})
+                game = new Game();
+                game.save(function(err, game){
+                  res.json(game);
+                });
             }
             res.json(game);
         });
@@ -144,7 +154,7 @@ var GameController = function() {
 
     self.findActiveGame = function (func) {
         console.log("Search for active games");
-        Game.findOne({game_status:self.STATUS_IN_PROGRESS}).exec(function(err, game){
+        Game.findOne({game_status:self.STATUS_IN_PROGRESS}).populate('team_white.players team_blue.players').exec(function(err, game){
             if (!game || err) {
                 game = null;
             }
@@ -164,7 +174,7 @@ var GameController = function() {
         return Game.findOne({$or: [
             {game_status: self.STATUS_NEW},
             {game_status: self.STATUS_IN_PROGRESS}
-        ]}).exec(function (err, game) {
+        ]}).populate('team_white.players team_blue.players').exec(function (err, game) {
             if (!game)
             {
                 game = new Game();
