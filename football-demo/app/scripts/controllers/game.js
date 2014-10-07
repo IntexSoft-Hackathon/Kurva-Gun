@@ -61,7 +61,8 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog) {
         $scope.game = game;
     });
 
-    Socket.on('game:end', function () {
+    Socket.on('game:end', function (game) {
+        $scope.game = game;
         var confirm = ngDialog.openConfirm({
             template: 'views/partials/dialogs/winner.html',
             className: 'ngdialog-theme-plain',

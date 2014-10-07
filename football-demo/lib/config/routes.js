@@ -5,7 +5,7 @@ var path = require('path'),
 
 module.exports = function (app, io) {
   var users = require('../controllers/users');
-  var game = require('../controllers/game');
+  var game  = require('../../app.js').gameController;
   // User Routes
   app.get('/auth/users', users.find);
   app.post('/auth/users', users.create);

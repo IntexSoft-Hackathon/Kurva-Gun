@@ -84,12 +84,15 @@ var port = process.env.PORT || 3000;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+exports.io = io;
 
 var arduino = require('./lib/controllers/arduino.js');
-
 exports.arduino = new arduino();
 
-exports.io = io;
+var gameController = require('./lib/controllers/game');
+exports.gameController = new gameController();
+
+require('./lib/controllers/achievements');
 
 // Connect to database
 
