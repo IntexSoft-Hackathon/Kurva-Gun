@@ -145,8 +145,8 @@ var UserController = function() {
                 var thumbPath = "./app/media/photos/thumbs/" + imageName;
 
                 /// write file to uploads/fullsize folder
-                fs.writeFile(newPath, data, function (err) {
-                    /*console.log(err);
+                /*fs.writeFile(newPath, data, function (err) {
+                    console.log(err);
                      /// write file to uploads/thumbs folder
                      im.resize({
                      srcPath: newPath,
@@ -155,9 +155,10 @@ var UserController = function() {
                      }, function(err, stdout, stderr){
                      if (err) throw err;
                      console.log('resized image to fit within 200x200px');
-                     });*/
+                     });
                     res.json({path:"/photos/fullsize/" + imageName});
-                });
+                });*/
+              res.json({path:"/photos/fullsize/" + imageName});
             }
         });
     };
