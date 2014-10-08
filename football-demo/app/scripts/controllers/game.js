@@ -44,6 +44,8 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
 
   $scope.startOrCancel = function() {
     if ($scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
+        //TODO remove after implement game selection
+        $scope.game.game_type = "TEAM";
       Api.getGames().start($scope.game, function(){}) ;
     } else {
       $location.path('players');
@@ -63,6 +65,8 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
     });
 
     Socket.on('game:update', function (game) {
+        game.team_white.players = $scope.game.team_white.players;
+        game.team_blue.players = $scope.game.team_blue.players;
         $scope.game = game;
     });
 

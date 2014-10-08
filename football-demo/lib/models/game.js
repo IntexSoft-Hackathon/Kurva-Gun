@@ -6,8 +6,10 @@ var mongoose = require('mongoose'),
 var GameSchema = new Schema({
     start_time: {type:Date},
     end_time: {type:Date},
-    //NEW, IN_PROGRESS, FINISHED
+    //NEW, IN_PROGRESS, FINISHED, ABORTED
     game_status: {type: String, default: "NEW"},
+    //SINGLE, TEAM
+    game_type: {type: String, default: "TEAM"},
     team_white: {players:[{type: mongoose.Schema.ObjectId, ref: 'User', role: String}], score: {type:Number, default:0}, goals: [{time: Date}]},
     team_blue: {players:[{type: mongoose.Schema.ObjectId, ref: 'User', role: String}], score: {type:Number, default:0}, goals: [{time: Date}]}
 });
