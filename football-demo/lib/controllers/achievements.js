@@ -11,6 +11,7 @@ GameController.on(GameController.GAME_START_EVENT, function (game) {
 
 GameController.on(GameController.GAME_UPDATE_EVENT, function (game) {
     console.log("Calculate game update achievements");
+    GameController.emit(GameController.NEW_ACHIEVEMENT_EVENT);
 });
 
 GameController.on(GameController.GAME_END_EVENT, function (game) {
@@ -20,7 +21,7 @@ GameController.on(GameController.GAME_END_EVENT, function (game) {
 function checkTimedAchievements() {
     console.log("Calculate interval achievements");
     GameController.findActiveGame(function(game){
-        if (game)
+        if (game && game.game_status === GameController.STATUS_IN_PROGRESS)
         {
             var minute = 1000 * 60;
             if (new Date().getTime() - game.start_time.getTime() > minute)
