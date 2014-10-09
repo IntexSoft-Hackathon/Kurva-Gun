@@ -65,7 +65,6 @@ function logUserStatistic(user) {
 
 function updateUserLevel(user)
 {
-    //TODO add correct levels
     if (user.experience < 5) {
         user.level = "Днище";
     }
@@ -75,10 +74,25 @@ function updateUserLevel(user)
     else if (user.experience >=10 && user.experience < 15) {
         user.level = "Джуниор";
     }
-    else if (user.experience >=15 && user.experience < 19) {
+    else if (user.experience >=15 && user.experience < 25) {
         user.level = "Любитель";
     }
-    else if (user.experience >=20) {
-        user.level = "Профессионал";
+    else if (user.experience >=25 && user.experience < 35) {
+        user.level = "Бывалый";
+    }
+    else if (user.experience >=35 && user.experience < 35) {
+        user.level = "Сеньер";
+    }
+    else if (user.experience >=45 && user.experience < 55) {
+        user.level = "Профи";
+    }
+    else if (user.experience >=55 && user.experience < 65) {
+        user.level = "Красавчик";
+    }
+    else if (user.experience >=65 && user.experience < 85) {
+        user.level = "Стасоподобный";
+    }
+    else if (user.experience >=85) {
+        user.level = "Kurva-Gun";
     }
 }
