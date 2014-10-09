@@ -27,12 +27,12 @@ GameSchema
 /**
  * Statics
  */
-//GameSchema.statics = {
-//    load: function (id, cb) {
-//        this.findOne({
-//            _id_user: id_user
-//        }).populate('user','name', 'username').exec(cb);
-//    }
-//};
+GameSchema.statics = {
+    load: function (id, cb) {
+        this.findOne({
+            _id: id
+        }).exec(cb);
+    }
+};
 
 mongoose.model('Game', GameSchema);

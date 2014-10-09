@@ -18,7 +18,7 @@ app.factory('Api', function ($resource) {
               method: 'PUT'
             },
             start:{
-              url:'/api/game/start',
+              url:'/api/game/:id/start',
               method: 'POST',
               isArray:false
             },

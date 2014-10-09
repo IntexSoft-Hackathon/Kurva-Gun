@@ -15,7 +15,7 @@
           <div class="col-xs-2 col-sm-1">ОЧКИ</div>
       </div>
       <div class="table-content">
-          <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="openDetails(user, $index + 1)">
+          <div class="position" ng-repeat="user in users | orderBy:'-experience'" ng-click="openDetails(user, $index + 1)">
               <div class="col-xs-1 col-sm-1">{{$index + 1}}</div>
               <div class="col-xs-7 col-sm-4 player">
                   <div class="circle shadow">

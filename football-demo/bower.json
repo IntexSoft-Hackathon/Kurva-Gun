@@ -15,7 +15,8 @@
     "jquery-ui":"*",
     "angular-resource":"*",
     "angular-route":"*",
-    "angular-cookies":"*"
+    "angular-cookies":"*",
+    "angular-timer":"*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

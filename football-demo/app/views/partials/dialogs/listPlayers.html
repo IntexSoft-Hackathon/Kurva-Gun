@@ -1,16 +1,16 @@
-<div class="row-fluid player-list" ng-init="getUsers()">
+<div class="row-fluid player-list" ng-init="getPlayers()">
     <div class="row header">
       ВЫБОР ИГРОКА
         <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
     </div>
     <div class="row content">
-        <div class="position" ng-repeat="user in users | orderBy:'experience'" ng-click="confirm(user) ">
+        <div class="position" ng-repeat="player in players | orderBy:'_id'" ng-click="confirm(player) ">
             <div class="col-sm-12 player">
                 <div class="circle shadow">
-                    <img class="profile-img" ng-src="{{'../../media/'+user.photo}}" alt="">
+                    <img class="profile-img" ng-src="{{'../../media/'+player.photo}}" alt="">
                 </div>
                 <p>
-                    {{user.username}}
+                    {{player.username}}
                 </p>
             </div>
         </div>

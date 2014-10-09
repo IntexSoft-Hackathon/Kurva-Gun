@@ -7,35 +7,50 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   $scope.selectedPlayer = {};
   $scope.selectedPosition = 0;
 
-  $scope.getUsers = function() {
-      Api.getUsers().query(function(users){
-          $scope.users = users;
-      });
-
-  };
   $scope.getGame = function() {
     Api.getGames().game(function(game){
       $scope.game = game;
     });
   };
 
+  function selectUser(players, position, selectedPlayer) {
+    players[position] = selectedPlayer;
+    Api.getGames().update($scope.game, function(game){
+    });
+  };
+
+  $scope.getPlayers = function(){
+    var white_players = $scope.game.team_white.players;
+    var blue_players = $scope.game.team_blue.players;
+    Api.getUsers().query(function(players){
+      $scope.players = players
+          .filter(function (el) {
+            var inWhiteTeam = $.grep(white_players, function(e){ return e ? e._id == el._id : false; });
+            var inBlueTeam = $.grep(blue_players, function(e){ return e ? e._id == el._id : false; });
+            return !inWhiteTeam.length && !inBlueTeam.length;
+          });
+    });
+  };
+
 
     $scope.openListPlayers = function(team, position){
-      $scope.selectedPosition = position;
-      var confirm = ngDialog.openConfirm({
-            template: 'views/partials/dialogs/listPlayers.html',
-            className: 'ngdialog-theme-plain',
-            scope: $scope,
-            showClose: false,
-            closeByDocument: true
+      if ($scope.game.game_status == "NEW") {
+        $scope.selectedPosition = position;
+        var confirm = ngDialog.openConfirm({
+          template: 'views/partials/dialogs/listPlayers.html',
+          className: 'ngdialog-theme-plain',
+          scope: $scope,
+          showClose: false,
+          closeByDocument: true
         });
         confirm.then(function (selectedPlayer) {
-          if (team === "white"){
-            $scope.game.team_white.players[$scope.selectedPosition] = selectedPlayer;
+          if (team === "white") {
+            selectUser($scope.game.team_white.players, $scope.selectedPosition, selectedPlayer);
           } else {
-            $scope.game.team_blue.players[$scope.selectedPosition] = selectedPlayer;
+            selectUser($scope.game.team_blue.players, $scope.selectedPosition, selectedPlayer);
           }
         });
+      }
     };
 
     Socket.on('user:new', function () {
@@ -52,34 +67,59 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
     }
   };
 
-  $scope.getButtonText = function() {
-    if ($scope.game.team_white && ($scope.game.team_white.players.length + $scope.game.team_blue.players.length) == 4) {
-      return "НАЧАТЬ ИГРУ";
-    } else {
-      return "ВЫЙТИ";
-    }
+  $scope.start = function() {
+    Api.getGames().start($scope.game, function(){}) ;
   };
 
-    Socket.on('game:start', function (game) {
-        $scope.game = game;
-    });
+  $scope.cancel = function() {
+    $location.path('players');
+  };
 
-    Socket.on('game:update', function (game) {
-        game.team_white.players = $scope.game.team_white.players;
-        game.team_blue.players = $scope.game.team_blue.players;
-        $scope.game = game;
-    });
+  $scope.toTimestamp = function(date) {
+    return new Date(date).getTime();
+  };
 
-    Socket.on('game:end', function (game) {
-        $scope.game = game;
-        var confirm = ngDialog.openConfirm({
-            template: 'views/partials/dialogs/winner.html',
-            className: 'ngdialog-theme-plain',
-            scope: $scope,
-            showClose: false,
-            closeByDocument: true
-        });
-        confirm.then(function () {
-        });
+  function gameStartListener(game) {
+    $scope.game = game;
+  }
+
+  function gameUpdateListener(game) {
+    $scope.game = game;
+    //Stub example for achivement
+    $.amaran({
+      content:{
+        title:'Player got new Achivment',
+        message:"It's Kurva Gun",
+        info:'Yahoooooooo!',
+        icon:'fa fa-download'
+      },
+      position:'top right',
+      theme:'awesome ok',
+      inEffect:'slideRight',
+      delay:10000
     });
+  }
+
+  function gameEndListener(game) {
+    $scope.endGame = game;
+    var confirm = ngDialog.openConfirm({
+      template: 'views/partials/dialogs/winner.html',
+      className: 'ngdialog-theme-plain',
+      scope: $scope,
+      showClose: false,
+      closeByDocument: true
+    });
+    confirm.then(function () {
+    });
+  }
+  //Init socket listeners
+  Socket.on('game:start', gameStartListener);
+  Socket.on('game:update', gameUpdateListener);
+  Socket.on('game:end', gameEndListener);
+  //Clean up
+  $scope.$on('$destroy', function iVeBeenDismissed() {
+    Socket.removeListener('game:start', gameStartListener);
+    Socket.removeListener('game:update', gameUpdateListener);
+    Socket.removeListener('game:end', gameEndListener);
+  })
 });

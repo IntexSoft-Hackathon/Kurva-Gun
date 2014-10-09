@@ -16,8 +16,8 @@ module.exports = function (app, io) {
   app.get('/api/game', game.findStartedGame);
   app.post('/api/game', game.findStartedGame);
   app.get('/api/game/:userId', game.show);
-  app.put('/api/game/:userId', game.update);
-  app.post('/api/game/start', game.start);
+  app.put('/api/game/:gameId', game.update);
+  app.post('/api/game/:gameId/start', game.start);
 
   // Check if username is available
   app.get('/auth/check_username/:username', users.exists);
@@ -27,6 +27,8 @@ module.exports = function (app, io) {
   app.get('/auth/session', auth.ensureAuthenticated, session.session);
   app.post('/auth/session', session.login);
   app.del('/auth/session', session.logout);
+
+  app.param('gameId', game.game);
 
   // Angular Routes
   app.get('/partials/*', function (req, res) {

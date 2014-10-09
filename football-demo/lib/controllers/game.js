@@ -33,6 +33,7 @@ var GameController = function() {
 
     self.start = function (req, res) {
         if (isGameReadyToStart(req.body)) {
+        currentGame = req.game;
             console.log("Start the game");
             Arduino.start();
             currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
@@ -144,24 +145,46 @@ var GameController = function() {
         });
     };
 
+  /**
+   * Update a game
+   */
+  self.game = function (req, res, next, id) {
+    var game = req.game;
+    Game.load(id, function (err, game) {
+      if (err) {
+        return next(err);
+      }
+      if (!game) {
+        return next(new Error('Failed to load game ' + id));
+      }
+      req.game = game;
+      next();
+    });
+  };
+
     /**
      * Update a game
      */
-    self.update = function (req, res) {
-        var game = req.game;
-        game.start_time = req.body.start_time;
-        game.end_time = req.body.end_time;
-        game.game_status = req.body.game_status;
-        game.team_white = req.body.team_white;
-        game.team_blue = req.body.team_blue;
-        game.save(function (err) {
-            if (err) {
-                res.json(500, err);
-            } else {
-                res.json(game);
-            }
-        });
-    };
+  self.update = function (req, res) {
+    var game = req.game;
+    var updatedGame = req.body;
+    game.start_time = updatedGame.start_time;
+    game.end_time = updatedGame.end_time;
+    game.game_status = updatedGame.game_status;
+    var playerWDefend = updatedGame.team_white.players[0] ? updatedGame.team_white.players[0]._id : null;
+    var playerWAttack = updatedGame.team_white.players[1] ? updatedGame.team_white.players[1]._id : null;
+    game.team_white.players = [playerWDefend, playerWAttack];
+    var playerBDefend = updatedGame.team_blue.players[0] ? updatedGame.team_blue.players[0]._id : null;
+    var playerBAttack = updatedGame.team_blue.players[1] ? updatedGame.team_blue.players[1]._id : null;
+    game.team_blue.players = [playerBDefend, playerBAttack];
+    game.save(function (err) {
+      if (err) {
+        res.json(500, err);
+      } else {
+        res.json(game);
+      }
+    });
+  };
 
     /**
      *  Find All
@@ -176,6 +199,7 @@ var GameController = function() {
             if (!game || err) {
                 game = new Game();
                 game.save(function(err, game){
+                  currentGame = game;
                   res.json(game);
                 });
             }

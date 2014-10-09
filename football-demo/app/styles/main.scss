@@ -370,6 +370,12 @@ textarea.form-control {height: 50px !important;}
   cursor: default;
 }
 
+.nav > li {
+  top: 0;
+  position: absolute;
+  right: 0;
+}
+
 .nav-tabs > li > a {
   margin-right: 2px;
   line-height: 1.42857;
@@ -439,6 +445,12 @@ div.circle {
     margin:0;
   }
 
+  .add-photo {
+    position: fixed;
+    margin-left: 100px;
+    margin-top: -40px;
+  }
+
   input {
     border-radius: 5px !important;
     border: 1px solid #61b52c;
@@ -467,7 +479,7 @@ div.circle {
   margin: 0;
 
   .dashboard-container {
-    padding: 70px 10px;
+    padding: 0 10px;
     .head-table {
       height: 65px;
       background-color: #f8d907;
@@ -661,7 +673,7 @@ div.circle {
 .game-dashboard {
   margin: 0;
   .container {
-    padding: 70px 10px;
+    padding: 0px 10px;
 
     .head {
       height: 65px;
@@ -674,7 +686,7 @@ div.circle {
     }
 
     .content{
-      height: 400px;
+      height: 550px;
       background-color: #e7e6e6;
 
       .left-side {
@@ -684,7 +696,6 @@ div.circle {
           background: transparent url('../media/b_icon.png') no-repeat center;
         }
         .players {
-          height: 15%;
           div.circle {
             width: 96px;
             height: 96px;
@@ -716,20 +727,30 @@ div.circle {
           font-weight: bold;
           text-align: center;
           padding-top: 45px;
+          .cloak {
+            display: block;
+          }
         }
         .vs {
-          height: 15%;
           font-size: 25pt;
           font-weight: bold;
           text-align: center;
           padding-top: 20px;
         }
         .colon {
+          padding-top: 20px;
           font-size: 120pt;
           font-weight: bold;
           text-align: center;
           .start-button {
-            margin-top:100px;
+             margin-top:100px;
+             background-color: #cd5514;
+             border-radius: 5px;
+             font-weight: bold;
+             font-size: 12pt;
+             color:#ffffff
+           }
+          .cancel-button {
             background-color: #cd5514;
             border-radius: 5px;
             font-weight: bold;
@@ -948,4 +969,8 @@ div.circle {
   height: 125px;
   margin: 0 auto 10px;
   display: block;
+}
+
+.amaran-wrapper.top {
+  top:90px !important;
 }

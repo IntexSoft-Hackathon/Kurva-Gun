@@ -10,7 +10,8 @@ var app = angular.module('webapp', [
   'ngTable',
   'ngDialog',
   'btford.socket-io',
-  'angularFileUpload'
+  'angularFileUpload',
+  'timer'
 ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider

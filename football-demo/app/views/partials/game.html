@@ -11,14 +11,16 @@
               </div>
               <div class="row players">
                   <div class="col-sm-6">
+                      <p>АТАКА</p>
                       <div class="circle shadow">
-                          <img class="profile-img" ng-src="{{'../../media/' +(game.team_blue.players[0].photo||'photo.png')}}" ng-click="openListPlayers('blue', 0)" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/' +(game.team_blue.players[0].photo||'add_player.png')}}" ng-click="openListPlayers('blue', 0)" alt="">
                       </div>
                       <p>{{game.team_blue.players[0].username}}</p>
                   </div>
                   <div class="col-sm-6">
+                      <p>ЗАЩИТА</p>
                       <div class="circle shadow">
-                          <img class="profile-img" ng-src="{{'../../media/'+ (game.team_blue.players[1].photo||'photo.png')}}" ng-click="openListPlayers('blue', 1)" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+ (game.team_blue.players[1].photo||'add_player.png')}}" ng-click="openListPlayers('blue', 1)" alt="">
                       </div>
                       <p>{{game.team_blue.players[1].username}}</p>
                   </div>
@@ -30,6 +32,7 @@
           <div class="col-sm-2 center">
               <div class="row time">
                   <img src="../../media/watch.png">
+                  <timer class="cloak" ng-if="game.game_status == 'IN_PROGRESS'" start-time="toTimestamp(game.start_time)">{{mminutes}}:{{sseconds}}</timer>
               </div>
               <div class="row vs">
                   VS
@@ -38,7 +41,10 @@
                   :
               </div>
               <div ng-if="game.game_status != 'IN_PROGRESS'" class="row colon">
-                  <button class="btn btn-lg btn-block start-button" ng-click="startOrCancel()">{{getButtonText()}}</button>
+                  <button ng-if="game.team_white.players.length + game.team_blue.players.length == 4" class="btn btn-lg btn-block start-button" ng-click="start()">НАЧАТЬ ИГРУ</button>
+              </div>
+              <div class="row colon">
+                  <button class="btn btn-lg btn-block cancel-button" ng-click="cancel()">ОТМЕНИТЬ</button>
               </div>
           </div>
           <div class="col-sm-5 right-side">
@@ -46,14 +52,16 @@
               </div>
               <div class="row players">
                   <div class="col-sm-6">
+                      <p>АТАКА</p>
                       <div class="circle shadow">
-                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[0].photo||'photo.png')}}" ng-click="openListPlayers('white', 0)" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[0].photo||'add_player.png')}}" ng-click="openListPlayers('white', 0)" alt="">
                       </div>
                       <p>{{game.team_white.players[0].username}}</p>
                   </div>
                   <div class="col-sm-6">
+                      <p>ЗАЩИТА</p>
                       <div class="circle shadow">
-                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[1].photo||'photo.png')}}"  ng-click="openListPlayers('white', 1)" alt="">
+                          <img class="profile-img" ng-src="{{'../../media/'+(game.team_white.players[1].photo||'add_player.png')}}"  ng-click="openListPlayers('white', 1)" alt="">
                       </div>
                       <p>{{game.team_white.players[1].username}}</p>
                   </div>
