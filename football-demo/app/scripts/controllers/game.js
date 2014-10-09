@@ -78,18 +78,6 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   function gameUpdateListener(game) {
     $scope.game = game;
     //Stub example for achivement
-    $.amaran({
-      content:{
-        title:'Player got new Achivment',
-        message:"It's Kurva Gun",
-        info:'Yahoooooooo!',
-        icon:'fa fa-download'
-      },
-      position:'top right',
-      theme:'awesome ok',
-      inEffect:'slideRight',
-      delay:10000
-    });
   }
 
   function gameEndListener(game) {
@@ -109,14 +97,34 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
       });
     }
   }
+
+  function gameAchievementListener(player, achievement) {
+    console.log(player);
+    console.log(achievement);
+    $.amaran({
+      content: {
+        title: player.username + 'got new Achievement',
+        message: achievement.name,
+        info: achievement.description,
+        icon: 'fa fa-download'
+      },
+      position: 'top right',
+      theme: 'awesome ok',
+      inEffect: 'slideRight',
+      delay: 10000
+    });
+  }
+
   //Init socket listeners
   Socket.on('game:start', gameStartListener);
   Socket.on('game:update', gameUpdateListener);
   Socket.on('game:end', gameEndListener);
+  Socket.on('game:achievement', gameAchievementListener);
   //Clean up
   $scope.$on('$destroy', function iVeBeenDismissed() {
     Socket.removeListener('game:start', gameStartListener);
     Socket.removeListener('game:update', gameUpdateListener);
     Socket.removeListener('game:end', gameEndListener);
+    Socket.removeListener('game:achievement', gameAchievementListener);
   })
 });

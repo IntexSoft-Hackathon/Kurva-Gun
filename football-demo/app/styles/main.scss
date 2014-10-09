@@ -627,6 +627,13 @@ div.circle {
       margin:0;
       border-bottom: 1px solid #b4b4b4;
       padding: 45px;
+
+      p.level {
+        text-align: center;
+        font-weight: bold;
+        font-size: 15pt;
+        padding-left: 10px;
+      }
       .name {
         font-weight: bold;
         font-size: 30pt;
@@ -871,8 +878,9 @@ div.circle {
   }
 
   .white-side {
-    height: 30%;
+    height: 81px;
     background: transparent url('../media/w_icon.png') no-repeat center;
+    padding: 20px;
   }
 
   div.circle {
