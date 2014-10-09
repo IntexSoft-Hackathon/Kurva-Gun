@@ -96,6 +96,7 @@ var gameController = require('./lib/controllers/game');
 exports.gameController = new gameController();
 
 require('./lib/controllers/achievements');
+require('./lib/controllers/statisctic');
 
 // Connect to database
 
