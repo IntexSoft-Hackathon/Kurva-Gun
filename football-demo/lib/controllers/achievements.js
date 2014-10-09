@@ -25,7 +25,7 @@ function checkTimedAchievements() {
             if (new Date().getTime() - game.start_time.getTime() > minute) {
                 console.log("Game is running more then one minute");
             }
-            if (new Date().getTime() - game.start_time.getTime() > minute * 10) {
+          if (new Date().getTime() - game.start_time.getTime() > minute * 1) {
                 console.log("Game is running more then ten minutes");
                 var achievement = {
                     name: String,

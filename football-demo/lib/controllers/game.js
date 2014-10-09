@@ -31,6 +31,10 @@ var GameController = function() {
 
     Arduino.on(Arduino.ARDUINO_IS_STOPPED, function(stopMessage){
         _stop(currentGame, true);
+    })
+
+  self.on(self.NEW_ACHIEVEMENT_EVENT, function (user, achievement) {
+    io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
     });
 
     self.start = function (req, res) {
