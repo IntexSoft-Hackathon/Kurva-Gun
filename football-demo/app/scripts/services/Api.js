@@ -22,9 +22,10 @@ app.factory('Api', function ($resource) {
               method: 'POST',
               isArray:false
             },
-            exit:{
-              url:'/api/game/exit',
-              method: 'POST'
+            stop: {
+              url: '/api/game/:id/stop',
+              method: 'POST',
+              isArray: false
             },
             game:{
             method:'GET',

@@ -62,8 +62,9 @@ var GameController = function() {
         }
         else {
             var game_status = currentGame ? currentGame.game_status : null;
-            console.error("Can't start the game. Current game is invalid state, game_status = " + game_status);
+          console.error("Can't stop the game. Current game is invalid state, game_status = " + game_status);
             updateCurrentGame();
+          res.json({status: 'OK'});
         }
     };
 

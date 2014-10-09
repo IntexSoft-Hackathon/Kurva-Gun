@@ -10,20 +10,25 @@
             <div class="row result">
                 ПОБЕДА!
             </div>
-            <div class="row blue-side">
+            <div class="row"
+                 ng-class="{'blue-side':end_game.winner_team === 'BLUE','white-side':end_game.winner_team === 'WHITE' }">
             </div>
             <div class="row players">
                 <div class="col-sm-6">
                     <div class="circle shadow">
-                        <img class="profile-img" src="../../media/photo.png" alt="">
+                        <img class="profile-img"
+                             ng-src="{{'../../media/'+ (end_game.winner_players[0].photo ? end_game.winner_players[0].photo : 'photo.png' )}}"
+                             alt="">
                     </div>
-                    <p>Player 2</p>
+                    <p>{{end_game.winner_players[0].username}}</p>
                 </div>
                 <div class="col-sm-6">
                     <div class="circle shadow">
-                        <img class="profile-img" src="../../media/photo.png" alt="">
+                        <img class="profile-img"
+                             ng-src="{{'../../media/'+ (end_game.winner_players[1].photo ? end_game.winner_players[1].photo : 'photo.png' )}}"
+                             alt="">
                     </div>
-                    <p>Player 1</p>
+                    <p>{{end_game.winner_players[1].username}}</p>
                 </div>
             </div>
         </div>
