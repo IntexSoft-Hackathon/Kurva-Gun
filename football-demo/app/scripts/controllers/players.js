@@ -34,6 +34,7 @@ app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket
       closeByDocument: true
     });
     newGame.then(function () {
+
       $location.path('game');
     });
   };

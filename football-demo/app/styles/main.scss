@@ -583,6 +583,7 @@ div.circle {
 }
 
 .profile {
+  min-width: 360px;
   .header {
      height: 65px;
      background-color: #f8d907;
@@ -629,6 +630,7 @@ div.circle {
       .name {
         font-weight: bold;
         font-size: 30pt;
+        line-height: 40px;
       }
       .text {
         color:#5e5e5e;
@@ -798,6 +800,7 @@ div.circle {
 
 
 .new-game {
+  min-width: 700px;
   .header {
     height: 65px;
     background-color: #f8d907;
@@ -810,9 +813,7 @@ div.circle {
   }
 
   .close {
-    position: absolute;
-    right: 0;
-    top: 20px;
+    margin: 10px;
   }
 
   .content {
@@ -863,6 +864,34 @@ div.circle {
     padding-top: 10px;
   }
 
+  .blue-side {
+    height: 81px;
+    background: transparent url('../media/b_icon.png') no-repeat center;
+    padding: 20px;
+  }
+
+  .white-side {
+    height: 30%;
+    background: transparent url('../media/w_icon.png') no-repeat center;
+  }
+
+  div.circle {
+    width: 90px;
+    height: 90px;
+    img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  .result {
+    text-align: center;
+    font-size: 36pt;
+    font-weight: bold;
+    line-height: 36px;
+    padding: 20px;
+  }
+
   .close {
     position: absolute;
     right: 0;
@@ -873,6 +902,13 @@ div.circle {
     margin: 0;
     background-color: #e7e6e6;
     height: 300px;
+  }
+  .players {
+    p {
+      text-align: center;
+      font-size: 13pt;
+      font-weight: bold;
+    }
   }
 }
 
@@ -936,10 +972,8 @@ div.circle {
   font-size: 1.1em;
   line-height: 1.5em;
   margin: 0 auto;
-  min-width: 660px;
   padding: 0;
   position: fixed;
-  width: 60%;
   top: 90px;
   left: 0;
   right: 0;
