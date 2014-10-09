@@ -32,8 +32,8 @@ var GameController = function() {
     });
 
     self.start = function (req, res) {
-        if (isGameReadyToStart(req.body)) {
         currentGame = req.game;
+        if (isGameReadyToStart(req.body)) {
             console.log("Start the game");
             Arduino.start();
             currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
@@ -80,8 +80,20 @@ var GameController = function() {
             game.end_time = new Date();
             game.save(function (err, game) {
                 Game.populate(game, {path:"team_white.players team_blue.players"}, function(err, game){
-                    io.sockets.emit(self.GAME_END_EVENT, game);
-                    self.emit(self.GAME_END_EVENT, game);
+                  var newGame = new Game();
+                  var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
+                  var playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
+                  newGame.team_white.players = [playerWDefend, playerWAttack];
+                  var playerBDefend = game.team_blue.players[0] ? game.team_blue.players[0]._id : null;
+                  var playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
+                  newGame.team_blue.players = [playerBDefend, playerBAttack];
+                  newGame.save(function(err, game){
+                    Game.populate(game, {path:"team_white.players team_blue.players"}, function(err, game){
+                      io.sockets.emit(self.GAME_UPDATE_EVENT, game);
+                    });
+                  });
+                  io.sockets.emit(self.GAME_END_EVENT, game);
+                  self.emit(self.GAME_END_EVENT, game);
                 });
                 updateCurrentGame();
             });

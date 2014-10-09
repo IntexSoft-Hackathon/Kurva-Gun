@@ -33,41 +33,32 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   };
 
 
-    $scope.openListPlayers = function(team, position){
-      if ($scope.game.game_status == "NEW") {
-        $scope.selectedPosition = position;
-        var confirm = ngDialog.openConfirm({
-          template: 'views/partials/dialogs/listPlayers.html',
-          className: 'ngdialog-theme-plain',
-          scope: $scope,
-          showClose: false,
-          closeByDocument: true
-        });
-        confirm.then(function (selectedPlayer) {
-          if (team === "white") {
-            selectUser($scope.game.team_white.players, $scope.selectedPosition, selectedPlayer);
-          } else {
-            selectUser($scope.game.team_blue.players, $scope.selectedPosition, selectedPlayer);
-          }
-        });
-      }
-    };
-
-    Socket.on('user:new', function () {
-        $scope.getUsers();
-    });
-
-  $scope.startOrCancel = function() {
-    if ($scope.game.team_white.players.length + $scope.game.team_blue.players.length == 4){
-        //TODO remove after implement game selection
-        $scope.game.game_type = "TEAM";
-      Api.getGames().start($scope.game, function(){}) ;
-    } else {
-      $location.path('players');
+  $scope.openListPlayers = function(team, position){
+    if ($scope.game.game_status == "NEW") {
+      $scope.selectedPosition = position;
+      var confirm = ngDialog.openConfirm({
+        template: 'views/partials/dialogs/listPlayers.html',
+        className: 'ngdialog-theme-plain',
+        scope: $scope,
+        showClose: false,
+        closeByDocument: true
+      });
+      confirm.then(function (selectedPlayer) {
+        if (team === "white") {
+          selectUser($scope.game.team_white.players, $scope.selectedPosition, selectedPlayer);
+        } else {
+          selectUser($scope.game.team_blue.players, $scope.selectedPosition, selectedPlayer);
+        }
+      });
     }
   };
 
+  Socket.on('user:new', function () {
+      $scope.getUsers();
+  });
+
   $scope.start = function() {
+    $scope.game.game_type = "TEAM";
     Api.getGames().start($scope.game, function(){}) ;
   };
 
