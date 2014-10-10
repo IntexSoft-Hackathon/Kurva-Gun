@@ -69,6 +69,8 @@ GameController.on(GameController.GAME_END_EVENT, function (game) {
         }
       });
 
+    }, function () {
+      console.log('Add achivements to game');
     });
   }
     console.log("Calculate end game achievements");
@@ -87,8 +89,7 @@ function checkTimedAchievements() {
                 iterateAllPlayers(game, function(player){
                     //console.log("iterate player = " + player.username);
                     game = addAchievement(achievement, player, game);
-                    return game;
-                }, function(game){
+                }, function () {
                     GameController.saveGame(game, function () {
                     });
                 });
@@ -105,11 +106,11 @@ function iterateAllPlayers(game, processNextPlayer, afterIteration)
 {
     for (var i = 0; i < game.team_white.players.length; i++) {
         var whitePlayer = game.team_white.players[i];
-        game = processNextPlayer(whitePlayer);
+      processNextPlayer(whitePlayer);
         var bluePlayer = game.team_blue.players[i];
-        game = processNextPlayer(bluePlayer);
+      processNextPlayer(bluePlayer);
     }
-    afterIteration(game);
+  afterIteration();
 }
 
 function addAchievement(achievement, player, game) {

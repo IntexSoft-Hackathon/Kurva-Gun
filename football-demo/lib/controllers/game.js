@@ -81,6 +81,7 @@ var GameController = function() {
             self.saveGame(game, function (game) {
                 findCurrentGame(function (newGame) {
                     if (!isAborted) {
+                      console.log('Set prev players to new game');
                         var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
                         var playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
                         newGame.team_white.players = [playerWDefend, playerWAttack];
@@ -89,6 +90,7 @@ var GameController = function() {
                         newGame.team_blue.players = [playerBDefend, playerBAttack];
                     }
                     self.saveGame(newGame, function (game) {
+                      console.log('Send New Game after previous is end.');
                         io.sockets.emit(self.GAME_UPDATE_EVENT, game);
                     });
                 });
