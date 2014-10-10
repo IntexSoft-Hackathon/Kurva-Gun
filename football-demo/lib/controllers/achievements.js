@@ -24,7 +24,7 @@ function checkTimedAchievements() {
     GameController.findActiveGame(function (game) {
         if (game && game.game_status === GameController.STATUS_IN_PROGRESS) {
             var minute = 1000 * 60;
-            if (new Date().getTime() - game.start_time.getTime() > minute * 10) {
+            if (new Date().getTime() - game.start_time.getTime() > minute * 1) {
                 console.log("Game is running more then ten minutes");
 
                 var achievement = AchievementsCollection.ACHIEVEMENT_PARTY_SUCKS;
@@ -33,8 +33,10 @@ function checkTimedAchievements() {
                 iterateAllPlayers(game, function(player){
                     //console.log("iterate player = " + player.username);
                     game = addAchievement(achievement, player, game);
-                });
-                GameController.saveGame(game, function () {
+                    return game;
+                }, function(game){
+                    GameController.saveGame(game, function () {
+                    });
                 });
             }
             var lastGoalTime = getLastGoalTime(game);
@@ -45,14 +47,15 @@ function checkTimedAchievements() {
     });
 }
 
-function iterateAllPlayers(game, processNextPlayer)
+function iterateAllPlayers(game, processNextPlayer, afterIteration)
 {
     for (var i = 0; i < game.team_white.players.length; i++) {
         var whitePlayer = game.team_white.players[i];
-        processNextPlayer(whitePlayer);
+        game = processNextPlayer(whitePlayer);
         var bluePlayer = game.team_blue.players[i];
-        processNextPlayer(bluePlayer);
+        game = processNextPlayer(bluePlayer);
     }
+    afterIteration(game);
 }
 
 function addAchievement(achievement, player, game) {
