@@ -6,4 +6,59 @@
 
 .amaran-wrapper *{-webkit-box-sizing:border-box;box-sizing:border-box}.amaran-wrapper{position:fixed;z-index:9999}.amaran-wrapper.top{top:0;bottom:auto}.amaran-wrapper.bottom{bottom:0;top:auto}.amaran-wrapper.left{left:0}.amaran-wrapper.right{right:0;left:auto}.amaran-wrapper.center{left:0;right:auto}.amaran{width:200px;background:rgba(0,0,0,.7);padding:3px;color:#fff;border-radius:4px;display:none;font-size:13px;cursor:pointer;position:relative;text-align:left;min-height:50px;margin:10px}.amaran-close{position:absolute;top:2px;right:2px;display:block;width:20px;height:20px}.amaran-close:before{content:"x";color:#fff;font-weight:700;font-family:Arial,sans-serif;font-size:18px}
 
-.amaran.user{width:300px;min-height:100px;background:#f3f3f3;color:#222;margin:15px;font-family:"Open Sans",Helvetica,Arial;font-size:13px;font-weight:300;-webkit-box-shadow:1px 1px 1px #000;box-shadow:1px 1px 1px #000;border-radius:0;padding:0}.amaran.user .icon{width:100px;height:100px;position:relative;background:#000;float:left}.amaran.user img{max-width:100%}.amaran.user .info{padding-left:110px;padding-top:10px}.amaran.user b{display:block;font-size:16px}.amaran.user.blue{background:#2773ed;color:#fff}.amaran.user.yellow{background:#f4b300;color:#fff}.amaran.user.green{background:#78ba00;color:#fff}
+.amaran.user {
+    width: 300px;
+    min-height: 100px;
+    background: #f3f3f3;
+    color: #222;
+    margin: 15px;
+    font-family: "Open Sans", Helvetica, Arial;
+    font-size: 13px;
+    font-weight: 300;
+    -webkit-box-shadow: 1px 1px 1px #000;
+    box-shadow: 1px 1px 1px #000;
+    border-radius: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.amaran.user .icon {
+    width: 100px;
+    position: relative;
+    background: #ffffff;
+    float: left
+}
+
+.amaran.user img {
+    max-width: 100%
+}
+
+.amaran.user .title {
+    font-weight: bold;
+    font-size: 15pt
+}
+
+.amaran.user .info {
+    padding-left: 110px;
+    padding-top: 10px
+}
+
+.amaran.user b {
+    display: block;
+    font-size: 16px
+}
+
+.amaran.user.blue {
+    background: #2773ed;
+    color: #fff
+}
+
+.amaran.user.yellow {
+    background: #f4b300;
+    color: #fff
+}
+
+.amaran.user.green {
+    background: #78ba00;
+    color: #fff
+}

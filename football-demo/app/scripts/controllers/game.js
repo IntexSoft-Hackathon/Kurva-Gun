@@ -99,20 +99,29 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   }
 
   function gameAchievementListener(player, achievement) {
-    console.log(player);
-    console.log(achievement);
-    $.amaran({
+    var white_players = $scope.game.team_white.players;
+    var blue_players = $scope.game.team_blue.players;
+    var inWhiteTeam = $.grep(white_players, function (e) {
+      return e ? e._id == player._id : false;
+    }).length;
+    var inBlueTeam = $.grep(blue_players, function (e) {
+      return e ? e._id == player._id : false;
+    }).length;
+    console.log(inBlueTeam);
+    var achievementObject = {
       content: {
-        title: player.username + 'got new Achievement',
-        message: achievement.name,
+        title: "New Achievement",
         info: achievement.description,
-        icon: 'fa fa-download'
+        message: achievement.name,
+        img: '../../media/' + achievement.image,
+        user: player.username
       },
-      position: 'top right',
-      theme: 'awesome ok',
-      inEffect: 'slideRight',
+      theme: "user green",
+      position: inBlueTeam ? 'top right' : 'top left',
+      inEffect: inBlueTeam ? 'slideRight' : 'slideLeft',
       delay: 10000
-    });
+    };
+    $.amaran(achievementObject);
   }
 
   //Init socket listeners
