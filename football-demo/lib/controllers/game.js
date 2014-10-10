@@ -10,7 +10,6 @@ var mongoose = require('mongoose'),
 
 var GameController = function() {
     var self=this;
-
     self.STATUS_NEW = "NEW";
     self.STATUS_IN_PROGRESS = "IN_PROGRESS";
     self. STATUS_FINISHED = "FINISHED";
@@ -34,8 +33,9 @@ var GameController = function() {
     });
 
   self.on(self.NEW_ACHIEVEMENT_EVENT, function (user, achievement) {
+    console.log("Send Notification to Front End");
     io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
-    });
+  });
 
     self.start = function (req, res) {
         if (isGameReadyToStart(currentGame)) {
