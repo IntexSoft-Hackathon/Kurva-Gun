@@ -1,10 +1,13 @@
 'use strict';
 
-var util = require("util"),
+var mongoose = require('mongoose'),
+    util = require("util"),
     EventEmitter = require('events').EventEmitter,
     GameController = require('../../app.js').gameController,
     UserController = require('../../app.js').userController,
-    AchievementsCollection = require('../../app.js').achievementsCollection;
+    AchievementsCollection = require('../../app.js').achievementsCollection,
+    User = mongoose.model('User'),
+    Game = mongoose.model('Game');
 
 setInterval(checkTimedAchievements, 1000);
 
@@ -17,6 +20,57 @@ GameController.on(GameController.GAME_UPDATE_EVENT, function (game) {
 });
 
 GameController.on(GameController.GAME_END_EVENT, function (game) {
+  if (game && game.game_status === GameController.STATUS_FINISHED) {
+
+    iterateAllPlayers(game, function (player) {
+      //Calculate data for ACHIEVEMENT_IMPUDENT, ACHIEVEMENT_WOW, ACHIEVEMENT_JEWELER
+      Game.find({
+        $or: [
+          {'team_white.players': player._id, 'team_white.score': 10, 'team_blue.score': 0},
+          {'team_blue.players': player._id, 'team_white.score': 0, 'team_blue.score': 10}
+        ]
+      }).exec(function (err, games) {
+        var achievement;
+        if (games.length === 1) {
+          achievement = AchievementsCollection.ACHIEVEMENT_IMPUDENT;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        } else if (games.length === 5) {
+          achievement = AchievementsCollection.ACHIEVEMENT_WOW;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        } else if (games.length >= 10) {
+          achievement = AchievementsCollection.ACHIEVEMENT_JEWELER;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        }
+      });
+
+      //Calculate data for ACHIEVEMENT_BULLET, ACHIEVEMENT_ROCK, ACHIEVEMENT_ROCK_BULLET
+      Game.find({
+        $or: [
+          {'team_white.players': player._id, 'team_white.score': 10},
+          {'team_blue.players': player._id, 'team_blue.score': 10}
+        ]
+      }).exec(function (err, games) {
+        var achievement;
+        if (games.length === 10) {
+          achievement = AchievementsCollection.ACHIEVEMENT_BULLET;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        } else if (games.length === 20) {
+          achievement = AchievementsCollection.ACHIEVEMENT_ROCK;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        } else if (games.length >= 50) {
+          achievement = AchievementsCollection.ACHIEVEMENT_ROCK_BULLET;
+          achievement.time = new Date();
+          game = addAchievement(achievement, player, game);
+        }
+      });
+
+    });
+  }
     console.log("Calculate end game achievements");
 });
 
