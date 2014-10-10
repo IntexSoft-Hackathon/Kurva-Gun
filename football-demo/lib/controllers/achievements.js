@@ -13,10 +13,55 @@ setInterval(checkTimedAchievements, 1000);
 
 GameController.on(GameController.GAME_START_EVENT, function (game) {
     console.log("Calculate game start achievements");
+
 });
 
 GameController.on(GameController.GAME_UPDATE_EVENT, function (game) {
     console.log("Calculate game update achievements");
+    iterateAllPlayers(game, function (player) {
+        Game.find({
+            $or: [
+                {'team_white.players': player._id},
+                {'team_blue.players': player._id}
+            ]
+        }).exec(function (err, games) {
+            var goalsCount = 0;
+            for (var i = 0; i < games.length; i++) {
+                var nextGame = games[i];
+                for (var j = 0; j < nextGame.team_white.players.length; j++) {
+                    var whitePlayer = game.team_white.players[j];
+                    if (whitePlayer._id === player._id) {
+                        goalsCount += nextGame.team_white.score;
+                    }
+                    var bluePlayer = game.team_blue.players[j];
+                    if (bluePlayer._id === player._id) {
+                        goalsCount += nextGame.team_blue.score;
+                    }
+                }
+            }
+            var achievement;
+            if (goalsCount >= 50 && goalsCount < 100)
+            {
+                achievement = AchievementsCollection.ACHIEVEMENT_MAD;
+                achievement.time = new Date();
+                game = addAchievement(achievement, player, game);
+            }
+            else if (goalsCount >= 100 && goalsCount < 250)
+            {
+                achievement = AchievementsCollection.ACHIEVEMENT_SLAYER;
+                achievement.time = new Date();
+                game = addAchievement(achievement, player, game);
+            }
+            else if (goalsCount >= 250)
+            {
+                achievement = AchievementsCollection.ACHIEVEMENT_CHUCK_NORRIS;
+                achievement.time = new Date();
+                game = addAchievement(achievement, player, game);
+            }
+        });
+    }, function(){
+
+    });
 });
 
 GameController.on(GameController.GAME_END_EVENT, function (game) {
@@ -80,7 +125,7 @@ function checkTimedAchievements() {
     GameController.findActiveGame(function (game) {
         if (game && game.game_status === GameController.STATUS_IN_PROGRESS) {
             var minute = 1000 * 60;
-            if (new Date().getTime() - game.start_time.getTime() > minute * 1) {
+            if (new Date().getTime() - game.start_time.getTime() > minute * 10) {
                 console.log("Game is running more then ten minutes");
 
                 var achievement = AchievementsCollection.ACHIEVEMENT_PARTY_SUCKS;

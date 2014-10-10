@@ -9,6 +9,8 @@ var AchievementsCollection = function() {
     self.ACHIEVEMENT_CHUCK_NORRIS = createAchievement("ЧАК НОРРИС", "250 голов", "achievements/chuck_norris.png");
 
     self.ACHIEVEMENT_UNSTOPPABLE = createAchievement("НЕУДЕРЖИМЫЙ", "3 гола подряд", "achievements/unstoppable.png");
+    self.ACHIEVEMENT_SHAITAN = createAchievement("ШАЙТАН", "5 голов подряд", "achievements/shaitan.png");
+    self.ACHIEVEMENT_SKOROSTREL = createAchievement("СКОРОСТРЕЛ", "7 голов подряд", "achievements/skorostrel.png");
 
     //End game achievements
     self.ACHIEVEMENT_BULLET = createAchievement("ПУЛЯ", "Выиграть 10 игр", "achievements/bullet.png");
@@ -20,6 +22,7 @@ var AchievementsCollection = function() {
     self.ACHIEVEMENT_JEWELER = createAchievement("ЮВЕЛИР", "Выиграть 10 игр всухую", "achievements/jeweler.png");
 
     self.ACHIEVEMENT_DRINK_THE_POISON = createAchievement("ВЫПЕЙ ЯДУ!", "3 поражения подряд", "achievements/drink_the_poison.png");
+    self.ACHIEVEMENT_GOLDEN_GOAL = createAchievement("ЗОЛОТОЙ ГОЛ", "Забить решающий гол при счете 9:9", "achievements/golden_goal.png");
 
     //Timed achievements
     self.ACHIEVEMENT_PARTY_SUCKS = createAchievement("ПАТИ-ТУХЛЯК", "Игра дольше 10 минут", "achievements/party_sucks.png");
