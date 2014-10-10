@@ -3,7 +3,10 @@
 var util = require("util"),
     EventEmitter = require('events').EventEmitter,
     GameController = require('../../app.js').gameController,
-    UserController = require('../../app.js').userController;
+    UserController = require('../../app.js').userController,
+    AchievementsCollection = require('../../app.js').achievementsCollection;
+
+setInterval(checkTimedAchievements, 1000);
 
 GameController.on(GameController.GAME_START_EVENT, function (game) {
     console.log("Calculate game start achievements");
@@ -18,47 +21,21 @@ GameController.on(GameController.GAME_END_EVENT, function (game) {
 });
 
 function checkTimedAchievements() {
-    console.log("Calculate interval achievements");
     GameController.findActiveGame(function (game) {
         if (game && game.game_status === GameController.STATUS_IN_PROGRESS) {
             var minute = 1000 * 60;
-            if (new Date().getTime() - game.start_time.getTime() > minute) {
-                console.log("Game is running more then one minute");
-            }
-          if (new Date().getTime() - game.start_time.getTime() > minute * 1) {
+            if (new Date().getTime() - game.start_time.getTime() > minute * 10) {
                 console.log("Game is running more then ten minutes");
-                var achievement = {
-                    name: String,
-                    time: Date,
-                    description: String,
-                    image: String
-                };
-                achievement.name = "ПАТИ-ТУХЛЯК";
-                achievement.description = "Игра дольше 10 минут";
+
+                var achievement = AchievementsCollection.ACHIEVEMENT_PARTY_SUCKS;
                 achievement.time = new Date();
-                achievement.image = "achievements/party_sucks.PNG";
-                for (var i = 0; i < game.team_white.players.length; i++) {
-                    var whitePlayer = game.team_white.players[i];
-                    var bluePlayer = game.team_blue.players[i];
-                    var whitePlayerAchievementExist = isAchievementExist(whitePlayer, achievement);
-                    var bluePlayerAchievementExist = isAchievementExist(bluePlayer, achievement);
-                    if (!whitePlayerAchievementExist) {
-                        whitePlayer.achievements.push(achievement);
-                        GameController.emit(GameController.NEW_ACHIEVEMENT_EVENT, whitePlayer, achievement);
-                    }
-                    if (!bluePlayerAchievementExist) {
-                        bluePlayer.achievements.push(achievement);
-                        GameController.emit(GameController.NEW_ACHIEVEMENT_EVENT, bluePlayer, achievement);
-                    }
-                    if (!whitePlayerAchievementExist) {
-                        achievement.user = whitePlayer;
-                        game.achievements.push(achievement);
-                    }
-                    if (!bluePlayerAchievementExist) {
-                        achievement.user = bluePlayer;
-                        game.achievements.push(achievement);
-                    }
-                }
+
+                iterateAllPlayers(game, function(player){
+                    //console.log("iterate player = " + player.username);
+                    game = addAchievement(achievement, player, game);
+                });
+                GameController.saveGame(game, function () {
+                });
             }
             var lastGoalTime = getLastGoalTime(game);
             if (lastGoalTime && (new Date().getTime() - lastGoalTime > minute)) {
@@ -68,13 +45,37 @@ function checkTimedAchievements() {
     });
 }
 
+function iterateAllPlayers(game, processNextPlayer)
+{
+    for (var i = 0; i < game.team_white.players.length; i++) {
+        var whitePlayer = game.team_white.players[i];
+        processNextPlayer(whitePlayer);
+        var bluePlayer = game.team_blue.players[i];
+        processNextPlayer(bluePlayer);
+    }
+}
+
+function addAchievement(achievement, player, game) {
+    //console.log("Add achievement name = " + name + ", descr = " + description + ", player = " + player + ", game =" + game);
+    //Check if user already have this achievement
+    var exist = isAchievementExist(player, achievement);
+    if (!exist) {
+        player.achievements.push(achievement);
+        achievement.user = player;
+        game.achievements.push(achievement);
+        UserController.saveUser(player, function (err, user) {
+            GameController.emit(GameController.NEW_ACHIEVEMENT_EVENT, user, achievement);
+        });
+    }
+    return game;
+}
+
 function isAchievementExist(user, newAchievement) {
-    var result = false;
     for (var i = 0; i < user.achievements.length; i++) {
         var achievement = user.achievements[i];
+        //console.log("New achievement name = " + newAchievement.name + ", existing achievement = " + achievement.name);
         if (newAchievement.name === achievement.name) {
-            result = true;
-            break;
+            return true;
         }
     }
 }
@@ -90,4 +91,3 @@ function getLastGoalTime(game) {
     }
     return lastGoalTime;
 }
-setInterval(checkTimedAchievements, 1000 * 30);

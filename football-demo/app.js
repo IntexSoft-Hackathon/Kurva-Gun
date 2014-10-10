@@ -95,6 +95,9 @@ exports.userController= new userController();
 var gameController = require('./lib/controllers/game');
 exports.gameController = new gameController();
 
+var achievementsCollection = require('./lib/models/achievements');
+exports.achievementsCollection = new achievementsCollection();
+
 require('./lib/controllers/achievements');
 require('./lib/controllers/statisctic');
 

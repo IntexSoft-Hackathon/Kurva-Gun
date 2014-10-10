@@ -31,7 +31,7 @@ var GameController = function() {
 
     Arduino.on(Arduino.ARDUINO_IS_STOPPED, function(stopMessage){
         _stop(currentGame, true);
-    })
+    });
 
   self.on(self.NEW_ACHIEVEMENT_EVENT, function (user, achievement) {
     io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
@@ -43,7 +43,7 @@ var GameController = function() {
             Arduino.start();
             currentGame.start_time = currentGame.start_time ? currentGame.start_time : new Date();
             currentGame.game_status = self.STATUS_IN_PROGRESS;
-            saveGame(currentGame, function (game) {
+            self.saveGame(currentGame, function (game) {
                 res.json({status: 'OK'});
                 io.sockets.emit(self.GAME_START_EVENT, game);
                 self.emit(self.GAME_START_EVENT, game);
@@ -78,7 +78,7 @@ var GameController = function() {
             Arduino.stop();
             game.game_status = isAborted ? self.STATUS_ABORTED : self.STATUS_FINISHED;
             game.end_time = new Date();
-            saveGame(game, function (game) {
+            self.saveGame(game, function (game) {
                 findCurrentGame(function (newGame) {
                     if (!isAborted) {
                         var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
@@ -88,7 +88,7 @@ var GameController = function() {
                         var playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
                         newGame.team_blue.players = [playerBDefend, playerBAttack];
                     }
-                    saveGame(newGame, function (game) {
+                    self.saveGame(newGame, function (game) {
                         io.sockets.emit(self.GAME_UPDATE_EVENT, game);
                     });
                 });
@@ -120,7 +120,7 @@ var GameController = function() {
                     return _stop(currentGame, false);
                 }
             }
-            saveGame(currentGame, function (game) {
+            self.saveGame(currentGame, function (game) {
                 io.sockets.emit(self.GAME_UPDATE_EVENT, game);
                 self.emit(self.GAME_UPDATE_EVENT, game);
             });
@@ -182,7 +182,7 @@ var GameController = function() {
     var playerBDefend = updatedGame.team_blue.players[0] ? updatedGame.team_blue.players[0]._id : null;
     var playerBAttack = updatedGame.team_blue.players[1] ? updatedGame.team_blue.players[1]._id : null;
     game.team_blue.players = [playerBDefend, playerBAttack];
-      saveGame(game, function(game)
+      self.saveGame(game, function(game)
       {
           res.json(game);
       });
@@ -200,21 +200,23 @@ var GameController = function() {
     };
 
     self.findActiveGame = function (func) {
-        console.log("Search for active games");
         findCurrentGame(function (game) {
             func(game);
         });
     };
 
-    function saveGame(game, func)
+    self.saveGame = function(game, func)
     {
         game.save(function (err, game) {
             Game.populate(game, {path: "team_white.players team_blue.players achievements.user"}, function (err, game) {
-                currentGame = game;
+                if (game.game_status === self.STATUS_NEW || game.game_status === self.STATUS_IN_PROGRESS)
+                {
+                    currentGame = game;
+                }
                 func(game);
             });
         });
-    }
+    };
 
     function updateCurrentGame()
     {
@@ -233,7 +235,7 @@ var GameController = function() {
             if (!game)
             {
                 game = new Game();
-                saveGame(game, function(game){
+                self.saveGame(game, function(game){
                     func(game);
                 });
             }

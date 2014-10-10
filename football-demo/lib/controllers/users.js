@@ -37,7 +37,7 @@ var UserController = function() {
         var newUser = new User(req.body);
         newUser.provider = 'local';
 
-        newUser.save(function (err) {
+        self.saveUser(newUser, function(err, user){
             if (err) {
                 return res.json(400, err);
             }
@@ -82,7 +82,7 @@ var UserController = function() {
         if (req.body.password)
             user.password = req.body.password;
         user.active = req.body.active;
-        user.save(function (err) {
+        self.saveUser(user, function(err, user){
             if (err) {
                 res.json(500, err);
             } else {
@@ -160,6 +160,13 @@ var UserController = function() {
                 });*/
               res.json({path:"/photos/fullsize/" + imageName});
             }
+        });
+    };
+
+    self.saveUser = function(user, func)
+    {
+        user.save(function (err, game) {
+            func(err, game);
         });
     };
 };
