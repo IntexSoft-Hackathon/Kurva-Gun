@@ -74,10 +74,10 @@ function updateUserLevel(user)
     else if (user.experience >=10 && user.experience < 15) {
         user.level = "Джуниор";
     }
-    else if (user.experience >=15 && user.experience < 25) {
+    else if (user.experience >=15 && user.experience < 20) {
         user.level = "Любитель";
     }
-    else if (user.experience >=25 && user.experience < 35) {
+    else if (user.experience >=20 && user.experience < 35) {
         user.level = "Бывалый";
     }
     else if (user.experience >=35 && user.experience < 35) {

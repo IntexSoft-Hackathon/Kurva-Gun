@@ -21,6 +21,9 @@ var GameController = function() {
 
     self.NEW_ACHIEVEMENT_EVENT = "game:achievement";
 
+    self.TEAM_WHITE = "WHITE";
+    self.TEAM_BLUE = "BLUE";
+
     var currentGame = null;
     updateCurrentGame();
 
@@ -79,14 +82,15 @@ var GameController = function() {
             game.game_status = isAborted ? self.STATUS_ABORTED : self.STATUS_FINISHED;
             game.end_time = new Date();
             self.saveGame(game, function (game) {
+                currentGame = null;
+                var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
+                var playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
+                var playerBDefend = game.team_blue.players[0] ? game.team_blue.players[0]._id : null;
+                var playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
                 findCurrentGame(function (newGame) {
                     if (!isAborted) {
                       console.log('Set prev players to new game');
-                        var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
-                        var playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
                         newGame.team_white.players = [playerWDefend, playerWAttack];
-                        var playerBDefend = game.team_blue.players[0] ? game.team_blue.players[0]._id : null;
-                        var playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
                         newGame.team_blue.players = [playerBDefend, playerBAttack];
                     }
                     self.saveGame(newGame, function (game) {
@@ -96,6 +100,7 @@ var GameController = function() {
                 });
                 io.sockets.emit(self.GAME_END_EVENT, game);
                 self.emit(self.GAME_END_EVENT, game);
+                self.emit(self.GAME_UPDATE_EVENT, game);
             });
         }
         else {
@@ -207,15 +212,19 @@ var GameController = function() {
         });
     };
 
-    self.saveGame = function(game, func)
+    self.saveGame = function(gameToSave, func)
     {
-        game.save(function (err, game) {
-            Game.populate(game, {path: "team_white.players team_blue.players achievements.user"}, function (err, game) {
-                if (game.game_status === self.STATUS_NEW || game.game_status === self.STATUS_IN_PROGRESS)
+        gameToSave.save(function (err, savedGame) {
+            Game.populate(savedGame, {path: "team_white.players team_blue.players achievements.user"}, function (err, populatedGame) {
+                if (err || populatedGame == undefined)
                 {
-                    currentGame = game;
+                    console.log("error during save = " + err);
                 }
-                func(game);
+                else if (populatedGame.game_status === self.STATUS_NEW || populatedGame.game_status === self.STATUS_IN_PROGRESS)
+                {
+                    currentGame = populatedGame;
+                }
+                func(populatedGame);
             });
         });
     };
@@ -236,10 +245,18 @@ var GameController = function() {
         ]}).populate('team_white.players team_blue.players achievements.user').exec(function (err, game) {
             if (!game)
             {
-                game = new Game();
-                self.saveGame(game, function(game){
-                    func(game);
-                });
+                if (!currentGame)
+                {
+                    game = new Game();
+                    currentGame = game;
+                    self.saveGame(game, function(game){
+                        func(game);
+                    });
+                }
+                else
+                {
+                    findCurrentGame(func);
+                }
             }
             else
             {
