@@ -24,15 +24,10 @@
           </div>
         </div>
         <div class="achievements row">
-            <div class="achievement">
-                <img src="../../media/cup_details.png">
-                <p class="name">Чемпион</p>
-                <p class="desc">50 побед</p>
-            </div>
-            <div class="achievement">
-                <img src="../../media/cup_details.png">
-                <p class="name">Чемпион</p>
-                <p class="desc">50 побед</p>
+            <div class="achievement" ng-repeat="achievement in currentUser.achievements">
+                <img ng-src="{{'../../media/'+achievement.image}}">
+                <p class="name">{{achievement.name}}</p>
+                <p class="desc">{{achievement.description}}</p>
             </div>
         </div>
     </div>

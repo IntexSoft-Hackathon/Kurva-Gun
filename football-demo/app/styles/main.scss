@@ -583,6 +583,7 @@ div.circle {
 }
 
 .profile {
+  width: 540px;
   min-width: 360px;
   .header {
      height: 65px;
@@ -655,11 +656,10 @@ div.circle {
 
       .achievement {
         float: left;
-        margin-left: 40px;
-        width: 100px;
+        width: 180px;
 
         img {
-          margin-left: 10px;
+          margin-left: 50px;
         }
 
         p.name {
