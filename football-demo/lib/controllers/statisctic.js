@@ -55,6 +55,7 @@ function updateUsersStatistic(game)
             whitePlayer.save();
             bluePlayer.save();
         }
+        GameController.saveGame(game, function(){});
     }
 }
 function logUserStatistic(user) {
