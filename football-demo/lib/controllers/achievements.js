@@ -44,7 +44,8 @@ GameController.on(GameController.GAME_END_EVENT, function (endedGame) {
         }, function () {
             console.log("add achievements to game after game ended");
             GameController.saveGame(endedGame, function (game) {
-                console.log("Saved game after game end event = " + game);
+                //console.log("Saved game after game end event = " + game);
+                GameController.emit(GameController.END_GAME_ACHIEVEMENTS_CALCULATED, game);
             });
 
         });
@@ -94,7 +95,7 @@ function addAchievement(achievement, player, game) {
     var exist = isAchievementExist(player, achievement);
     if (!exist) {
         player.achievements.push(achievement);
-        achievement.user = player;
+        achievement.user = player.username;
         game.achievements.push(achievement);
         UserController.saveUser(player, function (err, user) {
             GameController.emit(GameController.NEW_ACHIEVEMENT_EVENT, user, achievement);

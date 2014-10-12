@@ -24,10 +24,11 @@
           </div>
         </div>
         <div class="achievements row">
-            <div class="achievement" ng-repeat="achievement in currentUser.achievements">
+            <div class="achievement" ng-repeat="achievement in currentUser.achievements | orderBy:'-time'">
                 <img ng-src="{{'../../media/'+achievement.image}}">
                 <p class="name">{{achievement.name}}</p>
                 <p class="desc">{{achievement.description}}</p>
+                <p class="date">{{achievement.time | date:'dd-MM-yyyy HH:mm'}}</p>
             </div>
         </div>
     </div>

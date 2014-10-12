@@ -651,7 +651,7 @@ div.circle {
     }
     .achievements {
       margin:0;
-      height: 170px;
+      height: 240px;
       padding-top: 20px;
       width: 540px;
       min-width: 360px;
@@ -659,7 +659,8 @@ div.circle {
       overflow-y: hidden;
       white-space: nowrap;
       .achievement {
-        display: inline-block;
+        display: inline-table;
+        white-space: normal;
         width: 180px;
 
         img {
@@ -673,8 +674,16 @@ div.circle {
         }
 
         p.desc {
+          height: 45px;
           text-align: center;
           font-size: 10.03pt;
+          font-weight: bold;
+          color: #696969;
+        }
+
+        p.date {
+          text-align: center;
+          font-size: 9pt;
           font-weight: bold;
           color: #696969;
         }
@@ -870,6 +879,9 @@ div.circle {
 }
 
 .winner {
+  .row {
+    width: 540px;
+  }
   .header {
     height: 65px;
     background-color: #f8d907;
@@ -908,24 +920,78 @@ div.circle {
     font-weight: bold;
     line-height: 36px;
     padding: 20px;
+
+    .blue-side-small {
+      height: 40px;
+      background: transparent url('../media/b_icon_small.png') no-repeat right;
+    }
+
+    .white-side-small {
+      height: 40px;
+      background: transparent url('../media/w_icon_small.png') no-repeat right;
+    }
+
+    .score {
+      text-align: left;
+    }
   }
 
   .close {
-    position: absolute;
-    right: 0;
+    position: inherit;
     top: 20px;
+    margin-right: 10px;
+    margin-top: 10px;
   }
 
   .content {
     margin: 0;
     background-color: #e7e6e6;
-    height: 300px;
+    min-height: 300px;
   }
   .players {
     p {
       text-align: center;
       font-size: 13pt;
       font-weight: bold;
+    }
+  }
+
+  .separator {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid darkgray;
+  }
+  .achievements {
+    margin:0;
+    max-height: 240px;
+    padding-top: 20px;
+    width: 540px;
+    min-width: 360px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    .achievement {
+      display: inline-table;
+      white-space: normal;
+      width: 180px;
+
+      img {
+        margin-left: 50px;
+      }
+
+      p.name {
+        text-align: center;
+        font-size: 15.05pt;
+        font-weight: bold;
+      }
+
+      p.desc {
+        height: 45px;
+        text-align: center;
+        font-size: 10.03pt;
+        font-weight: bold;
+        color: #696969;
+      }
     }
   }
 }

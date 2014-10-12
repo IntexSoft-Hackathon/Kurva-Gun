@@ -14,7 +14,7 @@ var UserSchema = new Schema({
     register_time: {type: Date},
     game_time: {type: Number},
     level: {type: String, default: "Джуниор"},
-  achievements: [{name: String, time: Date, description: String, image: String}],
+    achievements: [{name: String, time: Date, description: String, image: String}],
     hashedPassword: String, salt: String, name: String,
     active: { type: Boolean, default: true},
     photo:{type:String, default:"photo.png"}

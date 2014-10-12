@@ -12,7 +12,7 @@ var GameSchema = new Schema({
     game_type: {type: String, default: "TEAM"},
     team_white: {players:[{type: mongoose.Schema.ObjectId, ref: 'User', role: String}], score: {type:Number, default:0}, goals: [{time: Date}]},
     team_blue: {players:[{type: mongoose.Schema.ObjectId, ref: 'User', role: String}], score: {type:Number, default:0}, goals: [{time: Date}]},
-    achievements: [{name: String, time: Date, description: String, image: String, user:[{type: mongoose.Schema.ObjectId, ref: 'User'}]}]
+    achievements: [{name: String, time: Date, description: String, image: String, user:String}]
 });
 
 GameSchema

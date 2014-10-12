@@ -77,25 +77,28 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
 
   function gameUpdateListener(game) {
     $scope.game = game;
-    //Stub example for achivement
+  }
+
+  function gameEndAchievementsCalculatedListener(game) {
+      $scope.end_game = game;
+      $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
+      $scope.end_game.winner_team = game.team_white.score === 10 ? "WHITE" : "BLUE";
+
+      if (game.game_status == "FINISHED") {
+          var confirm = ngDialog.openConfirm({
+              template: 'views/partials/dialogs/winner.html',
+              className: 'ngdialog-theme-plain',
+              scope: $scope,
+              showClose: false,
+              closeByDocument: true
+          });
+          confirm.then(function () {
+          });
+      }
   }
 
   function gameEndListener(game) {
-    $scope.end_game = {};
-    $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
-    $scope.end_game.winner_team = game.team_white.score === 10 ? "WHITE" : "BLUE";
 
-    if (game.game_status == "FINISHED") {
-      var confirm = ngDialog.openConfirm({
-        template: 'views/partials/dialogs/winner.html',
-        className: 'ngdialog-theme-plain',
-        scope: $scope,
-        showClose: false,
-        closeByDocument: true
-      });
-      confirm.then(function () {
-      });
-    }
   }
 
   function gameAchievementListener(player, achievement) {
@@ -129,11 +132,13 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   Socket.on('game:update', gameUpdateListener);
   Socket.on('game:end', gameEndListener);
   Socket.on('game:achievement', gameAchievementListener);
+  Socket.on('game:end:achievement', gameEndAchievementsCalculatedListener);
   //Clean up
   $scope.$on('$destroy', function iVeBeenDismissed() {
     Socket.removeListener('game:start', gameStartListener);
     Socket.removeListener('game:update', gameUpdateListener);
     Socket.removeListener('game:end', gameEndListener);
     Socket.removeListener('game:achievement', gameAchievementListener);
+    Socket.removeListener('game:end:achievement', gameEndAchievementsCalculatedListener);
   })
 });

@@ -20,6 +20,7 @@ var GameController = function() {
     self.GAME_END_EVENT = "game:end";
 
     self.NEW_ACHIEVEMENT_EVENT = "game:achievement";
+    self.END_GAME_ACHIEVEMENTS_CALCULATED = "game:end:achievement";
 
     self.TEAM_WHITE = "WHITE";
     self.TEAM_BLUE = "BLUE";
@@ -39,6 +40,11 @@ var GameController = function() {
     console.log("Send Notification to Front End");
     io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
   });
+
+    self.on(self.END_GAME_ACHIEVEMENTS_CALCULATED, function (game) {
+        console.log("Send end game achievements notification to Front End");
+        io.sockets.emit(self.END_GAME_ACHIEVEMENTS_CALCULATED, game);
+    });
 
     self.start = function (req, res) {
         if (isGameReadyToStart(currentGame)) {
@@ -215,7 +221,7 @@ var GameController = function() {
     self.saveGame = function(gameToSave, func)
     {
         gameToSave.save(function (err, savedGame) {
-            Game.populate(savedGame, {path: "team_white.players team_blue.players achievements.user"}, function (err, populatedGame) {
+            Game.populate(savedGame, {path: "team_white.players team_blue.players"}, function (err, populatedGame) {
                 if (err || populatedGame == undefined)
                 {
                     console.log("error during save = " + err);
@@ -242,7 +248,7 @@ var GameController = function() {
         return Game.findOne({$or: [
             {game_status: self.STATUS_NEW},
             {game_status: self.STATUS_IN_PROGRESS}
-        ]}).populate('team_white.players team_blue.players achievements.user').exec(function (err, game) {
+        ]}).populate('team_white.players team_blue.players').exec(function (err, game) {
             if (!game)
             {
                 if (!currentGame)
