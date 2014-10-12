@@ -617,8 +617,8 @@ div.circle {
 
   .close{
     position: absolute;
-    right: 0;
-    top: 20px;
+    right: -60px;
+    top: 15px;
   }
 
   .content {
@@ -653,9 +653,13 @@ div.circle {
       margin:0;
       height: 170px;
       padding-top: 20px;
-
+      width: 540px;
+      min-width: 360px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
       .achievement {
-        float: left;
+        display: inline-block;
         width: 180px;
 
         img {

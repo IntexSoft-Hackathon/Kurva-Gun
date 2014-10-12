@@ -25,7 +25,7 @@
 .amaran.user .icon {
     width: 100px;
     position: relative;
-    background: #ffffff;
+    background: transparent;
     float: left
 }
 
