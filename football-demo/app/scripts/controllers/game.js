@@ -56,6 +56,17 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
       $scope.getUsers();
   });
 
+  $scope.canStart = function () {
+    var countOfWhitePlayers = angular.copy($scope.game.team_white.players).filter(function (x) {
+      return x != null
+    }).length;
+    var countOfBluePlayers = angular.copy($scope.game.team_blue.players).filter(function (x) {
+      return x != null
+    }).length;
+    return countOfWhitePlayers + countOfBluePlayers == 4;
+  };
+
+
   $scope.start = function() {
     $scope.game.game_type = "TEAM";
     Api.getGames().start($scope.game, function(){}) ;

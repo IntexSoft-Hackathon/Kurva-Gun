@@ -45,7 +45,8 @@
                   :
               </div>
               <div ng-if="game.game_status != 'IN_PROGRESS'" class="row colon">
-                  <button ng-if="game.team_white.players.length + game.team_blue.players.length == 4" class="btn btn-lg btn-block start-button" ng-click="start()">НАЧАТЬ ИГРУ</button>
+                  <button ng-if="canStart()" class="btn btn-lg btn-block start-button" ng-click="start()">НАЧАТЬ ИГРУ
+                  </button>
               </div>
               <div class="row colon">
                   <button ng-if="game.game_status != 'IN_PROGRESS' || currentUser.username === 'admin'" class="btn btn-lg btn-block cancel-button" ng-click="stop()">ОТМЕНИТЬ</button>
