@@ -197,6 +197,7 @@ var GameController = function() {
     game.team_blue.players = [playerBDefend, playerBAttack];
       self.saveGame(game, function(game)
       {
+        io.sockets.emit(self.GAME_UPDATE_EVENT, game);
           res.json(game);
       });
   };
