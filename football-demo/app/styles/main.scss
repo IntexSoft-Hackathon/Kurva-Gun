@@ -414,12 +414,21 @@ div.circle {
 
 .login-view {
   position: relative;
-  margin-top: 20px;
   height: 100%;
 
-  .wrapper {
-    position: relative;
-    margin: auto;
+  .image-wrapper {
+    width: 144px;
+    height: 144px;
+    margin: 0 auto;
+    .add-photo {
+      margin-left: 99px;
+      margin-top: -40px;
+      position: absolute;
+    }
+    .wrapper {
+      position: relative;
+      margin: auto;
+    }
   }
 
   .link {
@@ -443,12 +452,6 @@ div.circle {
 
   .profile-img {
     margin:0;
-  }
-
-  .add-photo {
-    position: fixed;
-    margin-left: 100px;
-    margin-top: -40px;
   }
 
   input {
@@ -937,10 +940,9 @@ div.circle {
   }
 
   .close {
-    position: inherit;
-    top: 20px;
-    margin-right: 10px;
-    margin-top: 10px;
+    position: absolute;
+    top: 15px;
+    right: -60px
   }
 
   .content {

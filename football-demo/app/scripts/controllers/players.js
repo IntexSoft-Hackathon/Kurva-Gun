@@ -39,8 +39,18 @@ app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket
     });
   };
 
-  Socket.on('user:new', function () {
+  function refreshListener() {
     $scope.getUsers();
-  });
+  }
+
+  Socket.on('user:new', refreshListener);
+  Socket.on('game:update', refreshListener);
+  Socket.on('game:end', refreshListener);
+  //Clean up
+  $scope.$on('$destroy', function () {
+    Socket.removeListener('user:new', refreshListener);
+    Socket.removeListener('game:update', refreshListener);
+    Socket.removeListener('game:end', refreshListener);
+  })
 
 });

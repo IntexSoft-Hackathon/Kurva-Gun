@@ -72,6 +72,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   };
 
   function gameStartListener(game) {
+    console.log(game);
     $scope.game = game;
   }
 
@@ -134,7 +135,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   Socket.on('game:achievement', gameAchievementListener);
   Socket.on('game:end:achievement', gameEndAchievementsCalculatedListener);
   //Clean up
-  $scope.$on('$destroy', function iVeBeenDismissed() {
+  $scope.$on('$destroy', function () {
     Socket.removeListener('game:start', gameStartListener);
     Socket.removeListener('game:update', gameUpdateListener);
     Socket.removeListener('game:end', gameEndListener);

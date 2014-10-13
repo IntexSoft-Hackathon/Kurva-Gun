@@ -3,11 +3,16 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="account-wall">
                 <p class="link" ng-click="signup = !signup">{{!signup ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ"}}</p>
-                <div class="circle shadow">
-                    <div class="wrapper">
-                    <img class="profile-img" ng-src="{{profileImage ? '../../media/' + profileImage : '../../media/photo.png'}}" alt="">
-                    <img class="add-photo" ng-src="../../media/add_photo.png" ng-click ng-file-select="onFileSelect($files)">
+
+                <div class="image-wrapper">
+                    <div class="circle shadow">
+                        <div class="wrapper">
+                            <img class="profile-img"
+                                 ng-src="{{profileImage ? '../../media/' + profileImage : '../../media/photo.png'}}"
+                                 alt="">
+                        </div>
                     </div>
+                    <img class="add-photo" ng-src="../../media/add_photo.png" ng-click ng-file-select="onFileSelect($files)">
                 </div>
                 <form class="form-signin"
                       name="form"
