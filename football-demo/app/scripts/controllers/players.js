@@ -1,8 +1,9 @@
 'use strict';
 
 app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket) {
-
+  var sortingMap = ['-count_games', '-win', '-lost', '-level', '-experience'];
   $scope.users = {};
+  $scope.currentSorting = '-experience';
 
 
   $scope.getUsers = function() {
@@ -37,6 +38,15 @@ app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket
 
       $location.path('game');
     });
+  };
+
+  $scope.changeSorting = function (i) {
+    if ($scope.currentSorting !== sortingMap[i]) {
+      $scope.currentSorting = sortingMap[i];
+    } else {
+      $scope.currentSorting = $scope.currentSorting.slice(1);
+    }
+
   };
 
   function refreshListener() {
