@@ -115,7 +115,7 @@ var UserController = function() {
      *  returns all users
      */
     self.find = function (req, res, next) {
-        User.find({},{salt:0, hashedPassword:0}).exec(function (err, users) {
+        User.find({username:{$ne:"admin"}},{salt:0, hashedPassword:0}).exec(function (err, users) {
             if (err) {
                 return next(new Error('Failed to load User'));
             }
