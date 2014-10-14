@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
-
+app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, $location) {
+  var isDialogOpened = false;
   $scope.users = {};
   $scope.game = {};
   $scope.selectedPlayer = {};
@@ -33,7 +33,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
   };
 
   $scope.openListPlayers = function(team, position){
-    if ($scope.game.game_status == "NEW") {
+    if ($scope.game.game_status == "NEW" && !isDialogOpened) {
       $scope.selectedPosition = position;
       var confirm = ngDialog.openConfirm({
         template: 'views/partials/dialogs/listPlayers.html',
@@ -52,18 +52,32 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
     }
   };
 
+  $rootScope.$on('ngDialog.opened', function () {
+    isDialogOpened = true;
+  });
+
+  $rootScope.$on('ngDialog.closed', function () {
+    isDialogOpened = false;
+  });
+
+
   Socket.on('user:new', function () {
       $scope.getUsers();
   });
 
   $scope.canStart = function () {
-    var countOfWhitePlayers = angular.copy($scope.game.team_white.players).filter(function (x) {
-      return x != null
-    }).length;
-    var countOfBluePlayers = angular.copy($scope.game.team_blue.players).filter(function (x) {
-      return x != null
-    }).length;
-    return countOfWhitePlayers + countOfBluePlayers == 4;
+    if ($scope.game.team_white && $scope.game.team_blue) {
+      var countOfWhitePlayers = angular.copy($scope.game.team_white.players).filter(function (x) {
+        return x != null
+      }).length;
+      var countOfBluePlayers = angular.copy($scope.game.team_blue.players).filter(function (x) {
+        return x != null
+      }).length;
+      return countOfWhitePlayers + countOfBluePlayers == 4;
+    }
+    {
+      return false;
+    }
   };
 
 
@@ -96,7 +110,7 @@ app.controller('GameCtrl', function ($scope, Api, Socket, ngDialog, $location) {
       $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
       $scope.end_game.winner_team = game.team_white.score === 10 ? "WHITE" : "BLUE";
 
-      if (game.game_status == "FINISHED") {
+    if (game.game_status == "FINISHED" && !isDialogOpened) {
           var confirm = ngDialog.openConfirm({
               template: 'views/partials/dialogs/winner.html',
               className: 'ngdialog-theme-plain',

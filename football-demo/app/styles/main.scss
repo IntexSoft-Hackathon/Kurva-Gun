@@ -129,29 +129,6 @@ body {
   color: #ffffff;
 }
 
-.navbar-sub-style {
-  background-color: #2db490 !important;
-  min-height: 50px !important;
-  margin: 0 auto;
-  max-width: 1200px;
-  position: relative;
-}
-
-.navbar-sub-style .navbar-nav>li>a:hover{
-  color: #2db490 !important;
-  background-color: #FFFFFF !important;
-}
-
-.navbar-sub-style .activeMenu, .navbar-sub-style li>a:focus {
-  background-color: #FFFFFF !important;
-  color:#2db490 !important;
-}
-
-.navbar-sub-style .navbar-nav>li>a {
-  color: #FFFFFF ;
-  font-size: 19px;
-}
-
 .navbar .login-link {
   font-size: 16px;
 }
@@ -371,9 +348,14 @@ textarea.form-control {height: 50px !important;}
 }
 
 .nav > li {
-  top: 0;
-  position: absolute;
-  right: 0;
+  float: left;
+  height: 90px;
+}
+
+.nav > li > a {
+  height: 90px;
+  padding: 25px 10px;
+  text-align: right;
 }
 
 .nav-tabs > li > a {

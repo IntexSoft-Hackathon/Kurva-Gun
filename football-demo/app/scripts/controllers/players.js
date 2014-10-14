@@ -1,7 +1,8 @@
 'use strict';
 
-app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket) {
+app.controller('PlayersCtrl', function ($rootScope, $scope, ngDialog, $location, Api, Socket) {
   var sortingMap = ['-count_games', '-win', '-lost', '-level', '-experience'];
+  var isDialogOpened = false;
   $scope.users = {};
   $scope.currentSorting = '-experience';
 
@@ -13,32 +14,28 @@ app.controller('PlayersCtrl', function ($scope, ngDialog, $location, Api, Socket
   };
 
   $scope.openDetails = function(user, position){
-    $scope.currentUser = user;
-    $scope.currentUser.position = position;
-    var confirm = ngDialog.openConfirm({
-      template: 'views/partials/dialogs/playerDetails.html',
-      className: 'ngdialog-theme-plain',
-      scope: $scope,
-      showClose: false,
-      closeByDocument: true
-    });
-    confirm.then(function () {
-    });
+    if (!isDialogOpened) {
+      $scope.currentUser = user;
+      $scope.currentUser.position = position;
+      var confirm = ngDialog.openConfirm({
+        template: 'views/partials/dialogs/playerDetails.html',
+        className: 'ngdialog-theme-plain',
+        scope: $scope,
+        showClose: false,
+        closeByDocument: true
+      });
+      confirm.then(function () {
+      });
+    }
   };
 
-  $scope.openNewGame = function(){
-    var newGame = ngDialog.openConfirm({
-      template: 'views/partials/dialogs/newGame.html',
-      className: 'ngdialog-theme-plain',
-      scope: $scope,
-      showClose: false,
-      closeByDocument: true
-    });
-    newGame.then(function () {
+  $rootScope.$on('ngDialog.opened', function () {
+    isDialogOpened = true;
+  });
 
-      $location.path('game');
-    });
-  };
+  $rootScope.$on('ngDialog.closed', function () {
+    isDialogOpened = false;
+  });
 
   $scope.changeSorting = function (i) {
     if ($scope.currentSorting !== sortingMap[i]) {
