@@ -81,19 +81,19 @@ function updateUserLevel(user)
     else if (user.experience >=20 && user.experience < 35) {
         user.level = "Бывалый";
     }
-    else if (user.experience >=35 && user.experience < 45) {
+    else if (user.experience >=35 && user.experience < 50) {
         user.level = "Сеньер";
     }
-    else if (user.experience >=55 && user.experience < 65) {
+    else if (user.experience >=50 && user.experience < 65) {
         user.level = "Профи";
     }
-    else if (user.experience >=65 && user.experience < 75) {
+    else if (user.experience >=65 && user.experience < 80) {
         user.level = "Красавчик";
     }
-    else if (user.experience >=75 && user.experience < 95) {
+    else if (user.experience >=80 && user.experience < 100) {
         user.level = "Стасоподобный";
     }
-    else if (user.experience >=95) {
+    else if (user.experience >=100) {
         user.level = "Kurva-Gun";
     }
 }
