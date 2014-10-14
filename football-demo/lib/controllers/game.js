@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
     ObjectId = mongoose.Types.ObjectId,
     io = require('../../app.js').io,
     util = require("util"),
-    EventEmitter = require('events').EventEmitter;
+    EventEmitter = require('events').EventEmitter,
+    _ = require('underscore');
 
 var GameController = function() {
     var self=this;
@@ -222,17 +223,28 @@ var GameController = function() {
     self.saveGame = function(gameToSave, func)
     {
         gameToSave.save(function (err, savedGame) {
+          if (err) {
+            console.log(err);
+          } else {
+            var cashedGame = JSON.parse(JSON.stringify(savedGame));
             Game.populate(savedGame, {path: "team_white.players team_blue.players"}, function (err, populatedGame) {
-                if (err || populatedGame == undefined)
-                {
-                    console.log("error during save = " + err);
+              if (err || populatedGame == undefined) {
+                console.log("error during save = " + err);
                 }
-                else if (populatedGame.game_status === self.STATUS_NEW || populatedGame.game_status === self.STATUS_IN_PROGRESS)
-                {
-                    currentGame = populatedGame;
+              else if (populatedGame.game_status === self.STATUS_NEW || populatedGame.game_status === self.STATUS_IN_PROGRESS) {
+                currentGame = populatedGame;
                 }
+              if (cashedGame.team_white.players[0] == null && populatedGame.team_white.players[0]) {
+                populatedGame.team_white.players[1] = populatedGame.team_white.players[0];
+                populatedGame.team_white.players[0] = null;
+              }
+              if (cashedGame.team_blue.players[0] == null && populatedGame.team_blue.players[0]) {
+                populatedGame.team_blue.players[1] = populatedGame.team_blue.players[0];
+                populatedGame.team_blue.players[0] = null;
+              }
                 func(populatedGame);
             });
+          }
         });
     };
 
