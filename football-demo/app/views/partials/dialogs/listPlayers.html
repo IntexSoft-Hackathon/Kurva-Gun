@@ -7,7 +7,7 @@
         <input type="text" placeholder="ФИЛЬТР" autofocus ng-model="search.username">
     </div>
     <div class="row content">
-        <div class="position" ng-repeat="player in players | filter:search:strict | orderBy:'_id'" ng-click="confirm(player) ">
+        <div class="position" ng-repeat="player in players | filter:search:strict | orderBy:'username'" ng-click="confirm(player) ">
             <div class="col-sm-12 player">
                 <div class="circle shadow">
                     <img class="profile-img" ng-src="{{'../../media/'+player.photo}}" alt="">
