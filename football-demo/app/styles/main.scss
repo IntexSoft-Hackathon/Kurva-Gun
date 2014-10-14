@@ -1014,6 +1014,18 @@ div.circle {
     right: 20px;
     top: 20px;
   }
+
+  .filter {
+    background-color: #e7e6e6;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+
+    input{
+      width: 100%;
+    }
+  }
+
   .content {
     height: 500px;
     background-color: #e7e6e6;
