@@ -13,11 +13,27 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     });
   };
 
-  function selectUser(players, position, selectedPlayer) {
-    players[position] = selectedPlayer;
-    Api.getGames().update($scope.game, function(game){
-    });
-  };
+    function selectUser(players, position, selectedPlayer) {
+        players[position] = selectedPlayer;
+        Api.getGames().update($scope.game, function (game) {
+        });
+    }
+
+    function removeUserFromCurrentSelectedPosition() {
+        var player;
+        for (var i = 0; i < $scope.game.team_white.players.length; i++) {
+            player = $scope.game.team_white.players[i];
+            if (player != null && player.username === $scope.currentUser.username) {
+                $scope.game.team_white.players[i] = null;
+            }
+        }
+        for (i = 0; i < $scope.game.team_blue.players.length; i++) {
+            player = $scope.game.team_blue.players[i];
+            if (player != null && player.username === $scope.currentUser.username) {
+                $scope.game.team_blue.players[i] = null;
+            }
+        }
+    }
 
   $scope.getPlayers = function(){
     var white_players = $scope.game.team_white.players;
@@ -32,25 +48,32 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     });
   };
 
-  $scope.openListPlayers = function(team, position){
-    if ($scope.game.game_status == "NEW" && !isDialogOpened) {
-      $scope.selectedPosition = position;
-      var confirm = ngDialog.openConfirm({
-        template: 'views/partials/dialogs/listPlayers.html',
-        className: 'ngdialog-theme-plain',
-        scope: $scope,
-        showClose: false,
-        closeByDocument: true
-      });
-      confirm.then(function (selectedPlayer) {
-        if (team === "white") {
-          selectUser($scope.game.team_white.players, $scope.selectedPosition, selectedPlayer);
-        } else {
-          selectUser($scope.game.team_blue.players, $scope.selectedPosition, selectedPlayer);
+    $scope.openListPlayers = function (team, position) {
+        if ($scope.game.game_status == "NEW"  && !isDialogOpened) {
+            if ($scope.currentUser.username === 'admin') {
+                $scope.selectedPosition = position;
+                var confirm = ngDialog.openConfirm({
+                    template: 'views/partials/dialogs/listPlayers.html',
+                    className: 'ngdialog-theme-plain',
+                    scope: $scope,
+                    showClose: false,
+                    closeByDocument: true
+                });
+                confirm.then(function (selectedPlayer) {
+                    var players = team === "white" ?  $scope.game.team_white.players : $scope.game.team_blue.players;
+                    selectUser(players, $scope.selectedPosition, selectedPlayer);
+                });
+            } else {
+                var players = team === "white" ?  $scope.game.team_white.players : $scope.game.team_blue.players;
+                console.log("player in selected position = " + players[position]);
+                if (players[position] == undefined || players[position] == null)
+                {
+                    removeUserFromCurrentSelectedPosition();
+                    selectUser(players, position, $scope.currentUser);
+                }
+            }
         }
-      });
-    }
-  };
+    };
 
   $rootScope.$on('ngDialog.opened', function () {
     isDialogOpened = true;
@@ -73,13 +96,37 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
       var countOfBluePlayers = angular.copy($scope.game.team_blue.players).filter(function (x) {
         return x != null
       }).length;
-      return countOfWhitePlayers + countOfBluePlayers == 4;
+      return countOfWhitePlayers + countOfBluePlayers == 4 && canCurrentUserModifyGame();
     }
     {
       return false;
     }
   };
 
+    $scope.canCancel = function () {
+        var result = false;
+        if ($scope.game.game_status == "IN_PROGRESS") {
+            result = canCurrentUserModifyGame();
+        }
+        return result;
+    };
+
+    function canCurrentUserModifyGame() {
+        var result = false;
+        if ( $scope.currentUser.username === 'admin'){
+            result = true;
+        }
+        else {
+            for (var i = 0; i < $scope.game.team_white.players.length; i++) {
+                var whitePlayer = $scope.game.team_white.players[i];
+                var bluePlayer = $scope.game.team_blue.players[i];
+                if (whitePlayer.username === $scope.currentUser.username || bluePlayer.username === $scope.currentUser.username) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
 
   $scope.start = function() {
     $scope.game.game_type = "TEAM";
@@ -105,7 +152,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     $scope.game = game;
   }
 
-  function gameEndAchievementsCalculatedListener(game) {
+   function gameEndAchievementsCalculatedListener(game) {
       $scope.end_game = game;
       $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
       $scope.end_game.winner_team = game.team_white.score === 10 ? "WHITE" : "BLUE";

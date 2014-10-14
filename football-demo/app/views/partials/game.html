@@ -49,7 +49,7 @@
                   </button>
               </div>
               <div class="row colon">
-                  <button ng-if="game.game_status != 'IN_PROGRESS' || currentUser.username === 'admin'" class="btn btn-lg btn-block cancel-button" ng-click="stop()">ОТМЕНИТЬ</button>
+                  <button ng-if="game.game_status != 'IN_PROGRESS' || canCancel()" class="btn btn-lg btn-block cancel-button" ng-click="stop()">{{game.game_status == 'IN_PROGRESS' ? "ОТМЕНИТЬ" : "НАЗАД"}}</button>
               </div>
           </div>
           <div class="col-sm-5 left-side">
