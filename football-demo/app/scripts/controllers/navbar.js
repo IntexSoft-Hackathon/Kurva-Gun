@@ -12,7 +12,8 @@ app.controller('NavbarCtrl', function ($rootScope, $scope, Auth, $location, $rou
   $scope.routeParams = $routeParams;
 
   $scope.openNewGame = function () {
-    if (!isDialogOpened) {
+      $location.path('game');
+    /*if (!isDialogOpened) {
       var newGame = ngDialog.openConfirm({
         template: 'views/partials/dialogs/newGame.html',
         className: 'ngdialog-theme-plain',
@@ -23,7 +24,7 @@ app.controller('NavbarCtrl', function ($rootScope, $scope, Auth, $location, $rou
       newGame.then(function () {
         $location.path('game');
       });
-    }
+    }*/
   };
 
   $rootScope.$on('ngDialog.opened', function () {
