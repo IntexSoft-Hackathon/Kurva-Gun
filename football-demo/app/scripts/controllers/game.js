@@ -65,11 +65,13 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
                 });
             } else {
                 var players = team === "white" ?  $scope.game.team_white.players : $scope.game.team_blue.players;
-                console.log("player in selected position = " + players[position]);
                 if (players[position] == undefined || players[position] == null)
                 {
                     removeUserFromCurrentSelectedPosition();
                     selectUser(players, position, $scope.currentUser);
+                } else if (players[position].username === $scope.currentUser.username)
+                {
+                    players[position] = null;
                 }
             }
         }
