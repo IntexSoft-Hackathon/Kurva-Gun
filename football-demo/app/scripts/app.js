@@ -11,7 +11,8 @@ var app = angular.module('webapp', [
   'ngDialog',
   'btford.socket-io',
   'angularFileUpload',
-  'timer'
+  'timer',
+  'ngAudio'
 ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider

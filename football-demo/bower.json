@@ -12,11 +12,12 @@
     "ng-table": "*",
     "jquery": "*",
     "angular-socket-io": "*",
-    "jquery-ui":"*",
-    "angular-resource":"*",
-    "angular-route":"*",
-    "angular-cookies":"*",
-    "angular-timer":"*"
+    "jquery-ui": "*",
+    "angular-resource": "*",
+    "angular-route": "*",
+    "angular-cookies": "*",
+    "angular-timer": "*",
+    "angular-audio": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

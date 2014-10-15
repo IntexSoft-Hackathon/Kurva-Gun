@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, $location) {
+app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, ngAudio, $location) {
   var isDialogOpened = false;
   $scope.users = {};
   $scope.game = {};
