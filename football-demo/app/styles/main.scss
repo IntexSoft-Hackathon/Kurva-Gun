@@ -419,6 +419,7 @@ div.circle {
     margin: 0;
     padding: 0;
     font-weight: bold;
+    text-decoration: underline;
   }
 
   .account-wall {
@@ -687,8 +688,18 @@ div.circle {
       display: block;
       font-size: 15pt;
       text-align: center;
-      padding-top: 10px;
       font-weight: bold;
+      padding: 10px 10px;
+      .queue {
+        position: absolute;
+        right: 0;
+        padding: 5px 30px;
+        text-decoration: underline;
+      }
+    }
+
+    .queue-popover {
+      background-color: #e7e6e6;
     }
 
     .content{
@@ -1002,13 +1013,78 @@ div.circle {
     overflow-x: hidden;
     margin: 0;
 
-    input{
+    input {
       width: 100%;
     }
   }
 
   .content {
     height: 500px;
+    background-color: #e7e6e6;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+    .position {
+      margin: 0;
+      .player {
+        border-bottom: 1px solid #b4b4b4;
+        margin: 0;
+        padding: 10px 20px;
+        p {
+          margin-top: 20px;
+          margin-left: 80px;
+          font-weight: bold;
+          font-size: 14pt;
+        }
+      }
+      div.circle {
+        float: left;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        img {
+          width: 64px;
+          height: 64px;
+        }
+      }
+      .player {
+        margin: 0;
+      }
+    }
+  }
+
+}
+
+.queue-list {
+  .header {
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 20px;
+  }
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  .filter {
+    background-color: #e7e6e6;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+
+    input{
+      width: 100%;
+    }
+  }
+
+  .content {
+    height: 255px;
     background-color: #e7e6e6;
     overflow-y: auto;
     overflow-x: hidden;

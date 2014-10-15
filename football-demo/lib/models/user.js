@@ -39,7 +39,12 @@ UserSchema
     .get(function () {
         return {'_id': this._id, 'username': this.username, 'email': this.email, 'name': this.name,
             'experience': this.experience, 'win': this.win, 'lost': this.lost, 'count_games': this.count_games,
-            'register_time': this.register_time, 'game_time': this.game_time, 'level': this.level, 'achievements': this.achievements};
+          'register_time': this.register_time,
+          'game_time': this.game_time,
+          'level': this.level,
+          'achievements': this.achievements,
+          'photo': this.photo
+        };
     });
 
 /**
