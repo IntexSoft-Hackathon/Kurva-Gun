@@ -245,9 +245,9 @@ function calculateDrinkPoisonAchievement(player, game, team) {
         var looseCount = 0;
         for (var i = 0; i < games.length; i++) {
             var nextGame = games[i];
-            if (team === GameController.TEAM_WHITE && nextGame.team_white.score < 10) {
+            if (nextGame.team_white.players.indexOf(player._id) != -1 && nextGame.team_white.score < 10) {
                 looseCount++;
-            } else if (team === GameController.TEAM_BLUE && nextGame.team_blue.score < 10) {
+            } else if (nextGame.team_blue.players.indexOf(player._id) != -1 && nextGame.team_blue.score < 10) {
                 looseCount++;
             }
         }
