@@ -13,12 +13,14 @@ var GameController = function() {
     var self=this;
     self.STATUS_NEW = "NEW";
     self.STATUS_IN_PROGRESS = "IN_PROGRESS";
-    self. STATUS_FINISHED = "FINISHED";
-    self. STATUS_ABORTED = "ABORTED";
+    self.STATUS_FINISHED = "FINISHED";
+    self.STATUS_ABORTED = "ABORTED";
 
     self.GAME_START_EVENT = "game:start";
     self.GAME_UPDATE_EVENT = "game:update";
     self.GAME_END_EVENT = "game:end";
+
+    self.QUEUE_UPDATE_EVENT = "queue:update";
 
     self.NEW_ACHIEVEMENT_EVENT = "game:achievement";
     self.END_GAME_ACHIEVEMENTS_CALCULATED = "game:end:achievement";
@@ -27,6 +29,8 @@ var GameController = function() {
     self.TEAM_BLUE = "BLUE";
 
     var currentGame = null;
+
+    var currentQueue = [{attack: null, defend: null}, {attack: null, defend: null}, {attack: null, defend: null}];
     updateCurrentGame();
 
     Arduino.on(Arduino.ARDUINO_GOAL, function(team){
@@ -63,7 +67,6 @@ var GameController = function() {
         else {
             var game_status = currentGame ? currentGame.game_status : null;
             console.error("Can't start the game. Current game is invalid state, game_status = " + game_status);
-            updateCurrentGame();
             res.send(400, 'INVALID_GAME_STATE');
         }
     };
@@ -77,7 +80,6 @@ var GameController = function() {
         else {
             var game_status = currentGame ? currentGame.game_status : null;
           console.error("Can't stop the game. Current game is invalid state, game_status = " + game_status);
-            updateCurrentGame();
           res.json({status: 'OK'});
         }
     };
@@ -90,10 +92,23 @@ var GameController = function() {
             game.end_time = new Date();
             self.saveGame(game, function (game) {
                 currentGame = null;
-                var playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
-                var playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
-                var playerBDefend = game.team_blue.players[0] ? game.team_blue.players[0]._id : null;
-                var playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
+                var playerWDefend, playerWAttack, playerBDefend, playerBAttack, queuePlayers;
+                playerWDefend = game.team_white.players[0] ? game.team_white.players[0]._id : null;
+                playerWAttack = game.team_white.players[1] ? game.team_white.players[1]._id : null;
+                playerBDefend = game.team_blue.players[0] ? game.team_blue.players[0]._id : null;
+                playerBAttack = game.team_blue.players[1] ? game.team_blue.players[1]._id : null;
+                queuePlayers = currentQueue.shift();
+                if (queuePlayers.attack || queuePlayers.defend) {
+                    if (game.team_white.score === 10) {
+                        playerBDefend = queuePlayers.attack;
+                        playerBAttack = queuePlayers.defend;
+                    } else {
+                        playerWDefend = queuePlayers.attack;
+                        playerWAttack = queuePlayers.defend;
+                    }
+                }
+                currentQueue.push({attack: null, defend: null});
+                io.sockets.emit(self.QUEUE_UPDATE_EVENT, currentQueue);
                 findCurrentGame(function (newGame) {
                     if (!isAborted) {
                       console.log('Set prev players to new game');
@@ -105,7 +120,6 @@ var GameController = function() {
                         io.sockets.emit(self.GAME_UPDATE_EVENT, game);
                     });
                 });
-                io.sockets.emit(self.GAME_END_EVENT, game);
                 self.emit(self.GAME_END_EVENT, game);
                 self.emit(self.GAME_UPDATE_EVENT, game);
             });
@@ -142,7 +156,6 @@ var GameController = function() {
         else {
             var game_status = currentGame ? currentGame.game_status : null;
             console.error("Can't process goal message. Current game is invalid state, game_status = " + game_status);
-            updateCurrentGame();
         }
     }
 
@@ -202,6 +215,16 @@ var GameController = function() {
           res.json(game);
       });
   };
+
+    self.updateQueue = function (req, res) {
+        currentQueue = req.body;
+        io.sockets.emit(self.QUEUE_UPDATE_EVENT, currentQueue);
+        res.json(currentQueue);
+    };
+
+    self.queue = function (req, res) {
+        res.json(currentQueue);
+    };
 
     /**
      *  Find All
@@ -274,7 +297,7 @@ var GameController = function() {
                 }
                 else
                 {
-                    findCurrentGame(func);
+                    func(currentGame)
                 }
             }
             else

@@ -1072,17 +1072,6 @@ div.circle {
     top: 20px;
   }
 
-  .filter {
-    background-color: #e7e6e6;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin: 0;
-
-    input{
-      width: 100%;
-    }
-  }
-
   .content {
     height: 255px;
     background-color: #e7e6e6;
@@ -1096,7 +1085,7 @@ div.circle {
         margin: 0;
         padding: 10px 20px;
         p {
-          margin-top: 20px;
+          margin-top: 10px;
           margin-left: 80px;
           font-weight: bold;
           font-size: 14pt;

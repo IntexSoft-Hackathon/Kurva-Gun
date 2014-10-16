@@ -3,7 +3,8 @@
 var util = require("util"),
     EventEmitter = require('events').EventEmitter,
     GameController = require('../../app.js').gameController,
-    UserController = require('../../app.js').userController;
+    UserController = require('../../app.js').userController,
+    io = require('../../app.js').io;
 
 GameController.on(GameController.GAME_END_EVENT, function(game){
     updateUsersStatistic(game);
@@ -55,7 +56,10 @@ function updateUsersStatistic(game)
             whitePlayer.save();
             bluePlayer.save();
         }
-        GameController.saveGame(game, function(){});
+        GameController.saveGame(game, function () {
+            console.log('Send end game to users, after calc stats');
+            io.sockets.emit(GameController.GAME_END_EVENT, game);
+        });
     }
 }
 function logUserStatistic(user) {

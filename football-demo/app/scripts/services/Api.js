@@ -30,7 +30,17 @@ app.factory('Api', function ($resource) {
             game:{
             method:'GET',
             isArray:false
-          }
+            },
+              updateQueue: {
+                  url: '/api/queue/update',
+                  method: 'POST',
+                  isArray: true
+              },
+              getQueue: {
+                  url: '/api/queue',
+                  method: 'GET',
+                  isArray: true
+              }
           });
 
     },

@@ -19,7 +19,8 @@ module.exports = function (app, io) {
   app.put('/api/game/:gameId', game.update);
   app.post('/api/game/:gameId/start', game.start);
   app.post('/api/game/:gameId/stop', game.stop);
-
+  app.post('/api/queue/update', game.updateQueue);
+  app.get('/api/queue', game.queue);
   // Check if username is available
   app.get('/auth/check_username/:username', users.exists);
 

@@ -13,6 +13,9 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     Api.getGames().game(function(game){
       $scope.game = game;
     });
+      Api.getGames().getQueue(function (queue) {
+          $scope.queues = queue;
+      });
   };
 
     function selectUser(players, position, selectedPlayer) {
@@ -158,6 +161,10 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     $scope.game = game;
   }
 
+    function queueUpdateListener(queues) {
+        $scope.queues = queues;
+    }
+
    function gameEndAchievementsCalculatedListener(game) {
       $scope.end_game = game;
       $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
@@ -202,11 +209,17 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
       confirm.then(function (selectedPlayer) {
         removeUserFromQueueSelectedPosition(selectedPlayer);
         $scope.queues[index][position] = selectedPlayer;
+          Api.getGames().updateQueue($scope.queues, function (queues) {
+              $scope.queues = queues;
+          })
       });
     } else {
       removeUserFromCurrentSelectedPosition();
       removeUserFromQueueSelectedPosition();
       $scope.queues[index][position] = $scope.currentUser;
+        Api.getGames().updateQueue($scope.queues, function (queues) {
+            $scope.queues = queues;
+        })
     }
   };
 
@@ -261,6 +274,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
   Socket.on('game:end', gameEndListener);
   Socket.on('game:achievement', gameAchievementListener);
   Socket.on('game:end:achievement', gameEndAchievementsCalculatedListener);
+    Socket.on('queue:update', queueUpdateListener);
   //Clean up
   $scope.$on('$destroy', function () {
     Socket.removeListener('game:start', gameStartListener);
@@ -268,5 +282,6 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
     Socket.removeListener('game:end', gameEndListener);
     Socket.removeListener('game:achievement', gameAchievementListener);
     Socket.removeListener('game:end:achievement', gameEndAchievementsCalculatedListener);
+      Socket.removeListener('queue:update', queueUpdateListener);
   })
 });

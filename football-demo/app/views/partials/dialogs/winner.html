@@ -52,14 +52,14 @@
                         <div class="col-sm-4"><p>ОЧКИ</p></div>
                     </div>
                 </div>
-                <div class="col-sm-12" ng-repeat="player in game.team_white.players">
+                <div class="col-sm-12" ng-repeat="player in end_game.team_white.players">
                     <div class="row players">
                         <div class="col-sm-4"><p>{{player.username}}</p></div>
                         <div class="col-sm-4"><p>{{player.level}}</p></div>
                         <div class="col-sm-4"><p>{{player.experience}}</p></div>
                     </div>
                 </div>
-                <div class="col-sm-12" ng-repeat="player in game.team_blue.players">
+                <div class="col-sm-12" ng-repeat="player in end_game.team_blue.players">
                     <div class="row players">
                         <div class="col-sm-4"><p>{{player.username}}</p></div>
                         <div class="col-sm-4"><p>{{player.level}}</p></div>
