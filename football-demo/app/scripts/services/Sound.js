@@ -342,7 +342,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         playGameEndSound: function (game, callback) {
             var cb = callback || angular.noop;
             if (game.team_white.score + game.team_blue.score == 10) {
-                cb(getRandomSound(flawlessVicftorySound), getRandomMusic(endMusic));
+                cb(getRandomSound(flawlessVictorySound), getRandomMusic(endMusic));
                 return;
             } else {
                 cb(getRandomSound(endSounds), getRandomMusic(endMusic));
