@@ -82,6 +82,7 @@ var UserController = function() {
         if (req.body.password)
             user.password = req.body.password;
         user.active = req.body.active;
+        user.play_sound = req.body.play_sound;
         self.saveUser(user, function(err, user){
             if (err) {
                 res.json(500, err);

@@ -17,7 +17,8 @@ var UserSchema = new Schema({
     achievements: [{name: String, time: Date, description: String, image: String}],
     hashedPassword: String, salt: String, name: String,
     active: { type: Boolean, default: true},
-    photo:{type:String, default:"photo.png"}
+    photo:{type:String, default:"photo.png"},
+    play_sound: {type: Boolean, default: false}
 });
 
 /**
@@ -43,7 +44,8 @@ UserSchema
           'game_time': this.game_time,
           'level': this.level,
           'achievements': this.achievements,
-          'photo': this.photo
+          'photo': this.photo,
+          'play_sound' : this.play_sound
         };
     });
 

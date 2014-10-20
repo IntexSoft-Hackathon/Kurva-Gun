@@ -8,6 +8,9 @@
       </div>
       <div class="content">
           <div class="col-sm-5 right-side">
+              <img class="sound"
+                   ng-src="{{currentUser.play_sound ? '../media/unmute_audio.png' : '../media/mute_audio.png'}}"
+                   ng-click="switchSound()">
               <div class="row side">
               </div>
               <div class="row players">

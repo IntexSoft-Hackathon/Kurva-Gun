@@ -693,7 +693,7 @@ div.circle {
       .queue {
         position: absolute;
         right: 0;
-        padding: 5px 30px;
+        padding: 5px 50px;
         text-decoration: underline;
       }
     }
@@ -779,6 +779,10 @@ div.circle {
 
       .right-side {
         height: 100%;
+        .sound {
+          position: absolute;
+          margin-top: 10px;
+        }
         .side {
           height: 30%;
           background: transparent url('../media/w_icon.png') no-repeat center;

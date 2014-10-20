@@ -56,7 +56,7 @@ function checkTimedAchievements() {
         if (game && game.game_status === GameController.STATUS_IN_PROGRESS) {
             var minute = 1000 * 60;
             if (new Date().getTime() - game.start_time.getTime() > minute * 10) {
-                console.log("Game is running more then ten minutes");
+                //console.log("Game is running more then ten minutes");
 
                 var achievement = AchievementsCollection.ACHIEVEMENT_PARTY_SUCKS;
                 achievement.time = new Date();
@@ -71,7 +71,7 @@ function checkTimedAchievements() {
             }
             var lastGoalTime = getLastGoalTime(game);
             if (lastGoalTime && (new Date().getTime() - lastGoalTime > minute)) {
-                console.log("More then one minute left since last goal");
+                //console.log("More then one minute left since last goal");
             }
         }
     });
