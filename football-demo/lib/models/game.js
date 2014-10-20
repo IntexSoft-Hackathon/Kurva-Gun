@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
+    create_time: {type: Date, default: new Date()},
     start_time: {type:Date},
     end_time: {type:Date},
     //NEW, IN_PROGRESS, FINISHED, ABORTED

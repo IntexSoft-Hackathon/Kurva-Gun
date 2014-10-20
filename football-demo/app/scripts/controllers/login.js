@@ -51,17 +51,14 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, User, $location,
       };
 
     $scope.onFileSelect = function($files) {
-      //$files: an array of files selected, each file has name, size, and type.
       for (var i = 0; i < $files.length; i++) {
         var file = $files[i];
         console.log(file);
         $scope.upload = $upload.upload({
-          url: '/auth/users/uploadImage', //upload.php script, node.js route, or servlet url
-          data: {myObj: $scope.myModelObj},
+            url: '/auth/users/uploadImage',
           file: file
         }).progress(function(evt) {
-        }).success(function(data, status, headers, config) {
-          // file is uploaded successfully
+        }).success(function (data) {
           $scope.profileImage = data.path;
           $scope.user.photo = data.path;
         });

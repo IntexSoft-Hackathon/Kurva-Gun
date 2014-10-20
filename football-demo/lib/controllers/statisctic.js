@@ -3,7 +3,6 @@
 var util = require("util"),
     EventEmitter = require('events').EventEmitter,
     GameController = require('../../app.js').gameController,
-    UserController = require('../../app.js').userController,
     io = require('../../app.js').io;
 
 GameController.on(GameController.GAME_END_EVENT, function(game){

@@ -27,6 +27,7 @@ var GameController = function() {
 
     self.TEAM_WHITE = "WHITE";
     self.TEAM_BLUE = "BLUE";
+    self.SECOND = 1000;
 
     var currentGame = null;
 
@@ -37,7 +38,7 @@ var GameController = function() {
         goal(team);
     });
 
-    Arduino.on(Arduino.ARDUINO_IS_STOPPED, function(stopMessage){
+    Arduino.on(Arduino.ARDUINO_IS_STOPPED, function () {
         _stop(currentGame, true);
     });
 
@@ -227,8 +228,8 @@ var GameController = function() {
     };
 
     /**
-     *  Find All
-     *  returns all games
+     *  Find Current Game
+     *  @return Game
      */
     self.findStartedGame = function (req, res) {
         console.log("Search for started games");
@@ -237,12 +238,27 @@ var GameController = function() {
         });
     };
 
+
+    /**
+     * Callback active game
+     *
+     * @param func
+     * @callback Game
+     */
     self.findActiveGame = function (func) {
         findCurrentGame(function (game) {
             func(game);
         });
     };
 
+
+    /**
+     * Callback game, after saving it and update currentGame
+     *
+     * @param gameToSave
+     * @param func
+     * @callback Game
+     */
     self.saveGame = function(gameToSave, func)
     {
         gameToSave.save(function (err, savedGame) {
@@ -271,6 +287,10 @@ var GameController = function() {
         });
     };
 
+    /**
+     * Update currentGame
+     *
+     */
     function updateCurrentGame()
     {
         currentGame = null;
@@ -280,6 +300,12 @@ var GameController = function() {
         });
     }
 
+    /**
+     * Callback game, if game not exist then create it.
+     *
+     * @param func
+     * @callback game
+     */
     function findCurrentGame(func) {
         return Game.findOne({$or: [
             {game_status: self.STATUS_NEW},
@@ -290,6 +316,7 @@ var GameController = function() {
                 if (!currentGame)
                 {
                     game = new Game();
+                    game.create_time = new Date();
                     currentGame = game;
                     self.saveGame(game, function(game){
                         func(game);
@@ -307,6 +334,12 @@ var GameController = function() {
         });
     }
 
+    /**
+     * Return true, if game can be start, otherwise return false
+     *
+     * @param game
+     * @return Boolean
+     */
     function isGameReadyToStart(game) {
         console.log("Check game status = " + game.game_status);
         var result = false;
@@ -322,6 +355,28 @@ var GameController = function() {
         }
         return result;
     }
+
+    /**
+     * Checks game status and clean up players, if necessary
+     *
+     */
+    function checkGameStatus() {
+        findCurrentGame(function (game) {
+            if (game && game.game_status == self.STATUS_NEW) {
+                if (new Date().getTime() - game.create_time.getTime() > self.SECOND * 60 * 5) {
+                    console.log('Clean up players from NEW game, after 5 minutes of inactive');
+                    game.team_blue.players = [];
+                    game.team_white.players = [];
+                    game.create_time = new Date();
+                    self.saveGame(game, function () {
+                        io.sockets.emit(self.GAME_UPDATE_EVENT, game);
+                    });
+                }
+            }
+        });
+    }
+
+    setInterval(checkGameStatus, self.SECOND * 60 * 5);
 };
 
 util.inherits(GameController, EventEmitter);

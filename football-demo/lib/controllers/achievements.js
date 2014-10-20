@@ -11,9 +11,8 @@ var mongoose = require('mongoose'),
 
 setInterval(checkTimedAchievements, 1000);
 
-GameController.on(GameController.GAME_START_EVENT, function (game) {
+GameController.on(GameController.GAME_START_EVENT, function () {
     console.log("Calculate game start achievements");
-
 });
 
 GameController.on(GameController.GAME_UPDATE_EVENT, function (updatedGame) {
@@ -21,7 +20,7 @@ GameController.on(GameController.GAME_UPDATE_EVENT, function (updatedGame) {
 
     updatedGame = calculateGoalSeries(updatedGame);
 
-    iterateAllPlayers(updatedGame, function (player, team) {
+    iterateAllPlayers(updatedGame, function (player) {
         updatedGame = calculateGoalsCountAchievements(player, updatedGame);
     }, function(){
         GameController.saveGame(updatedGame, function(game){
@@ -62,7 +61,7 @@ function checkTimedAchievements() {
                 var achievement = AchievementsCollection.ACHIEVEMENT_PARTY_SUCKS;
                 achievement.time = new Date();
 
-                iterateAllPlayers(game, function(player, team){
+                iterateAllPlayers(game, function (player) {
                     //console.log("iterate player = " + player.username);
                     game = addAchievement(achievement, player, game);
                 }, function () {
@@ -220,11 +219,11 @@ function calculateTotalVictoriesAchievements(player, game) {
 
 function calculateGoldenGoalAchievement(player, game, team) {
     var achievement;
-    if (team === GameController.TEAM_BLUE && game.team_white.score == 9) {
+    if (team === GameController.TEAM_BLUE && game.team_white.score === 9) {
         achievement = AchievementsCollection.ACHIEVEMENT_GOLDEN_GOAL;
         achievement.time = new Date();
         game = addAchievement(achievement, player, game);
-    } else if (team === GameController.TEAM_WHITE && game.team_blue.score == 9) {
+    } else if (team === GameController.TEAM_WHITE && game.team_blue.score === 9) {
         achievement = AchievementsCollection.ACHIEVEMENT_GOLDEN_GOAL;
         achievement.time = new Date();
         game = addAchievement(achievement, player, game);
@@ -232,7 +231,7 @@ function calculateGoldenGoalAchievement(player, game, team) {
     return game;
 }
 
-function calculateDrinkPoisonAchievement(player, game, team) {
+function calculateDrinkPoisonAchievement(player, game) {
     Game.find({
         $or: [
             {'team_white.players': player._id},
@@ -245,9 +244,9 @@ function calculateDrinkPoisonAchievement(player, game, team) {
         var looseCount = 0;
         for (var i = 0; i < games.length; i++) {
             var nextGame = games[i];
-            if (nextGame.team_white.players.indexOf(player._id) != -1 && nextGame.team_white.score < 10) {
+            if (nextGame.team_white.players.indexOf(player._id) !== -1 && nextGame.team_white.score < 10) {
                 looseCount++;
-            } else if (nextGame.team_blue.players.indexOf(player._id) != -1 && nextGame.team_blue.score < 10) {
+            } else if (nextGame.team_blue.players.indexOf(player._id) !== -1 && nextGame.team_blue.score < 10) {
                 looseCount++;
             }
         }

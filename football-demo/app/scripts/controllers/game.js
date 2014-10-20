@@ -245,13 +245,9 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, ngDialog, 
   function gameAchievementListener(player, achievement) {
     var white_players = $scope.game.team_white.players;
     var blue_players = $scope.game.team_blue.players;
-    var inWhiteTeam = $.grep(white_players, function (e) {
-      return e ? e._id == player._id : false;
-    }).length;
     var inBlueTeam = $.grep(blue_players, function (e) {
       return e ? e._id == player._id : false;
     }).length;
-    console.log(inBlueTeam);
     var achievementObject = {
       content: {
         title: "New Achievement",

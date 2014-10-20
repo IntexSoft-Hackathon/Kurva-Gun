@@ -3,7 +3,7 @@
 var path = require('path'),
     auth = require('../config/auth');
 
-module.exports = function (app, io) {
+module.exports = function (app) {
   var users  = require('../../app.js').userController;
   var game  = require('../../app.js').gameController;
   // User Routes

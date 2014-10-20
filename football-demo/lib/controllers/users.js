@@ -37,7 +37,7 @@ var UserController = function() {
         var newUser = new User(req.body);
         newUser.provider = 'local';
 
-        self.saveUser(newUser, function(err, user){
+        self.saveUser(newUser, function (err) {
             if (err) {
                 return res.json(400, err);
             }
@@ -130,7 +130,7 @@ var UserController = function() {
     /**
      *  upload image profile
      */
-    self.uploadImage = function (req, res, next) {
+    self.uploadImage = function (req, res) {
         fs.readFile(req.files.file.path, function (err, data) {
             var imageName = req.files.file.name;
             if(!imageName){
