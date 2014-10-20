@@ -278,18 +278,15 @@ app.factory('Sound', function ($rootScope, ngAudio) {
             //Series sound
             else if (seriesCount >= 3) {
                 if (game[team].score > game[oppositeTeam].score) {
-                    //TODO winning series sound
                     console.log("Playing winning series sound");
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(goalWinningSeriesMusic));
                     return;
                 } else if (game[team].score == game[oppositeTeam].score) {
-                    //TODO comeback series equal
                     console.log("Playing comeback equal sound");
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(comebackEqualGoalMusic));
                     return;
                 }
                 else {
-                    //TODO comeback series sound
                     console.log("Playing comeback series sound");
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(goalComebackSeriesMusic));
                     return;

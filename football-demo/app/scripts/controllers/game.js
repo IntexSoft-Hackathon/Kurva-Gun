@@ -339,25 +339,11 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
   }
 
     function changeCurrentSound(sound) {
-        console.log("stop current sound");
-        console.log("play audio = " + $scope.playAudio);
         stopCurrentSound();
         if ($scope.playAudio) {
             $scope.currentSound = sound;
-            console.log($scope.currentSound);
             $scope.currentSound.volume = 1;
-            console.log("play current sound = " + $scope.currentSound);
             $scope.currentSound.play();
-            /*if (!$scope.currentSound.error && $scope.currentSound.canPlay) {
-                console.log("Play current sound = " + $scope.currentSound.src);
-                console.log($scope.currentSound);
-                $scope.currentSound.volume = 1;
-                $scope.currentSound.play();
-            } else {
-                console.log("Can't play current sound");
-                console.log($scope.currentSound.error);
-                console.log("can play = " + $scope.currentSound.canPlay);
-            }*/
         }
     }
 
@@ -367,25 +353,13 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
             $scope.currentMusic = music;
             $scope.currentMusic.volume = 0.3;
             $scope.currentMusic.play();
-            console.log($scope.currentSound);
-            /*if (!$scope.currentMusic.error && $scope.currentMusic.canPlay) {
-                $scope.currentMusic.volume = 0.2;
-                $scope.currentMusic.play();
-            } else {
-                console.log("Can't play current music, error = " + $scope.currentMusic.error);
-                console.log("Can't play current music, canPlay = " + $scope.currentMusic.canPlay);
-            }*/
+            console.log($scope.currentMusic);
         }
     }
 
   function stopCurrentSound() {
       if ($scope.currentSound != null) {
-          console.log("stop current sound");
           $scope.currentSound.restart();
-          /*if (!$scope.currentSound.error && $scope.currentSound.canPlay){
-              console.log("stop current sound");
-              $scope.currentSound.restart();
-          }*/
       }
   }
 
@@ -393,10 +367,6 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         if ($scope.currentMusic != null) {
             console.log("stop current music");
             $scope.currentMusic.restart();
-            /*if (!$scope.currentMusic.error && $scope.currentMusic.canPlay){
-                console.log("stop current music");
-                $scope.currentMusic.restart();
-            }*/
         }
     }
 
