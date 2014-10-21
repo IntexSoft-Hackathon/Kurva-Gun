@@ -8,26 +8,31 @@
     <div class="row content">
         <div class="description row">
             <div class="col-sm-5">
-              <div class="circle shadow">
-                  <img class="profile-img" ng-src="{{'../../media/'+ (currentUser.photo ? currentUser.photo : 'photo.png' )}}" alt="">
-              </div>
+                <div class="circle shadow">
+                    <img class="profile-img"
+                         ng-src="{{'../../media/'+ (currentUser.photo ? currentUser.photo : 'photo.png' )}}" alt="">
+                </div>
                 <p class="level">{{currentUser.level}}</p>
             </div>
             <div class="col-sm-7">
-              <p class="name">{{currentUser.username}}</p>
+                <p class="name">{{currentUser.username}}</p>
 
                 <p class="text">Выиграно игр: <b>{{currentUser.win}}</b> из <b>{{currentUser.count_games}}</b></p>
 
                 <p class="text">% побед: <b>{{ (currentUser.count_games ? currentUser.win / currentUser.count_games *
                     100 : '0') | number:0 }}</b></p>
-              <p class="text">Место в рейтинге:<b>{{currentUser.position}}</b></p>
-          </div>
+
+                <p class="text">Место в рейтинге:<b>{{currentUser.position}}</b></p>
+            </div>
         </div>
         <div class="achievements row">
             <div class="achievement" ng-repeat="achievement in currentUser.achievements | orderBy:'-time'">
                 <img ng-src="{{'../../media/'+achievement.image}}">
+
                 <p class="name">{{achievement.name}}</p>
+
                 <p class="desc">{{achievement.description}}</p>
+
                 <p class="date">{{achievement.time | date:'dd-MM-yyyy HH:mm'}}</p>
             </div>
         </div>

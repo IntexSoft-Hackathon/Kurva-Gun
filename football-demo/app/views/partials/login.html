@@ -12,7 +12,8 @@
                                  alt="">
                         </div>
                     </div>
-                    <img class="add-photo" ng-src="../../media/add_photo.png" ng-click ng-file-select="onFileSelect($files)">
+                    <img class="add-photo" ng-src="../../media/add_photo.png" ng-click
+                         ng-file-select="onFileSelect($files)">
                 </div>
                 <form class="form-signin"
                       name="form"
@@ -28,12 +29,14 @@
                                required
                                autofocus
                                mongoose-error>
+
                         <p class="help-block"
                            ng-show="form.username.$error.mongoose">
                             {{ errors.username }}
                         </p>
                     </div>
                     <br/>
+
                     <div ng-class="{'has-error': form.password.$error.mongoose}" style="position:relative">
                         <input type="password"
                                class="form-control"
@@ -42,6 +45,7 @@
                                ng-model="user.password"
                                required
                                mongoose-error>
+
                         <p class="help-block"
                            ng-show="form.password.$error.mongoose">
                             {{ errors.password }}
@@ -52,10 +56,13 @@
                         <p class="help-block">{{ error.other }}</p>
                     </div>
 
-                <button class="btn btn-lg btn-block login-button" type="submit">{{signup ? "ЗАРЕГИСТРИРОВАТЬСЯ" : "ВОЙТИ"}}</button>
+                    <button class="btn btn-lg btn-block login-button" type="submit">{{signup ? "ЗАРЕГИСТРИРОВАТЬСЯ" :
+                        "ВОЙТИ"}}
+                    </button>
 
                     <div>
                         <p class="another">Зарегистрироваться через:</p>
+
                         <div class="text-center">
                             <img class="img-circle" src="../../media/facebook.png" alt="">
                             <img class="img-circle" src="../../media/g+.png" alt="">

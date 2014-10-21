@@ -29,8 +29,8 @@ GameController.on(GameController.GAME_UPDATE_EVENT, function (updatedGame) {
     updatedGame = calculateGunner(updatedGame);
     iterateAllPlayers(updatedGame, function (player) {
         updatedGame = calculateGoalsCountAchievements(player, updatedGame);
-    }, function(){
-        GameController.saveGame(updatedGame, function(game){
+    }, function () {
+        GameController.saveGame(updatedGame, function (game) {
             console.log("Saved game after game update event");
         });
 
@@ -89,15 +89,14 @@ function checkTimedAchievements() {
     });
 }
 
-function iterateAllPlayers(game, processNextPlayer, afterIteration)
-{
+function iterateAllPlayers(game, processNextPlayer, afterIteration) {
     for (var i = 0; i < game.team_white.players.length; i++) {
         var whitePlayer = game.team_white.players[i];
-      processNextPlayer(whitePlayer, GameController.TEAM_WHITE);
+        processNextPlayer(whitePlayer, GameController.TEAM_WHITE);
         var bluePlayer = game.team_blue.players[i];
-      processNextPlayer(bluePlayer, GameController.TEAM_BLUE);
+        processNextPlayer(bluePlayer, GameController.TEAM_BLUE);
     }
-  afterIteration();
+    afterIteration();
 }
 
 function addAchievement(achievement, player, game) {

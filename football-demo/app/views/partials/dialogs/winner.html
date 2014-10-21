@@ -69,13 +69,16 @@
                 <div class="achievements row">
                     <div class="achievement" ng-repeat="achievement in end_game.achievements | orderBy:'time'">
                         <img ng-src="{{'../../media/'+achievement.image}}">
+
                         <p class="name">{{achievement.user}}</p>
+
                         <p class="name">{{achievement.name}}</p>
+
                         <p class="desc">{{achievement.description}}</p>
                     </div>
                 </div>
             </div>
-    </div>
         </div>
     </div>
+</div>
 </div>

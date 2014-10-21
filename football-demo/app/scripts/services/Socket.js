@@ -1,4 +1,4 @@
 app.factory('Socket', function (socketFactory) {
-  var myIoSocket = io.connect();
-  return socketFactory({ioSocket: myIoSocket});
+    var myIoSocket = io.connect();
+    return socketFactory({ioSocket: myIoSocket});
 });

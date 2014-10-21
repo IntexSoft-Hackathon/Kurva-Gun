@@ -21,10 +21,10 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" style="width:120px;">Welcome, {{ currentUser.username }}</a>
-                  <ul class="dropdown-menu">
-                    <li ng-if="isAdmin"><a href="/admin/user-manage">User Managment</a></li>
-                    <li><a ng-click="logout()"><span class="glyphicon-log-out"></span> Logout</a></li>
-                  </ul>
+                    <ul class="dropdown-menu">
+                        <li ng-if="isAdmin"><a href="/admin/user-manage">User Managment</a></li>
+                        <li><a ng-click="logout()"><span class="glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

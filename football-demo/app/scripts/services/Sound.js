@@ -50,7 +50,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         preLoadAudio("vlad_the_impaler_get_loose_cut.mp3"),
         preLoadAudio("what_i've_done_cut.mp3"),
         preLoadAudio("you_give_love_a_bad_name_cut.mp3")
-        ];
+    ];
 
     var comebackEqualGoalMusic = [
         preLoadAudio("chumbawamba_tumbthumping_cut.mp3"),
@@ -220,7 +220,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
     return {
         playGameStartAudio: function (game, callback) {
             var cb = callback || angular.noop;
-            cb(getRandomSound(startSounds),getRandomMusic(startMusic));
+            cb(getRandomSound(startSounds), getRandomMusic(startMusic));
         },
 
         playGameGoalAudio: function (game, callback) {
@@ -330,7 +330,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
                 personalMusic.push(getRandom(music));
                 personalMusic.push(getRandom(music));
                 personalMusic.push(getRandomMusic(music));
-                cb(getRandomSound(timedSounds),getRandomMusic(personalMusic));
+                cb(getRandomSound(timedSounds), getRandomMusic(personalMusic));
                 return;
 
             } else {
@@ -354,14 +354,14 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         playerSelectionSound: function (player, callback) {
             var cb = callback || angular.noop;
             if (player.username === 'Настя Голубович') {
-                cb(preLoadAudio("barney_stinson_awesome_small_cut.mp3"),null);
+                cb(preLoadAudio("barney_stinson_awesome_small_cut.mp3"), null);
                 return;
             }
             else if (player.username === 'Саша Сивов') {
-                cb(preLoadAudio("lube_ty_nesi_po_poljy.mp3"),null);
+                cb(preLoadAudio("lube_ty_nesi_po_poljy.mp3"), null);
                 return;
-            }else {
-                cb(getRandomSound(playerSelectionSounds),null);
+            } else {
+                cb(getRandomSound(playerSelectionSounds), null);
                 return;
             }
         }
@@ -370,7 +370,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
     function getLastEventTime(game) {
         var lastEventTime = getLastGoalTime(game);
-        if (!lastEventTime){
+        if (!lastEventTime) {
             console.log("game start time = " + game.start_time);
             lastEventTime = new Date(game.start_time).getTime();
         }
@@ -406,7 +406,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         return lastGoalTime;
     }
 
-    function preLoadAudio(sound){
+    function preLoadAudio(sound) {
         var audio = ngAudio.load("../../media/sounds/" + sound);
         //audio.loop = 0;
         return audio;
@@ -456,12 +456,12 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         var minSeriesScore = 3;
         //console.log("Scored team goals length = " + game[scoredTeam].goals.length);
         if (game[opponentTeam].goals.length >= minSeriesScore) {
-            for (var i = 0; i < game[opponentTeam].goals.length ; i++) {
+            for (var i = 0; i < game[opponentTeam].goals.length; i++) {
                 var nextItem = game[opponentTeam].goals.length - i - 1;
                 var previousGoalTime = new Date(game[opponentTeam].goals[nextItem].time).getTime();
                 //console.log("check next goal time, previous goal time = " + previousGoalTime + "; last opponent goal = " + lastOpponentGoal);
                 if (previousGoalTime > previousScoredTeamGoal) {
-                    seriesCount ++;
+                    seriesCount++;
                 } else {
                     break;
                 }
@@ -487,12 +487,12 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         var minSeriesScore = 3;
         //console.log("Scored team goals length = " + game[scoredTeam].goals.length);
         if (game[scoredTeam].goals.length >= minSeriesScore) {
-            for (var i = 0; i < game[scoredTeam].goals.length ; i++) {
+            for (var i = 0; i < game[scoredTeam].goals.length; i++) {
                 var nextItem = game[scoredTeam].goals.length - i - 1;
                 var previousGoalTime = new Date(game[scoredTeam].goals[nextItem].time).getTime();
                 //console.log("check next goal time, previous goal time = " + previousGoalTime + "; last opponent goal = " + lastOpponentGoal);
                 if (previousGoalTime > lastOpponentGoal) {
-                    seriesCount ++;
+                    seriesCount++;
                 } else {
                     break;
                 }

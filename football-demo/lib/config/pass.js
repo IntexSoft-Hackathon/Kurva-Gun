@@ -7,40 +7,40 @@ var mongoose = require('mongoose'),
 
 // Serialize sessions
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+    done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-  User.findOne({_id: id}, function (err, user) {
-    done(err, user);
-  });
+    User.findOne({_id: id}, function (err, user) {
+        done(err, user);
+    });
 });
 
 // Use local strategy
 passport.use(new LocalStrategy({
-      usernameField: 'username',
-      passwordField: 'password'
+        usernameField: 'username',
+        passwordField: 'password'
     },
     function (username, password, done) {
-      User.findOne({username: username}, function (err, user) {
-        if (err) {
-          return done(err);
-        }
-        if (!user) {
-          return done(null, false, {
-            'errors': {
-              'username': {type: 'Пользователь не зарегистрирован!'}
+        User.findOne({username: username}, function (err, user) {
+            if (err) {
+                return done(err);
             }
-          });
-        }
-        if (!user.authenticate(password)) {
-          return done(null, false, {
-            'errors': {
-              'password': {type: 'Неправильный пароль!'}
+            if (!user) {
+                return done(null, false, {
+                    'errors': {
+                        'username': {type: 'Пользователь не зарегистрирован!'}
+                    }
+                });
             }
-          });
-        }
-        return done(null, user);
-      });
+            if (!user.authenticate(password)) {
+                return done(null, false, {
+                    'errors': {
+                        'password': {type: 'Неправильный пароль!'}
+                    }
+                });
+            }
+            return done(null, user);
+        });
     }
 ));

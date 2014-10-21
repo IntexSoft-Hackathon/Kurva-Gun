@@ -1,7 +1,7 @@
 'use strict';
 
-var AchievementsCollection = function() {
-    var self=this;
+var AchievementsCollection = function () {
+    var self = this;
 
     //In game achievements
     self.ACHIEVEMENT_MAD = createAchievement("ШАЛЬНОЙ", "50 голов", "achievements/mad.png");

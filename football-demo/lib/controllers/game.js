@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
     EventEmitter = require('events').EventEmitter,
     _ = require('underscore');
 
-var GameController = function() {
-    var self=this;
+var GameController = function () {
+    var self = this;
     self.STATUS_NEW = "NEW";
     self.STATUS_IN_PROGRESS = "IN_PROGRESS";
     self.STATUS_FINISHED = "FINISHED";
@@ -34,7 +34,7 @@ var GameController = function() {
     var currentQueue = [{attack: null, defend: null}, {attack: null, defend: null}, {attack: null, defend: null}];
     updateCurrentGame();
 
-    Arduino.on(Arduino.ARDUINO_GOAL, function(team){
+    Arduino.on(Arduino.ARDUINO_GOAL, function (team) {
         goal(team);
     });
 
@@ -42,10 +42,10 @@ var GameController = function() {
         _stop(currentGame, true);
     });
 
-  self.on(self.NEW_ACHIEVEMENT_EVENT, function (user, achievement) {
-    console.log("Send Notification to Front End");
-    io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
-  });
+    self.on(self.NEW_ACHIEVEMENT_EVENT, function (user, achievement) {
+        console.log("Send Notification to Front End");
+        io.sockets.emit(self.NEW_ACHIEVEMENT_EVENT, user, achievement);
+    });
 
     self.on(self.END_GAME_ACHIEVEMENTS_CALCULATED, function (game) {
         console.log("Send end game achievements notification to Front End");
@@ -80,8 +80,8 @@ var GameController = function() {
         }
         else {
             var game_status = currentGame ? currentGame.game_status : null;
-          console.error("Can't stop the game. Current game is invalid state, game_status = " + game_status);
-          res.json({status: 'OK'});
+            console.error("Can't stop the game. Current game is invalid state, game_status = " + game_status);
+            res.json({status: 'OK'});
         }
     };
 
@@ -112,12 +112,12 @@ var GameController = function() {
                 io.sockets.emit(self.QUEUE_UPDATE_EVENT, currentQueue);
                 findCurrentGame(function (newGame) {
                     if (!isAborted) {
-                      console.log('Set prev players to new game');
+                        console.log('Set prev players to new game');
                         newGame.team_white.players = [playerWDefend, playerWAttack];
                         newGame.team_blue.players = [playerBDefend, playerBAttack];
                     }
                     self.saveGame(newGame, function (game) {
-                      console.log('Send New Game after previous is end.');
+                        console.log('Send New Game after previous is end.');
                         io.sockets.emit(self.GAME_UPDATE_EVENT, game);
                     });
                 });
@@ -178,44 +178,43 @@ var GameController = function() {
         });
     };
 
-  /**
-   * Update a game
-   */
-  self.game = function (req, res, next, id) {
-    var game = req.game;
-    Game.load(id, function (err, game) {
-      if (err) {
-        return next(err);
-      }
-      if (!game) {
-        return next(new Error('Failed to load game ' + id));
-      }
-      req.game = game;
-      next();
-    });
-  };
+    /**
+     * Update a game
+     */
+    self.game = function (req, res, next, id) {
+        var game = req.game;
+        Game.load(id, function (err, game) {
+            if (err) {
+                return next(err);
+            }
+            if (!game) {
+                return next(new Error('Failed to load game ' + id));
+            }
+            req.game = game;
+            next();
+        });
+    };
 
     /**
      * Update a game
      */
-  self.update = function (req, res) {
-    var game = req.game;
-    var updatedGame = req.body;
-    game.start_time = updatedGame.start_time;
-    game.end_time = updatedGame.end_time;
-    game.game_status = updatedGame.game_status;
-    var playerWDefend = updatedGame.team_white.players[0] ? updatedGame.team_white.players[0]._id : null;
-    var playerWAttack = updatedGame.team_white.players[1] ? updatedGame.team_white.players[1]._id : null;
-    game.team_white.players = [playerWDefend, playerWAttack];
-    var playerBDefend = updatedGame.team_blue.players[0] ? updatedGame.team_blue.players[0]._id : null;
-    var playerBAttack = updatedGame.team_blue.players[1] ? updatedGame.team_blue.players[1]._id : null;
-    game.team_blue.players = [playerBDefend, playerBAttack];
-      self.saveGame(game, function(game)
-      {
-        io.sockets.emit(self.GAME_UPDATE_EVENT, game);
-          res.json(game);
-      });
-  };
+    self.update = function (req, res) {
+        var game = req.game;
+        var updatedGame = req.body;
+        game.start_time = updatedGame.start_time;
+        game.end_time = updatedGame.end_time;
+        game.game_status = updatedGame.game_status;
+        var playerWDefend = updatedGame.team_white.players[0] ? updatedGame.team_white.players[0]._id : null;
+        var playerWAttack = updatedGame.team_white.players[1] ? updatedGame.team_white.players[1]._id : null;
+        game.team_white.players = [playerWDefend, playerWAttack];
+        var playerBDefend = updatedGame.team_blue.players[0] ? updatedGame.team_blue.players[0]._id : null;
+        var playerBAttack = updatedGame.team_blue.players[1] ? updatedGame.team_blue.players[1]._id : null;
+        game.team_blue.players = [playerBDefend, playerBAttack];
+        self.saveGame(game, function (game) {
+            io.sockets.emit(self.GAME_UPDATE_EVENT, game);
+            res.json(game);
+        });
+    };
 
     self.updateQueue = function (req, res) {
         currentQueue = req.body;
@@ -233,8 +232,8 @@ var GameController = function() {
      */
     self.findStartedGame = function (req, res) {
         console.log("Search for started games");
-      findCurrentGame(function (game) {
-        res.json(game);
+        findCurrentGame(function (game) {
+            res.json(game);
         });
     };
 
@@ -259,31 +258,30 @@ var GameController = function() {
      * @param func
      * @callback Game
      */
-    self.saveGame = function(gameToSave, func)
-    {
+    self.saveGame = function (gameToSave, func) {
         gameToSave.save(function (err, savedGame) {
-          if (err) {
-            console.log(err);
-          } else {
-            var cashedGame = JSON.parse(JSON.stringify(savedGame));
-            Game.populate(savedGame, {path: "team_white.players team_blue.players"}, function (err, populatedGame) {
-              if (err || populatedGame == undefined) {
-                console.log("error during save = " + err);
-                }
-              else if (populatedGame.game_status === self.STATUS_NEW || populatedGame.game_status === self.STATUS_IN_PROGRESS) {
-                currentGame = populatedGame;
-                }
-              if (cashedGame.team_white.players[0] == null && populatedGame.team_white.players[0]) {
-                populatedGame.team_white.players[1] = populatedGame.team_white.players[0];
-                populatedGame.team_white.players[0] = null;
-              }
-              if (cashedGame.team_blue.players[0] == null && populatedGame.team_blue.players[0]) {
-                populatedGame.team_blue.players[1] = populatedGame.team_blue.players[0];
-                populatedGame.team_blue.players[0] = null;
-              }
-                func(populatedGame);
-            });
-          }
+            if (err) {
+                console.log(err);
+            } else {
+                var cashedGame = JSON.parse(JSON.stringify(savedGame));
+                Game.populate(savedGame, {path: "team_white.players team_blue.players"}, function (err, populatedGame) {
+                    if (err || populatedGame == undefined) {
+                        console.log("error during save = " + err);
+                    }
+                    else if (populatedGame.game_status === self.STATUS_NEW || populatedGame.game_status === self.STATUS_IN_PROGRESS) {
+                        currentGame = populatedGame;
+                    }
+                    if (cashedGame.team_white.players[0] == null && populatedGame.team_white.players[0]) {
+                        populatedGame.team_white.players[1] = populatedGame.team_white.players[0];
+                        populatedGame.team_white.players[0] = null;
+                    }
+                    if (cashedGame.team_blue.players[0] == null && populatedGame.team_blue.players[0]) {
+                        populatedGame.team_blue.players[1] = populatedGame.team_blue.players[0];
+                        populatedGame.team_blue.players[0] = null;
+                    }
+                    func(populatedGame);
+                });
+            }
         });
     };
 
@@ -291,10 +289,9 @@ var GameController = function() {
      * Update currentGame
      *
      */
-    function updateCurrentGame()
-    {
+    function updateCurrentGame() {
         currentGame = null;
-        findCurrentGame(function(game){
+        findCurrentGame(function (game) {
             currentGame = game;
             io.sockets.emit(self.GAME_UPDATE_EVENT, game);
         });
@@ -307,28 +304,26 @@ var GameController = function() {
      * @callback game
      */
     function findCurrentGame(func) {
-        return Game.findOne({$or: [
-            {game_status: self.STATUS_NEW},
-            {game_status: self.STATUS_IN_PROGRESS}
-        ]}).populate('team_white.players team_blue.players').exec(function (err, game) {
-            if (!game)
-            {
-                if (!currentGame)
-                {
+        return Game.findOne({
+            $or: [
+                {game_status: self.STATUS_NEW},
+                {game_status: self.STATUS_IN_PROGRESS}
+            ]
+        }).populate('team_white.players team_blue.players').exec(function (err, game) {
+            if (!game) {
+                if (!currentGame) {
                     game = new Game();
                     game.create_time = new Date();
                     currentGame = game;
-                    self.saveGame(game, function(game){
+                    self.saveGame(game, function (game) {
                         func(game);
                     });
                 }
-                else
-                {
+                else {
                     func(currentGame)
                 }
             }
-            else
-            {
+            else {
                 func(game);
             }
         });

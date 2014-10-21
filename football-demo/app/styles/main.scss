@@ -3,21 +3,23 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import '../bower_components/sass-bootstrap/lib/bootstrap';
 
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
-html{
-  min-height:100%;
-  position:relative;
+
+html {
+  min-height: 100%;
+  position: relative;
 
 }
+
 body {
-    font-family: "Ubuntu Regular";
-    color: #333;
-    min-height:100%;
-    background: #61b52c url('../media/background.png') repeat;
+  font-family: "Ubuntu Regular";
+  color: #333;
+  min-height: 100%;
+  background: #61b52c url('../media/background.png') repeat;
 }
 
 .signup-well {
@@ -29,19 +31,24 @@ body {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
-.form-control { margin-bottom: 10px; }
+.form-control {
+  margin-bottom: 10px;
+}
 
 .form-signin {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
+
 .form-signin .form-signin-heading, .form-signin .checkbox {
   margin-bottom: 10px;
 }
+
 .form-signin .checkbox {
   font-weight: normal;
 }
+
 .form-signin .form-control {
   position: relative;
   font-size: 16px;
@@ -51,14 +58,17 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 .form-signin .form-control:focus {
   z-index: 2;
 }
+
 .form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+
 .form-signin input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
@@ -106,8 +116,8 @@ body {
 }
 
 .navbar-style {
- /* -webkit-box-shadow: 0 2px 5px #519433 !important;
-  box-shadow: 0 2px 5px #519433 !important;*/
+  /* -webkit-box-shadow: 0 2px 5px #519433 !important;
+   box-shadow: 0 2px 5px #519433 !important;*/
   background-color: #353636;
   margin: 0 auto;
   max-width: 1200px;
@@ -115,17 +125,17 @@ body {
   position: relative;
 }
 
-.navbar-style .activeMenu,.navbar-style li>a:focus {
+.navbar-style .activeMenu, .navbar-style li > a:focus {
   background-color: #2db490 !important;
-  color:#FFFFFF !important;
+  color: #FFFFFF !important;
 }
 
-.navbar-style .navbar-nav>li>a:hover {
+.navbar-style .navbar-nav > li > a:hover {
   color: #ffffff !important;
   background-color: #2db490 !important;
 }
 
-.navbar-style .navbar-nav>li>a {
+.navbar-style .navbar-nav > li > a {
   color: #ffffff;
 }
 
@@ -150,7 +160,6 @@ p {
   margin: 0 0 5px;
 }
 
-
 /*
 splash screen support
 */
@@ -160,13 +169,13 @@ splash screen support
   position: absolute;
   background: #61b52c url('../media/background.png') repeat;
   color: white;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   z-index: 100000;
 
-  .wrapper{
+  .wrapper {
     position: absolute;
-    top:0;
+    top: 0;
     bottom: 0;
     right: 0;
     left: 0;
@@ -186,33 +195,29 @@ splash screen support
   .loading {
     margin: 0 auto 10px;
     display: block;
-    width:32px;
+    width: 32px;
   }
 }
 
 /* add font*/
 @font-face {
   font-family: "Ubuntu Medium";
-  src: /*local("Ubuntu Medium"),*/
-  url("media/fonts/Ubuntu-M.ttf");
+  src: /*local("Ubuntu Medium"),*/ url("media/fonts/Ubuntu-M.ttf");
 }
 
 @font-face {
   font-family: "Ubuntu Regular";
-  src: /*local("Ubuntu Regular"),*/
-  url("media/fonts/Ubuntu-R.ttf");
+  src: /*local("Ubuntu Regular"),*/ url("media/fonts/Ubuntu-R.ttf");
 }
 
 @font-face {
   font-family: "Ubuntu Light";
-  src: /*local("Ubuntu Light"),*/
-  url("media/fonts/Ubuntu-L.ttf");
+  src: /*local("Ubuntu Light"),*/ url("media/fonts/Ubuntu-L.ttf");
 }
 
 @font-face {
   font-family: "Ubuntu Bold";
-  src: /*local("Ubuntu Bold"),*/
-  url("media/fonts/Ubuntu-B.ttf");
+  src: /*local("Ubuntu Bold"),*/ url("media/fonts/Ubuntu-B.ttf");
 }
 
 .form-control {
@@ -249,7 +254,7 @@ splash screen support
   background-color: #f4f3f3;
 }
 
-.checkbox{
+.checkbox {
   width: 100%;
   position: relative;
   margin-top: 0px;
@@ -258,13 +263,13 @@ splash screen support
 .checkbox label {
   cursor: pointer;
   position: absolute;
-  color:#2db490;
+  color: #2db490;
   width: 15px;
   height: 15px;
   top: 1px;
   left: 0;
   background: #ffffff;
-  border:1px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
 }
 
 .checkbox label:after {
@@ -303,13 +308,20 @@ splash screen support
 div.checkbox > input[type=checkbox] {
   visibility: hidden;
 }
+
 .fc-header {
   margin-top: 5px;
   height: 80px;
 }
 
-textarea { resize: none; }
-textarea.form-control {height: 50px !important;}
+textarea {
+  resize: none;
+}
+
+textarea.form-control {
+  height: 50px !important;
+}
+
 /* Let's get this party started */
 ::-webkit-scrollbar {
   width: 5px;
@@ -317,7 +329,7 @@ textarea.form-control {height: 50px !important;}
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
@@ -327,8 +339,9 @@ textarea.form-control {height: 50px !important;}
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.498039);
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
+
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(0, 0, 0, 0.498039);
 }
@@ -362,7 +375,7 @@ textarea.form-control {height: 50px !important;}
   line-height: 1.42857;
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
-  color:#a2a2a2;
+  color: #a2a2a2;
 }
 
 .nav > li > a:hover {
@@ -374,9 +387,9 @@ textarea.form-control {height: 50px !important;}
   top: 90px;
   height: calc(100% - 90px);
   max-width: 1200px;
-  margin:0 auto;
-  right:0;
-  left:0;
+  margin: 0 auto;
+  right: 0;
+  left: 0;
 }
 
 div.circle {
@@ -388,9 +401,9 @@ div.circle {
 }
 
 .circle.shadow {
-  -moz-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
-  -webkit-box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
-  box-shadow: inset 3px 4px 4px rgba(0,0,0,0.4);
+  -moz-box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
 }
 
 .login-view {
@@ -433,7 +446,7 @@ div.circle {
   }
 
   .profile-img {
-    margin:0;
+    margin: 0;
   }
 
   input {
@@ -469,7 +482,7 @@ div.circle {
       height: 65px;
       background-color: #f8d907;
       display: block;
-      font-size:15pt;
+      font-size: 15pt;
       text-align: center;
       padding-top: 8px;
       font-weight: bold;
@@ -516,7 +529,7 @@ div.circle {
           div {
             width: 48px;
             height: 48px;
-            float:left;
+            float: left;
             padding: 0;
             img {
               width: 48px;
@@ -526,21 +539,21 @@ div.circle {
         }
 
         div:last-child {
-          color:#61b52c;
+          color: #61b52c;
         }
 
       }
 
       .position:first-child > div:first-child {
-          background-color: #f8d907;
+        background-color: #f8d907;
       }
 
       .position:nth-child(2) > div:first-child {
-          background-color: #f4f3f3;
+        background-color: #f4f3f3;
       }
 
       .position:nth-child(3) > div:first-child {
-          background-color: #e29849;
+        background-color: #e29849;
       }
 
       .position > div:first-child {
@@ -553,13 +566,13 @@ div.circle {
       background-color: #e7e6e6;
       height: 100px;
       padding-top: 30px;
-      .new-game-button{
+      .new-game-button {
         background-color: #61b52c;
         border-radius: 5px;
         color: #FFFFFF;
         font-size: 16px;
-        width:415px;
-        margin:0 auto;
+        width: 415px;
+        margin: 0 auto;
       }
     }
 
@@ -571,15 +584,15 @@ div.circle {
   width: 540px;
   min-width: 360px;
   .header {
-     height: 65px;
-     background-color: #f8d907;
-     font-size: 15pt;
-     text-align: center;
-     font-weight: bold;
-     margin: 0;
-     border-bottom: 1px solid #b4b4b4;
-     padding-top: 5px;
-   }
+    height: 65px;
+    background-color: #f8d907;
+    font-size: 15pt;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 5px;
+  }
   .footer {
     height: 65px;
     background-color: #e7e6e6;
@@ -589,28 +602,28 @@ div.circle {
     padding-top: 5px;
     margin: 0;
     border-bottom: 1px solid #b4b4b4;
-    .new-game-button{
+    .new-game-button {
       background-color: #61b52c;
       border-radius: 5px;
       color: #FFFFFF;
       font-size: 16px;
-      width:415px;
-      margin:0 auto;
+      width: 415px;
+      margin: 0 auto;
     }
 
   }
 
-  .close{
+  .close {
     position: absolute;
     right: -60px;
     top: 15px;
   }
 
   .content {
-    margin:0;
+    margin: 0;
     background-color: #e7e6e6;
     .description {
-      margin:0;
+      margin: 0;
       border-bottom: 1px solid #b4b4b4;
       padding: 45px;
 
@@ -626,7 +639,7 @@ div.circle {
         line-height: 40px;
       }
       .text {
-        color:#5e5e5e;
+        color: #5e5e5e;
         font-size: 10.4pt;
         b {
           color: #000000;
@@ -635,7 +648,7 @@ div.circle {
       }
     }
     .achievements {
-      margin:0;
+      margin: 0;
       height: 240px;
       padding-top: 20px;
       width: 540px;
@@ -702,7 +715,7 @@ div.circle {
       background-color: #e7e6e6;
     }
 
-    .content{
+    .content {
       height: 550px;
       background-color: #e7e6e6;
 
@@ -760,19 +773,19 @@ div.circle {
           font-weight: bold;
           text-align: center;
           .start-button {
-             margin-top:100px;
-             background-color: #cd5514;
-             border-radius: 5px;
-             font-weight: bold;
-             font-size: 12pt;
-             color:#ffffff
-           }
+            margin-top: 100px;
+            background-color: #cd5514;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 12pt;
+            color: #ffffff
+          }
           .cancel-button {
             background-color: #cd5514;
             border-radius: 5px;
             font-weight: bold;
             font-size: 12pt;
-            color:#ffffff
+            color: #ffffff
           }
         }
       }
@@ -789,21 +802,21 @@ div.circle {
         }
         .players {
           height: 15%;
-            div.circle {
+          div.circle {
+            width: 96px;
+            height: 96px;
+            padding: 0;
+            img {
               width: 96px;
               height: 96px;
-              padding: 0;
-              img {
-                width: 96px;
-                height: 96px;
-              }
             }
+          }
 
-            p {
-              text-align: center;
-              font-weight: bold;
-              font-size: 14pt;
-            }
+          p {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+          }
         }
         .result {
           line-height: 120px;
@@ -816,7 +829,6 @@ div.circle {
     }
   }
 }
-
 
 .new-game {
   left: 0;
@@ -960,7 +972,7 @@ div.circle {
     border: 1px solid darkgray;
   }
   .achievements {
-    margin:0;
+    margin: 0;
     max-height: 240px;
     padding-top: 20px;
     width: 540px;
@@ -1082,9 +1094,9 @@ div.circle {
     overflow-y: auto;
     overflow-x: hidden;
     margin: 0;
-    .position{
+    .position {
       margin: 0;
-      .player{
+      .player {
         border-bottom: 1px solid #b4b4b4;
         margin: 0;
         padding: 10px 20px;
@@ -1096,12 +1108,12 @@ div.circle {
         }
       }
       div.circle {
-        float:left;
-        width:64px;
+        float: left;
+        width: 64px;
         height: 64px;
         padding: 0;
         img {
-          width:64px;
+          width: 64px;
           height: 64px;
         }
       }
@@ -1113,11 +1125,10 @@ div.circle {
 
 }
 
-
 .ngdialog.ngdialog-theme-plain .ngdialog-content {
   background: transparent;
   color: #444;
-  font-family: 'Helvetica Neue',sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 1.1em;
   line-height: 1.5em;
   margin: 0 auto;
@@ -1140,10 +1151,11 @@ div.circle {
   animation: ngdialog-fadein 0.5s;
 }
 
-.two{
-   background: #fff;
- }
-.four{
+.two {
+  background: #fff;
+}
+
+.four {
   background: #61b52c;
 }
 
@@ -1155,5 +1167,5 @@ div.circle {
 }
 
 .amaran-wrapper.top {
-  top:90px !important;
+  top: 90px !important;
 }

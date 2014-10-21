@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     util = require("util"),
     EventEmitter = require('events').EventEmitter;
 
-var UserController = function() {
+var UserController = function () {
     var self = this;
 
     /**
@@ -83,7 +83,7 @@ var UserController = function() {
             user.password = req.body.password;
         user.active = req.body.active;
         user.play_sound = req.body.play_sound;
-        self.saveUser(user, function(err, user){
+        self.saveUser(user, function (err, user) {
             if (err) {
                 res.json(500, err);
             } else {
@@ -116,7 +116,7 @@ var UserController = function() {
      *  returns all users
      */
     self.find = function (req, res, next) {
-        User.find({username:{$ne:"admin"}},{salt:0, hashedPassword:0}).exec(function (err, users) {
+        User.find({username: {$ne: "admin"}}, {salt: 0, hashedPassword: 0}).exec(function (err, users) {
             if (err) {
                 return next(new Error('Failed to load User'));
             }
@@ -124,7 +124,7 @@ var UserController = function() {
         });
     };
 
-    var emitNewUser = function(io, data){
+    var emitNewUser = function (io, data) {
         io.sockets.emit('user:new', data);
     };
 
@@ -134,7 +134,7 @@ var UserController = function() {
     self.uploadImage = function (req, res) {
         fs.readFile(req.files.file.path, function (err, data) {
             var imageName = req.files.file.name;
-            if(!imageName){
+            if (!imageName) {
 
                 console.log("There was an error");
                 res.redirect("/");
@@ -150,26 +150,25 @@ var UserController = function() {
                     if (err) {
                         console.error("Error during image upload = " + err);
                     }
-                     /// write file to uploads/thumbs folder
-                     /*im.resize({
+                    /// write file to uploads/thumbs folder
+                    /*im.resize({
                      srcPath: newPath,
                      dstPath: thumbPath,
                      width:   120
                      }, function(err, stdout, stderr){
                      if (err){
-                         console.error("Error during image upload = " + err);
+                     console.error("Error during image upload = " + err);
                      }
                      console.log('resized image to fit within 200x200px');
                      });*/
-                    res.json({path:"/photos/fullsize/" + imageName});
+                    res.json({path: "/photos/fullsize/" + imageName});
                 });
-              //res.json({path:"/photos/fullsize/" + imageName});
+                //res.json({path:"/photos/fullsize/" + imageName});
             }
         });
     };
 
-    self.saveUser = function(user, func)
-    {
+    self.saveUser = function (user, func) {
         user.save(function (err, game) {
             func(err, game);
         });
