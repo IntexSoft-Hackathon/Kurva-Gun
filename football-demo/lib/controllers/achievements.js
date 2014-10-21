@@ -7,9 +7,14 @@ var mongoose = require('mongoose'),
     UserController = require('../../app.js').userController,
     AchievementsCollection = require('../../app.js').achievementsCollection,
     User = mongoose.model('User'),
-    Game = mongoose.model('Game');
+    Game = mongoose.model('Game'),
+    Q = require('q'),
+    deferred = Q.defer();
 
 setInterval(checkTimedAchievements, 1000);
+
+var TEAMS = ["team_blue", "team_white"];
+var TEAM_COUNT = 2;
 
 GameController.on(GameController.GAME_START_EVENT, function () {
     console.log("Calculate game start achievements");
@@ -19,7 +24,9 @@ GameController.on(GameController.GAME_UPDATE_EVENT, function (updatedGame) {
     console.log("Calculate game update achievements");
 
     updatedGame = calculateGoalSeries(updatedGame);
-
+    updatedGame = calculateBolt(updatedGame);
+    updatedGame = calculateBeast(updatedGame);
+    updatedGame = calculateGunner(updatedGame);
     iterateAllPlayers(updatedGame, function (player) {
         updatedGame = calculateGoalsCountAchievements(player, updatedGame);
     }, function(){
@@ -31,6 +38,7 @@ GameController.on(GameController.GAME_UPDATE_EVENT, function (updatedGame) {
 });
 
 GameController.on(GameController.GAME_END_EVENT, function (endedGame) {
+    console.log(endedGame);
     console.log("Calculate end game achievements");
     if (endedGame && endedGame.game_status === GameController.STATUS_FINISHED) {
         iterateAllPlayers(endedGame, function (player, team) {
@@ -40,13 +48,17 @@ GameController.on(GameController.GAME_END_EVENT, function (endedGame) {
             endedGame = calculateTotalVictoriesAchievements(player, endedGame);
             endedGame = calculateGoldenGoalAchievement(player, endedGame, team);
             endedGame = calculateDrinkPoisonAchievement(player, endedGame, team);
+            endedGame = calculatePerfectWeekAchievement(player, endedGame, team);
         }, function () {
             console.log("add achievements to game after game ended");
             GameController.saveGame(endedGame, function (game) {
+                endedGame = calculateWeAreBeautiful(endedGame);
+                endedGame = calculateWall(endedGame);
+                endedGame = calculateFlash(endedGame);
+                endedGame = calculateBatman(endedGame);
                 //console.log("Saved game after game end event = " + game);
                 GameController.emit(GameController.END_GAME_ACHIEVEMENTS_CALCULATED, game);
             });
-
         });
     }
 });
@@ -103,14 +115,15 @@ function addAchievement(achievement, player, game) {
     return game;
 }
 
-function isAchievementExist(user, newAchievement) {
-    for (var i = 0; i < user.achievements.length; i++) {
-        var achievement = user.achievements[i];
+function isAchievementExist(player, newAchievement) {
+    for (var i = 0; i < player.achievements.length; i++) {
+        var achievement = player.achievements[i];
         //console.log("New achievement name = " + newAchievement.name + ", existing achievement = " + achievement.name);
         if (newAchievement.name === achievement.name) {
             return true;
         }
     }
+    return false;
 }
 
 function getLastGoalTime(game) {
@@ -240,7 +253,7 @@ function calculateDrinkPoisonAchievement(player, game) {
         $and: [
             {game_status: GameController.STATUS_FINISHED}
         ]
-    }).sort({end_time: -1}).limit(3).exec(function (err, games) {
+    }).sort({end_time: -1}).limit(5).exec(function (err, games) {
         var looseCount = 0;
         for (var i = 0; i < games.length; i++) {
             var nextGame = games[i];
@@ -250,14 +263,158 @@ function calculateDrinkPoisonAchievement(player, game) {
                 looseCount++;
             }
         }
-        if (looseCount === 3)
-        {
+        if (looseCount > 2 && looseCount < 5) {
             var achievement = AchievementsCollection.ACHIEVEMENT_DRINK_THE_POISON;
+            achievement.time = new Date();
+            game = addAchievement(achievement, player, game);
+        } else if (looseCount > 4) {
+            var achievement = AchievementsCollection.ACHIEVEMENT_LOSER;
             achievement.time = new Date();
             game = addAchievement(achievement, player, game);
         }
     });
     return game;
+}
+
+function calculatePerfectWeekAchievement(player, game) {
+    Game.find({
+        $or: [
+            {'team_white.players': player._id},
+            {'team_blue.players': player._id}
+        ],
+        $and: [
+            {game_status: GameController.STATUS_FINISHED}
+        ]
+    }).sort({end_time: -1}).limit(7).exec(function (err, games) {
+        var winCount = 0;
+        for (var i = 0; i < games.length; i++) {
+            var nextGame = games[i];
+            if (nextGame.team_white.players.indexOf(player._id) !== -1 && nextGame.team_white.score === 10) {
+                winCount++;
+            } else if (nextGame.team_blue.players.indexOf(player._id) !== -1 && nextGame.team_blue.score === 10) {
+                winCount++;
+            }
+        }
+        if (winCount > 6) {
+            var achievement = AchievementsCollection.ACHIEVEMENT_PERFECT_WEEK;
+            achievement.time = new Date();
+            game = addAchievement(achievement, player, game);
+        }
+    });
+    return game;
+}
+
+function calculateWeAreBeautiful(game) {
+    var achievement;
+    var tanya = 1;
+    var nastya = 2
+    for (var i = 0; i < TEAM_COUNT; i++) {
+        var isLoose = game[TEAMS[i]].goals.length < 10;
+        var isTanya = game[TEAMS[i]].players.indexOf(tanya) !== -1;
+        var isNastya = game[TEAMS[i]].players.indexOf(nastya) !== -1;
+        if (isLoose && isTanya && isNastya) {
+            achievement = AchievementsCollection.ACHIEVEMENT_WE_ARE_BEAUTIFUL;
+            addAchievementToPlayers(game, TEAMS[i], achievement);
+        }
+    }
+    return game;
+};
+
+function calculateWall(game) {
+    var achievement;
+    var isLoose = game[TEAMS[0]].goals.length < 10;
+    if (isLoose) {
+        if (game[TEAMS[1]].goals.length - game[TEAMS[0]].goals.length > 5) {
+            achievement = AchievementsCollection.ACHIEVEMENT_WALL;
+            addAchievementToPlayers(game, TEAMS[1], achievement);
+        }
+    } else {
+        if (game[TEAMS[0]].goals.length - game[TEAMS[1]].goals.length > 5) {
+            achievement = AchievementsCollection.ACHIEVEMENT_WALL;
+            addAchievementToPlayers(game, TEAMS[0], achievement);
+        }
+    }
+    return game;
+};
+
+function calculateFlash(game) {
+    var achievement;
+    if (game.end_time.getTime() - game.start_time.getTime() < 1000 * 60 * 2) {
+        achievement = AchievementsCollection.ACHIEVEMENT_FLASH;
+        if (game[TEAMS[0]].goals.length === 10) {
+            addAchievementToPlayers(game, TEAMS[0], achievement);
+        } else {
+            addAchievementToPlayers(game, TEAMS[1], achievement);
+        }
+    }
+    return game;
+};
+
+function calculateBatman(game) {
+    var achievement;
+    if (game.end_time.getTime() - game.start_time.getTime() < 1000 * 60 * 3) {
+        achievement = AchievementsCollection.ACHIEVEMENT_BATMAN;
+        if (game[TEAMS[0]].goals.length === 10) {
+            addAchievementToPlayers(game, TEAMS[0], achievement);
+        } else {
+            addAchievementToPlayers(game, TEAMS[1], achievement);
+        }
+    }
+    return game;
+};
+
+function calculateBolt(game) {
+    var achievement;
+    for (var i = 0; i < TEAM_COUNT; i++) {
+        if (game[TEAMS[i]].goals.length === 1) {
+            var lastGoalFromStartTime = game[TEAMS[i]].goals[0].time.getTime() - game.start_time.getTime();
+            if (lastGoalFromStartTime <= 5000) {
+                achievement = AchievementsCollection.ACHIEVEMENT_BOLT;
+                addAchievementToPlayers(game, TEAMS[i], achievement);
+            }
+        }
+    }
+    return game;
+};
+
+function calculateBeast(game) {
+    var achievement;
+    for (var i = 0; i < TEAM_COUNT; i++) {
+        if (game[TEAMS[i]].goals.length > 2) {
+            var goalsCount = game[TEAMS[i]].goals.length;
+            var lastGoalTime = game[TEAMS[i]].goals[goalsCount - 1].time.getTime();
+            var thirdGoalTime = game[TEAMS[i]].goals[goalsCount - 3].time.getTime();
+            if (lastGoalTime - thirdGoalTime <= 1000 * 30) {
+                achievement = AchievementsCollection.ACHIEVEMENT_BEAST;
+                addAchievementToPlayers(game, TEAMS[i], achievement);
+            }
+        }
+    }
+    return game;
+}
+
+function calculateGunner(game) {
+    var achievement;
+    for (var i = 0; i < TEAM_COUNT; i++) {
+        if (game[TEAMS[i]].goals.length > 4) {
+            var goalsCount = game[TEAMS[i]].goals.length;
+            var lastGoalTime = game[TEAMS[i]].goals[goalsCount - 1].time.getTime();
+            var fifthGoalTime = game[TEAMS[i]].goals[goalsCount - 5].time.getTime();
+            if (lastGoalTime - fifthGoalTime <= 1000 * 60) {
+                achievement = AchievementsCollection.ACHIEVEMENT_BEAST;
+                addAchievementToPlayers(game, TEAMS[i], achievement);
+            }
+        }
+    }
+    return game;
+}
+
+function addAchievementToPlayers(game, team, achievement) {
+    var playersCount = game[team].players.length;
+    for (var i = 0; i < playersCount; i++) {
+        var player = game[team].players[i];
+        addAchievement(achievement, player, game);
+    }
 }
 
 function calculateGoalSeries(game) {
@@ -274,7 +431,7 @@ function calculateGoalSeries(game) {
     function addAchievementToWhitePlayers(achievement) {
         for (var i = 0; i < game.team_white.players.length; i++) {
             var whitePlayer = game.team_white.players[i];
-            game = addAchievement(achievement, whitePlayer, game);
+            addAchievement(achievement, whitePlayer, game);
         }
     }
 

@@ -132,7 +132,7 @@ var GameController = function() {
     }
 
     function goal(team) {
-        if (currentGame && currentGame.game_status == self.STATUS_IN_PROGRESS) {
+        if (currentGame && currentGame.game_status === self.STATUS_IN_PROGRESS) {
             console.log("Process goal message in gate = " + team);
             if (team == Arduino.GOAL_WHITE_MESSAGE) {
                 currentGame.team_blue.score++;

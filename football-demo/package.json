@@ -15,7 +15,8 @@
     "body-parser":"*",
     "session": "*",
     "serialport": "*",
-    "imagemagick":"*"
+    "imagemagick": "*",
+    "q": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
