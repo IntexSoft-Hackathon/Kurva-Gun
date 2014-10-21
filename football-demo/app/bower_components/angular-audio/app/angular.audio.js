@@ -14,7 +14,7 @@ angular.module('ngAudio', [])
 
             var audio = ngAudio.load($attrs.ngAudio);
             // audio.unbind();
-            
+
             $element.on('click', function() {
 
                 audio.volume = $scope.volume || audio.volume;
@@ -147,41 +147,6 @@ angular.module('ngAudio', [])
             }
         };
 
-        function $setWatch() {
-            $audioWatch = $rootScope.$watch(function() {
-                return {
-                    volume: audioObject.volume,
-                    currentTime: audioObject.currentTime,
-                    progress: audioObject.progress,
-                    muting: audioObject.muting,
-                    loop: audioObject.loop,
-                };
-            }, function(newValue, oldValue) {
-                if (newValue.currentTime !== oldValue.currentTime) {
-                    audioObject.setCurrentTime(newValue.currentTime);
-                }
-
-                if (newValue.progress !== oldValue.progress) {
-                    audioObject.setProgress(newValue.progress);
-                }
-                if (newValue.volume !== oldValue.volume) {
-                    audioObject.setVolume(newValue.volume);
-                }
-
-                if (newValue.volume !== oldValue.volume) {
-                    audioObject.setVolume(newValue.volume);
-                }
-
-                if (newValue.loop !== oldValue.loop) {
-                    $looping = newValue.loop;
-                }
-
-                if (newValue.muting !== oldValue.muting) {
-                    audioObject.setMuting(newValue.muting);
-                }
-            }, true);
-        }
-
         cleverAudioFindingService.find(id)
             .then(function(nativeAudio) {
                 audio = nativeAudio;
@@ -195,9 +160,6 @@ angular.module('ngAudio', [])
 
 
         $interval(function() {
-            if ($audioWatch) {
-                $audioWatch();
-            }
             if (audio) {
 
                 if ($isMuting || ngAudioGlobals.isMuting) {
@@ -253,9 +215,7 @@ angular.module('ngAudio', [])
 
                 audioObject.audio = audio;
             }
-
-            $setWatch();
-        }, 25);
+        }, 1000);
     };
 }])
 .service('ngAudio', ['NgAudioObject', 'ngAudioGlobals', function(NgAudioObject, ngAudioGlobals) {

@@ -7,17 +7,18 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
   $scope.users = {};
   $scope.game = {};
   $scope.selectedPlayer = {};
-  $scope.selectedPosition = 0;
   $scope.currentSound = null;
   $scope.currentMusic = null;
   $scope.playAudio = false;
   $scope.gameTimer = undefined;
+    $scope.canStart = false;
 
   $scope.queues = [{attack: {}, defend: {}}, {attack: {}, defend: {}}, {attack: {}, defend: {}}];
 
   $scope.getGame = function() {
     Api.getGames().game(function(game){
       $scope.game = game;
+        $scope.canStart = checkStart();
       startGameTimer();
       $scope.playAudio = $scope.currentUser.play_sound;
     });
@@ -32,6 +33,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
             changeCurrentSound(audio);
         });
         Api.getGames().update($scope.game, function (game) {
+            $scope.canStart = checkStart();
         });
     }
 
@@ -108,7 +110,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
       $scope.getUsers();
   });
 
-  $scope.canStart = function () {
+    function checkStart() {
     if ($scope.game.team_white && $scope.game.team_blue && $scope.currentUser) {
       var countOfWhitePlayers = angular.copy($scope.game.team_white.players).filter(function (x) {
         return x != null
@@ -188,9 +190,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     }
 
     function gameStartListener(game) {
-    console.log(game);
     $scope.game = game;
-    console.log("Start game");
     startGameTimer();
     Sound.playGameStartAudio(game, function(sound, music){
         changeCurrentSound(sound);
@@ -200,7 +200,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
 
   function gameUpdateListener(game) {
     $scope.game = game;
-      if ($scope.game.game_status == "IN_PROGRESS"){
+      if ($scope.game.game_status === "IN_PROGRESS") {
           Sound.playGameGoalAudio(game, function(sound, music){
               changeCurrentSound(sound);
               changeCurrentMusic(music);
@@ -218,7 +218,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
       $scope.end_game.winner_players = game.team_white.score === 10 ? game.team_white.players : game.team_blue.players;
       $scope.end_game.winner_team = game.team_white.score === 10 ? "WHITE" : "BLUE";
 
-    if (game.game_status == "FINISHED" && !isDialogOpened) {
+       if (game.game_status === "FINISHED" && !isDialogOpened) {
           var confirm = ngDialog.openConfirm({
               template: 'views/partials/dialogs/winner.html',
               className: 'ngdialog-theme-plain',
@@ -248,7 +248,6 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     $scope.switchSound = function () {
         $rootScope.currentUser.play_sound = !$rootScope.currentUser.play_sound;
         $scope.playAudio = $rootScope.currentUser.play_sound;
-        console.log("switch sound");
         stopCurrentMusic();
         stopCurrentSound();
         Api.getUsers().update($rootScope.currentUser, function (user) {
@@ -299,7 +298,6 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
 
     function stopGameTimer() {
         if (angular.isDefined($scope.gameTimer)) {
-            console.log("Stop timer");
             $interval.cancel($scope.gameTimer);
             $scope.gameTimer = undefined;
         }
