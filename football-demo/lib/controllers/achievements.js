@@ -305,15 +305,15 @@ function calculatePerfectWeekAchievement(player, game) {
 
 function calculateWeAreBeautiful(game) {
     var achievement;
-    var tanya = 1;
-    var nastya = 2
     for (var i = 0; i < TEAM_COUNT; i++) {
         var isLoose = game[TEAMS[i]].goals.length < 10;
-        var isTanya = game[TEAMS[i]].players.indexOf(tanya) !== -1;
-        var isNastya = game[TEAMS[i]].players.indexOf(nastya) !== -1;
-        if (isLoose && isTanya && isNastya) {
-            achievement = AchievementsCollection.ACHIEVEMENT_WE_ARE_BEAUTIFUL;
-            addAchievementToPlayers(game, TEAMS[i], achievement);
+        if (game[TEAMS[i]].players.length == 2) {
+            var isNastya = game[TEAMS[i]].players[0].username === 'Настя Голубович' || game[TEAMS[i]].players[1].username === 'Настя Голубович';
+            var isTanya = game[TEAMS[i]].players[0].username === 'Таня Зайцева' || game[TEAMS[i]].players[1].username === 'Таня Зайцева';
+            if (isLoose && isTanya && isNastya) {
+                achievement = AchievementsCollection.ACHIEVEMENT_WE_ARE_BEAUTIFUL;
+                addAchievementToPlayers(game, TEAMS[i], achievement);
+            }
         }
     }
     return game;
