@@ -30,7 +30,7 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico')));
+    //app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico')));
   app.use(express.static(path.join(__dirname, 'public')));
   app.set('views', __dirname + '/views');
 
@@ -82,7 +82,7 @@ mailer.extend(app, {
 // Start server
 var port = process.env.PORT || 3000;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-var server = require('http').createServer(app);
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 exports.io = io;
 
@@ -111,5 +111,5 @@ process.on('uncaughtException', function(err) {
 });
 
 server.listen(port, function () {
-  //console.log('Express server listening on port %d in %s mode', port, app.get('env'));
+    console.log('Server listening on port %d in %s mode', port, app.get('env'));
 });

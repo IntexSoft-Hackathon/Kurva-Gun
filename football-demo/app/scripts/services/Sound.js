@@ -1,3 +1,5 @@
+'use strict';
+
 app.factory('Sound', function ($rootScope, ngAudio) {
 
     var playerSelectionSounds = [
@@ -200,19 +202,15 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
     function addPersonalMusic(player, music, game, team, oppositeTeam) {
         if (player.username.indexOf("Андрей") > -1) {
-            console.log("Add andrew music");
             music.push(andrewMusic);
         }
         if (player.username.indexOf("Саша Сивов") > -1) {
-            console.log("Add kon music");
             music.push(lubeKonMusic);
         }
         if (player.username.indexOf("Настя Голубович") > -1) {
-            console.log("Add awesome music");
             music.push(awesomeMusic);
         }
         if (player.username.indexOf("Женя") > -1 && game[team].score < game[oppositeTeam].score) {
-            console.log("Add eugene music");
             music.push(eugenLooseMusic);
         }
     }
@@ -225,52 +223,40 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
         playGameGoalAudio: function (game, callback) {
             var cb = callback || angular.noop;
-            console.log("b_score = " + game.team_white.score + "; w_score = " + game.team_blue.score);
-
             var lastScore = getLastScore(game);
             var score = lastScore.score;
             var team = lastScore.team;
             var oppositeTeam = lastScore.oppositeTeam;
-            console.log("Last score = " + score + "; team = " + team);
             var seriesCount = calculateGoalSeries(game);
-            console.log("Series count = " + seriesCount);
             var interruptedSeriesCount = calculateInterruptedSeriesCount(game);
-            console.log("Interrupted series count = " + interruptedSeriesCount);
-
             //First goal
-            if (game.team_white.score + game.team_blue.score == 1) {
-                console.log("Playing first goal sound");
+            if (game.team_white.score + game.team_blue.score === 1) {
                 cb(getRandomSound(firstGoalSounds), getRandomMusic(goalMusic));
                 return;
             }
             //If first goal while opponent already had goal series
-            else if (score == 1 && game.team_white.score + game.team_blue.score >= 4) {
-                console.log("Playing first comeback goal sound");
+            else if (score === 1 && game.team_white.score + game.team_blue.score >= 4) {
                 cb(getRandomSound(goalComebackFirstGoalSounds), getRandomMusic(goalSeriesBrokenMusic));
                 return;
             }
             //Five to zero
-            else if ((game.team_white.score == 0 && game.team_blue.score == 5) || (game.team_white.score == 5 && game.team_blue.score == 0)) {
-                console.log("Playing 5:0 sound");
+            else if ((game.team_white.score === 0 && game.team_blue.score === 5) || (game.team_white.score === 5 && game.team_blue.score === 0)) {
                 cb(getRandomSound(goalSounds), getRandomMusic(fiveToZeroMusic));
                 return;
             }
             //Score is nine
-            else if (score == 9) {
+            else if (score === 9) {
                 var opponentScore = team === 'team_white' ? game.team_blue.score : game.team_white.score;
-                if (opponentScore == 9) {
-                    console.log("Playing 9:9 sound");
+                if (opponentScore === 9) {
                     //TODO 9:9 sound
                     cb(getRandomSound(nineToNineGoalSound), getRandomMusic(nineToNineGoalMusic));
                     return;
                 } else if (opponentScore < 7) {
-                    console.log("Playing 9 with big difference sound");
                     //TODO 9 to small score sound
                     cb(getRandomSound(nineGoalBigDifferenceSound), getRandomMusic(nineGoalBigDifferenceMusic));
                     return;
                 } else {
                     //Regular nine sound
-                    console.log("Playing regular 9 sound");
                     cb(getRandomSound(nineGoalRegularMusic), getRandomMusic(goalMusic));
                     return;
                 }
@@ -278,27 +264,22 @@ app.factory('Sound', function ($rootScope, ngAudio) {
             //Series sound
             else if (seriesCount >= 3) {
                 if (game[team].score > game[oppositeTeam].score) {
-                    console.log("Playing winning series sound");
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(goalWinningSeriesMusic));
                     return;
-                } else if (game[team].score == game[oppositeTeam].score) {
-                    console.log("Playing comeback equal sound");
+                } else if (game[team].score === game[oppositeTeam].score) {
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(comebackEqualGoalMusic));
                     return;
                 }
                 else {
-                    console.log("Playing comeback series sound");
                     cb(getRandomSound(goalSeriesSounds), getRandomMusic(goalComebackSeriesMusic));
                     return;
                 }
             }
             else if (interruptedSeriesCount >= 3) {
-                console.log("Playing interrupted series count");
                 cb(getRandomSound(goalSeriesSounds), getRandomMusic(goalSeriesBrokenMusic));
                 return;
             }
             else {
-                console.log("Playing regular goal sound");
                 cb(getRandomSound(goalSounds), getRandomMusic(goalMusic));
                 return;
             }
@@ -326,7 +307,6 @@ app.factory('Sound', function ($rootScope, ngAudio) {
                     oppositeTeam = 'team_white';
                     addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
                 }
-                console.log(personalMusic);
                 personalMusic.push(getRandom(music));
                 personalMusic.push(getRandom(music));
                 personalMusic.push(getRandomMusic(music));
@@ -342,7 +322,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
         playGameEndSound: function (game, callback) {
             var cb = callback || angular.noop;
-            if (game.team_white.score + game.team_blue.score == 10) {
+            if (game.team_white.score + game.team_blue.score === 10) {
                 cb(getRandomSound(flawlessVictorySound), getRandomMusic(endMusic));
                 return;
             } else {
@@ -371,7 +351,6 @@ app.factory('Sound', function ($rootScope, ngAudio) {
     function getLastEventTime(game) {
         var lastEventTime = getLastGoalTime(game);
         if (!lastEventTime) {
-            console.log("game start time = " + game.start_time);
             lastEventTime = new Date(game.start_time).getTime();
         }
         return lastEventTime;
@@ -382,7 +361,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         var lastGoalScore;
         var team;
         var oppositeTeam;
-        if (game.team_blue.goals.length > 0 && lastGoalTime == new Date(game.team_blue.goals[game.team_blue.goals.length - 1].time).getTime()) {
+        if (game.team_blue.goals.length > 0 && lastGoalTime === new Date(game.team_blue.goals[game.team_blue.goals.length - 1].time).getTime()) {
             lastGoalScore = game.team_blue.score;
             team = "team_blue";
             oppositeTeam = "team_white";
@@ -415,8 +394,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
     function getRandomMusic(musics) {
         var music = getRandom(musics);
-        while (previousMusic == music) {
-            console.log("pick next music");
+        while (previousMusic === music) {
             music = getRandom(musics);
         }
         previousMusic = music;
@@ -425,8 +403,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
     function getRandomSound(sounds) {
         var sound = getRandom(sounds);
-        while (previousSound == sound) {
-            console.log("pick next sound");
+        while (previousSound === sound) {
             sound = getRandom(sounds);
         }
         previousSound = sound;
@@ -452,7 +429,6 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         var opponentTeam = scoredTeam === 'team_white' ? 'team_blue' : 'team_white';
 
         var previousScoredTeamGoal = game[scoredTeam].goals.length > 1 ? new Date(game[scoredTeam].goals[game[scoredTeam].goals.length - 2].time).getTime() : 0;
-        console.log("Previous scored team goal = " + previousScoredTeamGoal);
         var minSeriesScore = 3;
         //console.log("Scored team goals length = " + game[scoredTeam].goals.length);
         if (game[opponentTeam].goals.length >= minSeriesScore) {

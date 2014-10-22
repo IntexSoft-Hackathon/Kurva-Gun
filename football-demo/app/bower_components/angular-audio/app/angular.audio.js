@@ -153,9 +153,8 @@ angular.module('ngAudio', [])
                 audio.addEventListener('canplay', function() {
                     audioObject.canPlay = true;
                 });
-            }, function(error) {
+          }, function () {
                 audioObject.error = true;
-                console.warn(error);
             });
 
 
@@ -215,7 +214,7 @@ angular.module('ngAudio', [])
 
                 audioObject.audio = audio;
             }
-        }, 1000);
+        }, 200);
     };
 }])
 .service('ngAudio', ['NgAudioObject', 'ngAudioGlobals', function(NgAudioObject, ngAudioGlobals) {

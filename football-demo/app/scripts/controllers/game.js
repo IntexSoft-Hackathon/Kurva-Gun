@@ -32,7 +32,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         Sound.playerSelectionSound(selectedPlayer, function (audio) {
             changeCurrentSound(audio);
         });
-        Api.getGames().update($scope.game, function (game) {
+        Api.getGames().update($scope.game, function () {
             $scope.canStart = checkStart();
         });
     }
@@ -41,14 +41,16 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         var player;
         for (var i = 0; i < $scope.game.team_white.players.length; i++) {
             player = $scope.game.team_white.players[i];
-            if (player != null && player.username === $scope.currentUser.username) {
-                return $scope.game.team_white.players[i] = null;
+            if (player !== null && player.username === $scope.currentUser.username) {
+                $scope.game.team_white.players[i] = null;
+                return;
             }
         }
         for (i = 0; i < $scope.game.team_blue.players.length; i++) {
             player = $scope.game.team_blue.players[i];
-            if (player != null && player.username === $scope.currentUser.username) {
-                return $scope.game.team_blue.players[i] = null;
+            if (player !== null && player.username === $scope.currentUser.username) {
+                $scope.game.team_blue.players[i] = null;
+                return;
             }
         }
     }
@@ -60,10 +62,10 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
             $scope.players = players
                 .filter(function (el) {
                     var inWhiteTeam = $.grep(white_players, function (e) {
-                        return e ? e._id == el._id : false;
+                        return e ? e._id === el._id : false;
                     });
                     var inBlueTeam = $.grep(blue_players, function (e) {
-                        return e ? e._id == el._id : false;
+                        return e ? e._id === el._id : false;
                     });
                     return !inWhiteTeam.length && !inBlueTeam.length;
                 });
@@ -71,11 +73,11 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     };
 
     $scope.openListPlayers = function (team, position) {
-        if ($scope.game.game_status == "NEW" && !isDialogOpened) {
+        if ($scope.game.game_status === "NEW" && !isDialogOpened) {
             if ($scope.currentUser.username === 'admin') {
                 $scope.selectedPosition = position;
                 var confirm = ngDialog.openConfirm({
-                    template: 'views/partials/dialogs/listPlayers.html',
+                    template: '/partials/dialogs/listPlayers.html',
                     className: 'ngdialog-theme-plain',
                     scope: $scope,
                     showClose: false,
@@ -88,7 +90,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
                 });
             } else {
                 var players = team === "white" ? $scope.game.team_white.players : $scope.game.team_blue.players;
-                if (players[position] == undefined || players[position] == null) {
+                if (players[position] === undefined || players[position] === null) {
                     removeUserFromCurrentSelectedPosition();
                     removeUserFromQueueSelectedPosition();
                     selectUser(players, position, $scope.currentUser);
@@ -115,19 +117,19 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     function checkStart() {
         if ($scope.game.team_white && $scope.game.team_blue && $scope.currentUser) {
             var countOfWhitePlayers = angular.copy($scope.game.team_white.players).filter(function (x) {
-                return x != null
+                return x !== null;
             }).length;
             var countOfBluePlayers = angular.copy($scope.game.team_blue.players).filter(function (x) {
-                return x != null
+                return x !== null;
             }).length;
-            return countOfWhitePlayers + countOfBluePlayers == 4 && canCurrentUserModifyGame();
+            return countOfWhitePlayers + countOfBluePlayers === 4 && canCurrentUserModifyGame();
         }
         return false;
-    };
+    }
 
     $scope.canCancel = function () {
         var result = false;
-        if ($scope.game.game_status == "IN_PROGRESS" && $scope.currentUser) {
+        if ($scope.game.game_status === "IN_PROGRESS" && $scope.currentUser) {
             result = canCurrentUserModifyGame();
         }
         return result;
@@ -223,7 +225,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
 
         if (game.game_status === "FINISHED" && !isDialogOpened) {
             var confirm = ngDialog.openConfirm({
-                template: 'views/partials/dialogs/winner.html',
+                template: '/partials/dialogs/winner.html',
                 className: 'ngdialog-theme-plain',
                 scope: $scope,
                 showClose: false,
@@ -237,7 +239,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     $scope.showQueue = function () {
         if (!isDialogOpened) {
             var confirm = ngDialog.openConfirm({
-                template: 'views/partials/dialogs/queue.html',
+                template: '/partials/dialogs/queue.html',
                 className: 'ngdialog-theme-plain',
                 scope: $scope,
                 showClose: false,
@@ -261,7 +263,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     $scope.showQueuePlayerList = function (position, index) {
         if ($scope.currentUser.username === 'admin') {
             var confirm = ngDialog.openConfirm({
-                template: 'views/partials/dialogs/listPlayers.html',
+                template: '/partials/dialogs/listPlayers.html',
                 className: 'ngdialog-theme-plain',
                 scope: $scope,
                 showClose: false,
@@ -272,7 +274,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
                 $scope.queues[index][position] = selectedPlayer;
                 Api.getGames().updateQueue($scope.queues, function (queues) {
                     $scope.queues = queues;
-                })
+                });
             });
         } else {
             removeUserFromCurrentSelectedPosition();
@@ -280,7 +282,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
             $scope.queues[index][position] = $scope.currentUser;
             Api.getGames().updateQueue($scope.queues, function (queues) {
                 $scope.queues = queues;
-            })
+            });
         }
     };
 
@@ -289,12 +291,14 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         var playerAttack, playerDefend;
         for (var i = 0; i < $scope.queues.length; i++) {
             playerAttack = $scope.queues[i].attack;
-            if (playerAttack != null && playerAttack.username === player.username) {
-                return $scope.queues[i].attack = null;
+            if (playerAttack !== null && playerAttack.username === player.username) {
+                $scope.queues[i].attack = null;
+                return;
             }
             playerDefend = $scope.queues[i].defend;
-            if (playerDefend != null && playerDefend.username === player.username) {
-                return $scope.queues[i].defend = null;
+            if (playerDefend !== null && playerDefend.username === player.username) {
+                $scope.queues[i].defend = null;
+                return;
             }
         }
     }
@@ -318,10 +322,9 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     }
 
     function gameAchievementListener(player, achievement) {
-        var white_players = $scope.game.team_white.players;
         var blue_players = $scope.game.team_blue.players;
         var inBlueTeam = $.grep(blue_players, function (e) {
-            return e ? e._id == player._id : false;
+            return e ? e._id === player._id : false;
         }).length;
         var achievementObject = {
             content: {
@@ -354,19 +357,17 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
             $scope.currentMusic = music;
             $scope.currentMusic.volume = 0.3;
             $scope.currentMusic.play();
-            console.log($scope.currentMusic);
         }
     }
 
     function stopCurrentSound() {
-        if ($scope.currentSound != null) {
+        if ($scope.currentSound !== null) {
             $scope.currentSound.restart();
         }
     }
 
     function stopCurrentMusic() {
-        if ($scope.currentMusic != null) {
-            console.log("stop current music");
+        if ($scope.currentMusic !== null) {
             $scope.currentMusic.restart();
         }
     }
@@ -386,5 +387,5 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         Socket.removeListener('game:achievement', gameAchievementListener);
         Socket.removeListener('game:end:achievement', gameEndAchievementsCalculatedListener);
         Socket.removeListener('queue:update', queueUpdateListener);
-    })
+    });
 });

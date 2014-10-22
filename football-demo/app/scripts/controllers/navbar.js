@@ -7,7 +7,7 @@ app.controller('NavbarCtrl', function ($rootScope, $scope, Auth, $location, ngDi
         $location.path('game');
         /*if (!isDialogOpened) {
          var newGame = ngDialog.openConfirm({
-         template: 'views/partials/dialogs/newGame.html',
+         template: '/partials/dialogs/newGame.html',
          className: 'ngdialog-theme-plain',
          scope: $scope,
          showClose: false,

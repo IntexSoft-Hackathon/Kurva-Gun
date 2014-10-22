@@ -18,7 +18,7 @@ app.controller('PlayersCtrl', function ($rootScope, $scope, ngDialog, $location,
             $scope.currentUser = user;
             $scope.currentUser.position = position;
             var confirm = ngDialog.openConfirm({
-                template: 'views/partials/dialogs/playerDetails.html',
+                template: '/partials/dialogs/playerDetails.html',
                 className: 'ngdialog-theme-plain',
                 scope: $scope,
                 showClose: false,
@@ -58,6 +58,6 @@ app.controller('PlayersCtrl', function ($rootScope, $scope, ngDialog, $location,
         Socket.removeListener('user:new', refreshListener);
         Socket.removeListener('game:update', refreshListener);
         Socket.removeListener('game:end', refreshListener);
-    })
+    });
 
 });

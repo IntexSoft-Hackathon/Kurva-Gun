@@ -51,17 +51,16 @@ app.controller('LoginCtrl', function ($scope, $rootScope, Auth, User, $location,
     };
 
     $scope.onFileSelect = function ($files) {
+        var uploadResult = function (data) {
+            $scope.profileImage = data.path;
+            $scope.user.photo = data.path;
+        };
         for (var i = 0; i < $files.length; i++) {
             var file = $files[i];
-            console.log(file);
             $scope.upload = $upload.upload({
                 url: '/auth/users/uploadImage',
                 file: file
-            }).progress(function (evt) {
-            }).success(function (data) {
-                $scope.profileImage = data.path;
-                $scope.user.photo = data.path;
-            });
+            }).success(uploadResult);
         }
     };
 });
