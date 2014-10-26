@@ -91,6 +91,7 @@ function checkTimedAchievements() {
             var currentTime = new Date().getTime();
             if ((currentTime - lastGoalTime > periodicMusicTime) && (currentTime - lastTimedIntervalEventTime > periodicMusicTime)) {
                 lastTimedIntervalEventTime = currentTime;
+                console.log("emit inactivity event");
                 GameController.emit(GameController.GAME_TIMED_INACTIVITY_EVENT, game);
             }
         }
@@ -375,7 +376,7 @@ function calculateBolt(game) {
     for (var i = 0; i < TEAM_COUNT; i++) {
         if (game[TEAMS[i]].goals.length === 1) {
             var lastGoalFromStartTime = game[TEAMS[i]].goals[0].time.getTime() - game.start_time.getTime();
-            if (lastGoalFromStartTime <= 5000) {
+            if (lastGoalFromStartTime <= 8000) {
                 achievement = AchievementsCollection.ACHIEVEMENT_BOLT;
                 addAchievementToPlayers(game, TEAMS[i], achievement);
             }

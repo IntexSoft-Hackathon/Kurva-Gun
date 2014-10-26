@@ -12,7 +12,7 @@ var AchievementsCollection = function () {
     self.ACHIEVEMENT_SHAITAN = createAchievement("ШАЙТАН", "5 голов подряд", "achievements/shaitan.png");
     self.ACHIEVEMENT_SKOROSTREL = createAchievement("СКОРОСТРЕЛ", "7 голов подряд", "achievements/skorostrel.png");
 
-    self.ACHIEVEMENT_BOLT = createAchievement("БОЛТЯРА", "Забить гол в первые 5 секунд игры", "achievements/bolt.png");
+    self.ACHIEVEMENT_BOLT = createAchievement("БОЛТЯРА", "Забить гол в первые 8 секунд игры", "achievements/bolt.png");
     self.ACHIEVEMENT_BEAST = createAchievement("ЗВЕРЮГА", "Забить 3 гола в течение 30 секунд", "achievements/beast.png");
     self.GUNNER = createAchievement("ПУЛЕМЕТЧИК", "Забить 5 голов за 1 минуту", "achievements/gunner.png");
 
