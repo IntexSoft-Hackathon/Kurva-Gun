@@ -238,7 +238,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         getPathToAudio("my_heart_will_go_on_cut.mp3"),
         getPathToAudio("dont_stop_believing_cut.mp3"),
         getPathToAudio("mission_impossible_intro.mp3"),
-        getPathToAudio("nrm_try_charapahi_cut.mp3f"),
+        getPathToAudio("nrm_try_charapahi_cut.mp3"),
         getPathToAudio("skillet_hero_cut.mp3")
     ];
 
@@ -400,7 +400,6 @@ app.factory('Sound', function ($rootScope, ngAudio) {
             var player;
             var team;
             var oppositeTeam;
-            var music = timedMusic.slice(0);
             var personalMusic = [];
             for (var i = 0; i < game.team_white.players.length; i++) {
                 player = game.team_white.players[i];
@@ -412,9 +411,15 @@ app.factory('Sound', function ($rootScope, ngAudio) {
                 oppositeTeam = 'team_white';
                 addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
             }
-            personalMusic.push(getRandom(music));
-            personalMusic.push(getRandom(music));
-            personalMusic.push(getRandomMusic(music));
+            var timedMusicCount = 0;
+            while (timedMusicCount < 2) {
+                var music = getRandom(timedMusic);
+                if (personalMusic.indexOf(music) === -1) {
+                    personalMusic.push(music);
+                    timedMusicCount++;
+                }
+            }
+            console.log(personalMusic);
             cb(getRandomSound(timedSounds), getRandomMusic(personalMusic));
             return;
         },
@@ -433,11 +438,11 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         playerSelectionSound: function (player, callback) {
             var cb = callback || angular.noop;
             if (player.username === 'Настя Голубович') {
-                cb(getPathToAudio("barney_stinson_awesome_small_cut.mp3"), null);
+                cb(ngAudio.load(getPathToAudio("barney_stinson_awesome_small_cut.mp3")), null);
                 return;
             }
             else if (player.username === 'Саша Сивов') {
-                cb(getPathToAudio("lube_ty_nesi_po_poljy.mp3"), null);
+                cb(ngAudio.load(getPathToAudio("lube_ty_nesi_po_poljy.mp3")), null);
                 return;
             } else {
                 cb(getRandomSound(playerSelectionSounds), null);
@@ -497,6 +502,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
             music = getRandom(musics);
         }
         previousMusic = music;
+        console.log(music);
         return ngAudio.load(music);
     }
 

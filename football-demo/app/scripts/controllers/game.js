@@ -107,6 +107,8 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, Sound, ngD
 
     $rootScope.$on('ngDialog.closed', function () {
         isDialogOpened = false;
+        stopCurrentMusic();
+        stopCurrentSound();
     });
 
 
