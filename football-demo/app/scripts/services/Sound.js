@@ -62,7 +62,6 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         getPathToAudio("deep_purple_smoke_on_the_water_intro.mp3"),
         getPathToAudio("europe_the_final_countdown_cut.mp3"),
         getPathToAudio("gorky_park_moscow_calling_cut.mp3"),
-        getPathToAudio("imagine_dragons_it's_time_cut.mp3"),
         getPathToAudio("in_extremo_vollmond_cut.mp3"),
         getPathToAudio("metallica_fuel_cut.mp3"),
         getPathToAudio("my_chemical_romance_desolation_row_cut.mp3"),
@@ -261,9 +260,9 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
     var timedSounds = [
         getPathToAudio("football_crowd.mp3"),
-        getPathToAudio("football_crowd.mp3"),
-        getPathToAudio("crowd_laughing.mp3"),
-        getPathToAudio("crowd_boo.mp3")
+        getPathToAudio("crowd_boo.mp3"),
+        getPathToAudio("crowd_cheering.mp3"),
+        getPathToAudio("crowd_cheering2.mp3")
     ];
 
     var timedMusic = [
@@ -278,7 +277,17 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         getPathToAudio("chaif_vremya_ne_jdet_cut.mp3"),
         getPathToAudio("los_lobos_cancion_del_cut.mp3"),
         getPathToAudio("muse_isolated_system_cut.mp3"),
-        getPathToAudio("splean_pausy_v_slovah_cut.mp3")
+        getPathToAudio("splean_pausy_v_slovah_cut.mp3"),
+        getPathToAudio("kasabian_fire_cut.mp3"),
+        getPathToAudio("thousand_foot_krutch_move_cut.mp3"),
+        getPathToAudio("bon_jovi_it's_my_life_cut.mp3"),
+        getPathToAudio("haddaway_what_is_love_cut.mp3"),
+        getPathToAudio("muse_knights_of_cydonia_intro.mp3"),
+        getPathToAudio("michael_jackson_smouth_criminal_cut.mp3"),
+        getPathToAudio("the_prodigy_stand_up_cut.mp3"),
+        getPathToAudio("coldplay_viva_la_vida_intro.mp3"),
+        getPathToAudio("carry_on_my_wayward_son_intro.mp3"),
+        getPathToAudio("imagine_dragons_it's_time_cut.mp3")
     ];
 
     var endSounds = [
