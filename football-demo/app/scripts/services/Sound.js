@@ -287,37 +287,27 @@ app.factory('Sound', function ($rootScope, ngAudio) {
 
         playTimedSound: function (game, callback) {
             var cb = callback || angular.noop;
-            //console.log(game);
-            var lastEventTime = getLastEventTime(game);
-            var minute = 1000 * 60;
-            if (new Date().getTime() - lastEventTime > minute * 1.2) {
-                //console.log("Return timed sound");
-                var player;
-                var team;
-                var oppositeTeam;
-                var music = timedMusic.slice(0);
-                var personalMusic = [];
-                for (var i = 0; i < game.team_white.players.length; i++) {
-                    player = game.team_white.players[i];
-                    team = 'team_white';
-                    oppositeTeam = 'team_blue';
-                    addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
-                    player = game.team_blue.players[i];
-                    team = 'team_blue';
-                    oppositeTeam = 'team_white';
-                    addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
-                }
-                personalMusic.push(getRandom(music));
-                personalMusic.push(getRandom(music));
-                personalMusic.push(getRandomMusic(music));
-                cb(getRandomSound(timedSounds), getRandomMusic(personalMusic));
-                return;
 
-            } else {
-                cb(null, null);
-                return;
+            var player;
+            var team;
+            var oppositeTeam;
+            var music = timedMusic.slice(0);
+            var personalMusic = [];
+            for (var i = 0; i < game.team_white.players.length; i++) {
+                player = game.team_white.players[i];
+                team = 'team_white';
+                oppositeTeam = 'team_blue';
+                addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
+                player = game.team_blue.players[i];
+                team = 'team_blue';
+                oppositeTeam = 'team_white';
+                addPersonalMusic(player, personalMusic, game, team, oppositeTeam);
             }
-
+            personalMusic.push(getRandom(music));
+            personalMusic.push(getRandom(music));
+            personalMusic.push(getRandomMusic(music));
+            cb(getRandomSound(timedSounds), getRandomMusic(personalMusic));
+            return;
         },
 
         playGameEndSound: function (game, callback) {

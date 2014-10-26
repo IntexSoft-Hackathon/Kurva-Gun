@@ -16,6 +16,8 @@ setInterval(checkTimedAchievements, 1000);
 var TEAMS = ["team_blue", "team_white"];
 var TEAM_COUNT = 2;
 
+var lastTimedIntervalEventTime = null;
+
 GameController.on(GameController.GAME_START_EVENT, function () {
     console.log("Calculate game start achievements");
 });
@@ -82,8 +84,14 @@ function checkTimedAchievements() {
                 });
             }
             var lastGoalTime = getLastGoalTime(game);
-            if (lastGoalTime && (new Date().getTime() - lastGoalTime > minute)) {
-                //console.log("More then one minute left since last goal");
+            if (!lastTimedIntervalEventTime) {
+                lastTimedIntervalEventTime = lastGoalTime;
+            }
+            var periodicMusicTime = minute * 0.7;
+            var currentTime = new Date().getTime();
+            if ((currentTime - lastGoalTime > periodicMusicTime) && (currentTime - lastTimedIntervalEventTime > periodicMusicTime)) {
+                lastTimedIntervalEventTime = currentTime;
+                GameController.emit(GameController.GAME_TIMED_INACTIVITY_EVENT, game);
             }
         }
     });
@@ -126,7 +134,7 @@ function isAchievementExist(player, newAchievement) {
 }
 
 function getLastGoalTime(game) {
-    var lastGoalTime = null;
+    var lastGoalTime = game.start_time;
     if (game.team_blue.goals.length > 0) {
         lastGoalTime = game.team_blue.goals[game.team_blue.goals.length - 1].time.getTime();
     }

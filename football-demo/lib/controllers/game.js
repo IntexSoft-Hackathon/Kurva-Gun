@@ -17,6 +17,7 @@ var GameController = function () {
     self.STATUS_ABORTED = "ABORTED";
 
     self.GAME_START_EVENT = "game:start";
+    self.GAME_TIMED_INACTIVITY_EVENT = "game:inactivity";
     self.GAME_UPDATE_EVENT = "game:update";
     self.GAME_END_EVENT = "game:end";
 
@@ -31,7 +32,11 @@ var GameController = function () {
 
     var currentGame = null;
 
-    var currentQueue = [{attack: null, defend: null}, {attack: null, defend: null}, {attack: null, defend: null}];
+    var currentQueue = [
+        {attack: null, defend: null},
+        {attack: null, defend: null},
+        {attack: null, defend: null}
+    ];
     updateCurrentGame();
 
     Arduino.on(Arduino.ARDUINO_GOAL, function (team) {
@@ -50,6 +55,10 @@ var GameController = function () {
     self.on(self.END_GAME_ACHIEVEMENTS_CALCULATED, function (game) {
         console.log("Send end game achievements notification to Front End");
         io.sockets.emit(self.END_GAME_ACHIEVEMENTS_CALCULATED, game);
+    });
+
+    self.on(self.GAME_TIMED_INACTIVITY_EVENT, function (game) {
+        io.sockets.emit(self.GAME_TIMED_INACTIVITY_EVENT, game);
     });
 
     self.start = function (req, res) {

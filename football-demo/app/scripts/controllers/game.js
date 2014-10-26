@@ -1,25 +1,25 @@
 'use strict';
 
-app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket, Sound, ngDialog, $location) {
+app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, Sound, ngDialog, $location) {
     var isDialogOpened = false;
-    var minute = 1000 * 60;
-    var previousTimedEventTime = null;
     $scope.users = {};
     $scope.game = {};
     $scope.selectedPlayer = {};
     $scope.currentSound = null;
     $scope.currentMusic = null;
     $scope.playAudio = false;
-    $scope.gameTimer = undefined;
     $scope.canStart = false;
 
-    $scope.queues = [{attack: {}, defend: {}}, {attack: {}, defend: {}}, {attack: {}, defend: {}}];
+    $scope.queues = [
+        {attack: {}, defend: {}},
+        {attack: {}, defend: {}},
+        {attack: {}, defend: {}}
+    ];
 
     $scope.getGame = function () {
         Api.getGames().game(function (game) {
             $scope.game = game;
             $scope.canStart = checkStart();
-            startGameTimer();
             $scope.playAudio = $scope.currentUser.play_sound;
         });
         Api.getGames().getQueue(function (queue) {
@@ -159,7 +159,6 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     };
 
     $scope.stop = function () {
-        stopGameTimer();
         stopCurrentMusic();
         stopCurrentSound();
         Api.getGames().stop($scope.game, function () {
@@ -171,32 +170,8 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         return new Date(date).getTime();
     };
 
-    function startGameTimer() {
-        if ($scope.game.game_status === "IN_PROGRESS" && !angular.isDefined($scope.gameTimer)) {
-            $scope.gameTimer = $interval(function () {
-                if (!previousTimedEventTime) {
-                    //console.log("Run interval function");
-                    Sound.playTimedSound($scope.game, function (sound, music) {
-                        if (sound) {
-                            changeCurrentSound(sound);
-                        }
-                        if (music) {
-                            changeCurrentMusic(music);
-                        }
-                        if (sound || music) {
-                            previousTimedEventTime = new Date().getTime();
-                        }
-                    });
-                } else if (new Date().getTime() - previousTimedEventTime > minute) {
-                    previousTimedEventTime = null;
-                }
-            }, 1000);
-        }
-    }
-
     function gameStartListener(game) {
         $scope.game = game;
-        startGameTimer();
         Sound.playGameStartAudio(game, function (sound, music) {
             changeCurrentSound(sound);
             changeCurrentMusic(music);
@@ -211,6 +186,17 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
                 changeCurrentMusic(music);
             });
         }
+    }
+
+    function gameTimedInactivityListener(game) {
+        Sound.playTimedSound($scope.game, function (sound, music) {
+            if (sound) {
+                changeCurrentSound(sound);
+            }
+            if (music) {
+                changeCurrentMusic(music);
+            }
+        });
     }
 
     function queueUpdateListener(queues) {
@@ -303,16 +289,8 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         }
     }
 
-    function stopGameTimer() {
-        if (angular.isDefined($scope.gameTimer)) {
-            $interval.cancel($scope.gameTimer);
-            $scope.gameTimer = undefined;
-        }
-    }
-
     function gameEndListener(game) {
         console.log("Update game = " + game.game_status);
-        stopGameTimer();
         if (game.game_status === "FINISHED") {
             Sound.playGameEndSound(game, function (sound, music) {
                 changeCurrentSound(sound);
@@ -355,7 +333,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
         stopCurrentMusic();
         if ($scope.playAudio) {
             $scope.currentMusic = music;
-            $scope.currentMusic.volume = 0.3;
+            $scope.currentMusic.volume = 0.5;
             $scope.currentMusic.play();
         }
     }
@@ -375,6 +353,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     //Init socket listeners
     Socket.on('game:start', gameStartListener);
     Socket.on('game:update', gameUpdateListener);
+    Socket.on('game:inactivity', gameTimedInactivityListener);
     Socket.on('game:end', gameEndListener);
     Socket.on('game:achievement', gameAchievementListener);
     Socket.on('game:end:achievement', gameEndAchievementsCalculatedListener);
@@ -383,6 +362,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, $interval, Api, Socket,
     $scope.$on('$destroy', function () {
         Socket.removeListener('game:start', gameStartListener);
         Socket.removeListener('game:update', gameUpdateListener);
+        Socket.on('game:inactivity', gameTimedInactivityListener);
         Socket.removeListener('game:end', gameEndListener);
         Socket.removeListener('game:achievement', gameAchievementListener);
         Socket.removeListener('game:end:achievement', gameEndAchievementsCalculatedListener);
