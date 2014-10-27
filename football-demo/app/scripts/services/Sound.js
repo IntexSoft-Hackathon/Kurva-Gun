@@ -44,7 +44,8 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         getPathToAudio("michael_jackson_smouth_criminal_cut.mp3"),
         getPathToAudio("muse_knights_of_cydonia_intro.mp3"),
         getPathToAudio("rammstein_du_riechst_so_gut_intro.mp3"),
-        getPathToAudio("the_prodigy_stand_up_cut.mp3")
+        getPathToAudio("the_prodigy_stand_up_cut.mp3"),
+        getPathToAudio("ghostbusters_cut.mp3")
     ];
 
     var goalMusic = [
@@ -287,7 +288,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
         getPathToAudio("the_prodigy_stand_up_cut.mp3"),
         getPathToAudio("coldplay_viva_la_vida_intro.mp3"),
         getPathToAudio("carry_on_my_wayward_son_intro.mp3"),
-        getPathToAudio("imagine_dragons_it's_time_cut.mp3")
+        getPathToAudio("ghostbusters_cut.mp3")
     ];
 
     var endSounds = [
@@ -429,7 +430,7 @@ app.factory('Sound', function ($rootScope, ngAudio) {
                 }
             }
             console.log(personalMusic);
-            cb(getRandomSound(timedSounds), getRandomMusic(personalMusic));
+            cb(null, getRandomMusic(personalMusic));
             return;
         },
 
@@ -453,7 +454,12 @@ app.factory('Sound', function ($rootScope, ngAudio) {
             else if (player.username === 'Саша Сивов') {
                 cb(ngAudio.load(getPathToAudio("lube_ty_nesi_po_poljy.mp3")), null);
                 return;
-            } else {
+            }
+            else if (player.username === 'Таня Зайцева') {
+                cb(ngAudio.load(getPathToAudio("ghostbusters_small_cut.mp3")), null);
+                return;
+            }
+            else {
                 cb(getRandomSound(playerSelectionSounds), null);
                 return;
             }

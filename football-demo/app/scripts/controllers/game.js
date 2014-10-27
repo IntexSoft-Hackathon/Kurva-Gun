@@ -350,7 +350,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, Sound, ngD
         stopCurrentMusic();
         if ($scope.playAudio) {
             $scope.currentMusic = music;
-            $scope.currentMusic.volume = 0.5;
+            $scope.currentMusic.volume = 0.7;
             $scope.currentMusic.play();
         }
     }
