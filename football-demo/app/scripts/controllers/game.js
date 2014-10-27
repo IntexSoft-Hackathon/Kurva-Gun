@@ -170,6 +170,19 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, Sound, ngD
         return new Date(date).getTime();
     };
 
+    $scope.getPlayersInQueueCount = function() {
+        var result = 0;
+        for (var i = 0; i < $scope.queues.length; i++) {
+            if ($scope.queues[i].attack !== null) {
+                result ++;
+            }
+            if ($scope.queues[i].defend !== null) {
+                result++;
+            }
+        }
+        return result;
+    };
+
     function gameStartListener(game) {
         $scope.game = game;
         Sound.playGameStartAudio(game, function (sound, music) {
