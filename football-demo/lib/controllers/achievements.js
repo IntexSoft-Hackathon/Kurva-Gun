@@ -270,6 +270,10 @@ function calculateDrinkPoisonAchievement(player, game) {
             } else if (nextGame.team_blue.players.indexOf(player._id) !== -1 && nextGame.team_blue.score < 10) {
                 looseCount++;
             }
+            else {
+                //If player didn't loose in game, there is no reason to continue, it's not loose in a row.
+                break;
+            }
         }
         if (looseCount > 2 && looseCount < 5) {
             var achievement = AchievementsCollection.ACHIEVEMENT_DRINK_THE_POISON;
