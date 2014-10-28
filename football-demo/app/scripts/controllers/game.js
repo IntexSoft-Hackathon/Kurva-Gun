@@ -379,7 +379,7 @@ app.controller('GameCtrl', function ($rootScope, $scope, Api, Socket, Sound, ngD
     $scope.$on('$destroy', function () {
         Socket.removeListener('game:start', gameStartListener);
         Socket.removeListener('game:update', gameUpdateListener);
-        Socket.on('game:inactivity', gameTimedInactivityListener);
+        Socket.removeListener('game:inactivity', gameTimedInactivityListener);
         Socket.removeListener('game:end', gameEndListener);
         Socket.removeListener('game:achievement', gameAchievementListener);
         Socket.removeListener('game:end:achievement', gameEndAchievementsCalculatedListener);
