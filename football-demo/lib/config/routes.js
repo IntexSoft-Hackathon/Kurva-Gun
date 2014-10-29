@@ -1,7 +1,8 @@
 'use strict';
 
 var path = require('path'),
-    auth = require('../config/auth');
+    auth = require('../config/auth'),
+    mobileDetect = require('mobile-detect');
 
 module.exports = function (app) {
     var users = require('../../app.js').userController;
@@ -33,7 +34,7 @@ module.exports = function (app) {
     app.param('gameId', game.game);
 
     // Angular Routes
-    app.get('/partials/*', function (req, res) {
+    app.get('/partials/*', checkForMobile, function (req, res) {
         var requestedView = path.join('./', req.url);
         res.render(requestedView);
     });
@@ -44,5 +45,21 @@ module.exports = function (app) {
         }
         res.render('index.html');
     });
+
+    function checkForMobile(req, res, next) {
+        // check to see if the caller is a mobile device
+        var md = new mobileDetect(req.headers['user-agent']);
+
+        var isMobile = md.mobile();
+
+        if (isMobile) {
+            console.log("Going mobile");
+            var requestedView = path.join('./mobile/', req.url);
+            res.render(requestedView);
+        } else {
+            // if we didn't detect mobile, call the next method, which will eventually call the desktop route
+            return next();
+        }
+    }
 
 };

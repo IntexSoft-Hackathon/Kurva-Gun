@@ -97,32 +97,798 @@ body {
 
 /*NavBar styles*/
 
-.navbar {
-  min-height: 90px;
-  background-color: #353636;
-  border: none;
+@media (max-width: $screen-xs-max) {
+  .navbar {
+    min-height: 50px;
+    background-color: #353636;
+    border: none;
+  }
+
+  .navbar-style {
+    /* -webkit-box-shadow: 0 2px 5px #519433 !important;
+     box-shadow: 0 2px 5px #519433 !important;*/
+    background-color: #353636;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 50px;
+    position: relative;
+  }
+
+  .navbar-brand {
+    padding: 0 !important;
+    max-width: 100%;
+    width: 174px;
+    height: 70px;
+    margin: 5px 5px;
+    float: left !important;
+    font-size: 18px !important;
+    line-height: 20px !important;
+  }
+
+  .splash {
+
+    position: absolute;
+    background: #61b52c url('../media/background.png') repeat;
+    color: white;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+
+    .wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      padding: 0 !important;
+      height: 427px
+    }
+
+    .logo {
+      margin: 0 auto 10px;
+      display: block;
+      height: 327px;
+      width: 100%;
+      background: transparent url('../media/logo.png') center no-repeat;
+      background-size: 80%;
+    }
+
+    .loading {
+      margin: 0 auto 10px;
+      display: block;
+      width: 32px;
+    }
+  }
+
+  .main-view {
+    position: absolute;
+    top: 50px;
+    height: calc(100% - 50px);
+    max-width: 1200px;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+  }
+
+  .login-view {
+    position: relative;
+    height: 100%;
+
+    .image-wrapper {
+      margin: 10px auto;
+      width: 144px;
+      height: 144px;
+      .add-photo {
+        margin-left: 99px;
+        margin-top: -40px;
+        position: absolute;
+      }
+      .wrapper {
+        position: relative;
+        margin: auto;
+      }
+    }
+
+    .link {
+      position: absolute;
+      right: 15px;
+      margin: -15px 0 0;
+      padding: 0;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .account-wall {
+      margin-top: 0;
+      padding: 40px 0 0;
+      background-color: #f4f3f3;
+      -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    .profile-img {
+      margin: 0;
+    }
+
+    input {
+      border-radius: 5px !important;
+      border: 1px solid #61b52c;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .login-button {
+      background-color: #61b52c;
+      border-radius: 5px;
+      color: #FFFFFF;
+      font-size: 16px;
+    }
+
+    p.another {
+      font-size: 16px;
+      color: #61b52c;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+  }
+
+  .dashboard {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    .dashboard-container {
+      height: 100%;
+      padding: 0;
+      overflow: hidden;
+      .head-table {
+        height: 65px;
+        background-color: #f8d907;
+        display: block;
+        font-size: 15pt;
+        text-align: center;
+        padding-top: 8px;
+        font-weight: bold;
+      }
+
+      .table-th {
+        height: 35px;
+        background-color: #e7e6e6;
+
+        div {
+          text-align: center;
+          padding: 10px 0;
+          border: 1px solid #7d7d7d;
+          height: 100%;
+          font-size: 8pt;
+          font-weight: bold;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      .table-content::-webkit-scrollbar {
+        width: 0 !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      .table-content {
+        height: calc(100% - 100px);
+        padding: 0;
+        background-color: white;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .position {
+          height: 65px;
+          div {
+            text-align: center;
+            padding: 10px 0 0;
+            border: 1px solid #7d7d7d;
+            height: 100%;
+            font-size: 11pt;
+            font-weight: bold;
+
+          }
+
+          div.player {
+            font-size: 11.59pt;
+            text-align: left;
+            padding-left: 10px;
+            p {
+              margin-top: 5px;
+              margin-left: 55px;
+            }
+
+            div {
+              width: 48px;
+              height: 48px;
+              float: left;
+              padding: 0;
+              img {
+                width: 48px;
+                height: 48px;
+              }
+            }
+          }
+
+          div:last-child {
+            color: #61b52c;
+          }
+
+        }
+
+        .position:first-child > div:first-child {
+          background-color: #f8d907;
+        }
+
+        .position:nth-child(2) > div:first-child {
+          background-color: #f4f3f3;
+        }
+
+        .position:nth-child(3) > div:first-child {
+          background-color: #e29849;
+        }
+
+        .position > div:first-child {
+          background-color: #8fda61;
+        }
+
+      }
+
+      .table-footer {
+        background-color: #e7e6e6;
+        height: 100px;
+        padding-top: 30px;
+        .new-game-button {
+          background-color: #61b52c;
+          border-radius: 5px;
+          color: #FFFFFF;
+          font-size: 16px;
+          width: 415px;
+          margin: 0 auto;
+        }
+      }
+
+    }
+
+  }
+
+  .profile {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    .header {
+      height: 65px;
+      background-color: #f8d907;
+      font-size: 12pt;
+      text-align: center;
+      font-weight: bold;
+      margin: 0;
+      border-bottom: 1px solid #b4b4b4;
+      padding-top: 5px;
+    }
+    .footer {
+      height: 65px;
+      background-color: #e7e6e6;
+      font-size: 15pt;
+      text-align: center;
+      font-weight: bold;
+      padding-top: 5px;
+      margin: 0;
+      border-bottom: 1px solid #b4b4b4;
+      .new-game-button {
+        background-color: #61b52c;
+        border-radius: 5px;
+        color: #FFFFFF;
+        font-size: 16px;
+        width: 415px;
+        margin: 0 auto;
+      }
+
+    }
+
+    .close {
+      position: absolute;
+      right: 5px;
+      top: 15px;
+    }
+
+    .content {
+      height: calc(100% - 65px);
+      margin: 0;
+      background-color: #e7e6e6;
+      .description {
+        margin: 0;
+        border-bottom: 1px solid #b4b4b4;
+        padding: 15px 0;
+
+        p.level {
+          font-weight: bold;
+          font-size: 12pt;
+        }
+        .name {
+          font-weight: bold;
+          font-size: 16pt;
+          line-height: 30px;
+        }
+        .text {
+          color: #5e5e5e;
+          font-size: 10.4pt;
+          b {
+            color: #000000;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .achievements::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      .achievements {
+        margin: 0;
+        padding-top: 20px;
+        width: 540px;
+        min-width: 360px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+
+        .achievement {
+          display: inline-table;
+          white-space: normal;
+          width: 180px;
+
+          img {
+            margin-left: 50px;
+          }
+
+          p.name {
+            text-align: center;
+            font-size: 12.05pt;
+            font-weight: bold;
+          }
+
+          p.desc {
+            text-align: center;
+            font-size: 8.03pt;
+            font-weight: bold;
+            color: #696969;
+          }
+
+          p.date {
+            text-align: center;
+            font-size: 6pt;
+            font-weight: bold;
+            color: #696969;
+          }
+        }
+      }
+    }
+  }
+
+  .ngdialog.ngdialog-theme-plain .ngdialog-content {
+    background: transparent;
+    color: #444;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 0 auto;
+    padding: 0;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .ngdialog-overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.4);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-animation: ngdialog-fadein 0.5s;
+    animation: ngdialog-fadein 0.5s;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .navbar {
+    min-height: 90px;
+    background-color: #353636;
+    border: none;
+  }
+
+  .navbar-style {
+    /* -webkit-box-shadow: 0 2px 5px #519433 !important;
+     box-shadow: 0 2px 5px #519433 !important;*/
+    background-color: #353636;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 90px;
+    position: relative;
+  }
+
+  .navbar-brand {
+    padding: 0 !important;
+    max-width: 100%;
+    width: 348px;
+    height: 141px;
+    margin: 15px 0;
+    float: left !important;
+    font-size: 18px !important;
+    line-height: 20px !important;
+  }
+
+  .splash {
+
+    position: absolute;
+    background: #61b52c url('../media/background.png') repeat;
+    color: white;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+
+    .wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      height: 427px
+    }
+
+    .logo {
+      margin: 0 auto 10px;
+      display: block;
+      height: 327px;
+      width: 381px;
+      max-width: 100%;
+      background: transparent url('../media/logo.png') no-repeat;
+    }
+
+    .loading {
+      margin: 0 auto 10px;
+      display: block;
+      width: 32px;
+    }
+  }
+
+  .main-view {
+    position: absolute;
+    top: 90px;
+    height: calc(100% - 90px);
+    max-width: 1200px;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+  }
+
+  .login-view {
+    position: relative;
+    height: 100%;
+
+    .image-wrapper {
+      width: 144px;
+      height: 144px;
+      margin: 0 auto;
+      .add-photo {
+        margin-left: 99px;
+        margin-top: -40px;
+        position: absolute;
+      }
+      .wrapper {
+        position: relative;
+        margin: auto;
+      }
+    }
+
+    .link {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .account-wall {
+      margin-top: 20px;
+      padding: 40px 0px 20px 0px;
+      background-color: #f4f3f3;
+      -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+    }
+
+    .profile-img {
+      margin: 0;
+    }
+
+    input {
+      border-radius: 5px !important;
+      border: 1px solid #61b52c;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .login-button {
+      background-color: #61b52c;
+      border-radius: 5px;
+      color: #FFFFFF;
+      font-size: 16px;
+    }
+
+    p.another {
+      font-size: 16px;
+      color: #61b52c;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+  }
+
+  .dashboard {
+    margin: 0;
+
+    .dashboard-container {
+      padding: 0 10px;
+      .head-table {
+        height: 65px;
+        background-color: #f8d907;
+        display: block;
+        font-size: 15pt;
+        text-align: center;
+        padding-top: 8px;
+        font-weight: bold;
+      }
+
+      .table-th {
+        height: 65px;
+        background-color: #e7e6e6;
+
+        div {
+          text-align: center;
+          padding: 20px 0;
+          border: 1px solid #7d7d7d;
+          height: 100%;
+          font-size: 11.11pt;
+          font-weight: bold;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      .table-content {
+        background-color: white;
+        .position {
+          height: 65px;
+          div {
+            text-align: center;
+            padding: 10px 0 0;
+            border: 1px solid #7d7d7d;
+            height: 100%;
+            font-size: 26.7pt;
+            font-weight: bold;
+
+          }
+
+          div.player {
+            font-size: 11.59pt;
+            text-align: left;
+            padding-left: 10px;
+            p {
+              margin-top: 12px;
+              margin-left: 55px;
+            }
+
+            div {
+              width: 48px;
+              height: 48px;
+              float: left;
+              padding: 0;
+              img {
+                width: 48px;
+                height: 48px;
+              }
+            }
+          }
+
+          div:last-child {
+            color: #61b52c;
+          }
+
+        }
+
+        .position:first-child > div:first-child {
+          background-color: #f8d907;
+        }
+
+        .position:nth-child(2) > div:first-child {
+          background-color: #f4f3f3;
+        }
+
+        .position:nth-child(3) > div:first-child {
+          background-color: #e29849;
+        }
+
+        .position > div:first-child {
+          background-color: #8fda61;
+        }
+
+      }
+
+      .table-footer {
+        background-color: #e7e6e6;
+        height: 100px;
+        padding-top: 30px;
+        .new-game-button {
+          background-color: #61b52c;
+          border-radius: 5px;
+          color: #FFFFFF;
+          font-size: 16px;
+          width: 415px;
+          margin: 0 auto;
+        }
+      }
+
+    }
+
+  }
+
+  .profile {
+    width: 540px;
+    min-width: 360px;
+    .header {
+      height: 65px;
+      background-color: #f8d907;
+      font-size: 15pt;
+      text-align: center;
+      font-weight: bold;
+      margin: 0;
+      border-bottom: 1px solid #b4b4b4;
+      padding-top: 5px;
+    }
+    .footer {
+      height: 65px;
+      background-color: #e7e6e6;
+      font-size: 15pt;
+      text-align: center;
+      font-weight: bold;
+      padding-top: 5px;
+      margin: 0;
+      border-bottom: 1px solid #b4b4b4;
+      .new-game-button {
+        background-color: #61b52c;
+        border-radius: 5px;
+        color: #FFFFFF;
+        font-size: 16px;
+        width: 415px;
+        margin: 0 auto;
+      }
+
+    }
+
+    .close {
+      position: absolute;
+      right: -60px;
+      top: 15px;
+    }
+
+    .content {
+      margin: 0;
+      background-color: #e7e6e6;
+      .description {
+        margin: 0;
+        border-bottom: 1px solid #b4b4b4;
+        padding: 45px;
+
+        p.level {
+          text-align: center;
+          font-weight: bold;
+          font-size: 15pt;
+          padding-left: 10px;
+        }
+        .name {
+          font-weight: bold;
+          font-size: 30pt;
+          line-height: 40px;
+        }
+        .text {
+          color: #5e5e5e;
+          font-size: 10.4pt;
+          b {
+            color: #000000;
+            font-weight: bold;
+          }
+        }
+      }
+      .achievements {
+        margin: 0;
+        height: 240px;
+        padding-top: 20px;
+        width: 540px;
+        min-width: 360px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        .achievement {
+          display: inline-table;
+          white-space: normal;
+          width: 180px;
+
+          img {
+            margin-left: 50px;
+          }
+
+          p.name {
+            text-align: center;
+            font-size: 15.05pt;
+            font-weight: bold;
+          }
+
+          p.desc {
+            height: 45px;
+            text-align: center;
+            font-size: 10.03pt;
+            font-weight: bold;
+            color: #696969;
+          }
+
+          p.date {
+            text-align: center;
+            font-size: 9pt;
+            font-weight: bold;
+            color: #696969;
+          }
+        }
+      }
+    }
+  }
+
+  .ngdialog.ngdialog-theme-plain .ngdialog-content {
+    background: transparent;
+    color: #444;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 0 auto;
+    padding: 0;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    right: 0;
+  }
+
+  .ngdialog-overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.4);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-animation: ngdialog-fadein 0.5s;
+    animation: ngdialog-fadein 0.5s;
+  }
 }
 
 .navbar-nav.nav-main > li > a, .navbar-nav.nav-main > li > img {
   padding-top: 35px;
   padding-bottom: 35px;
-}
-
-.navbar-brand {
-  float: left !important;
-  padding: 10px 15px 0px 15px !important;
-  font-size: 18px !important;
-  line-height: 20px !important;
-}
-
-.navbar-style {
-  /* -webkit-box-shadow: 0 2px 5px #519433 !important;
-   box-shadow: 0 2px 5px #519433 !important;*/
-  background-color: #353636;
-  margin: 0 auto;
-  max-width: 1200px;
-  min-height: 90px;
-  position: relative;
 }
 
 .navbar-style .activeMenu, .navbar-style li > a:focus {
@@ -158,45 +924,6 @@ body {
 
 p {
   margin: 0 0 5px;
-}
-
-/*
-splash screen support
-*/
-
-.splash {
-
-  position: absolute;
-  background: #61b52c url('../media/background.png') repeat;
-  color: white;
-  width: 100%;
-  height: 100%;
-  z-index: 100000;
-
-  .wrapper {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: auto;
-    height: 427px
-  }
-
-  .logo {
-    margin: 0 auto 10px;
-    display: block;
-    height: 327px;
-    width: 381px;
-    max-width: 100%;
-    background: transparent url('../media/logo.png') no-repeat;
-  }
-
-  .loading {
-    margin: 0 auto 10px;
-    display: block;
-    width: 32px;
-  }
 }
 
 /* add font*/
@@ -382,16 +1109,6 @@ textarea.form-control {
   background-color: #D5EFE8;
 }
 
-.main-view {
-  position: absolute;
-  top: 90px;
-  height: calc(100% - 90px);
-  max-width: 1200px;
-  margin: 0 auto;
-  right: 0;
-  left: 0;
-}
-
 div.circle {
   width: 144px;
   height: 144px;
@@ -404,290 +1121,6 @@ div.circle {
   -moz-box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
   -webkit-box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
   box-shadow: inset 3px 4px 4px rgba(0, 0, 0, 0.4);
-}
-
-.login-view {
-  position: relative;
-  height: 100%;
-
-  .image-wrapper {
-    width: 144px;
-    height: 144px;
-    margin: 0 auto;
-    .add-photo {
-      margin-left: 99px;
-      margin-top: -40px;
-      position: absolute;
-    }
-    .wrapper {
-      position: relative;
-      margin: auto;
-    }
-  }
-
-  .link {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    text-decoration: underline;
-  }
-
-  .account-wall {
-    margin-top: 20px;
-    padding: 40px 0px 20px 0px;
-    background-color: #f4f3f3;
-    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
-    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 2px;
-  }
-
-  .profile-img {
-    margin: 0;
-  }
-
-  input {
-    border-radius: 5px !important;
-    border: 1px solid #61b52c;
-    padding: 10px;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .login-button {
-    background-color: #61b52c;
-    border-radius: 5px;
-    color: #FFFFFF;
-    font-size: 16px;
-  }
-
-  p.another {
-    font-size: 16px;
-    color: #61b52c;
-    text-align: center;
-    margin-top: 10px;
-  }
-
-}
-
-.dashboard {
-  margin: 0;
-
-  .dashboard-container {
-    padding: 0 10px;
-    .head-table {
-      height: 65px;
-      background-color: #f8d907;
-      display: block;
-      font-size: 15pt;
-      text-align: center;
-      padding-top: 8px;
-      font-weight: bold;
-    }
-
-    .table-th {
-      height: 65px;
-      background-color: #e7e6e6;
-
-      div {
-        text-align: center;
-        padding: 20px 0;
-        border: 1px solid #7d7d7d;
-        height: 100%;
-        font-size: 11.11pt;
-        font-weight: bold;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-    }
-    .table-content {
-      background-color: white;
-      .position {
-        height: 65px;
-        div {
-          text-align: center;
-          padding: 10px 0 0;
-          border: 1px solid #7d7d7d;
-          height: 100%;
-          font-size: 26.7pt;
-          font-weight: bold;
-
-        }
-
-        div.player {
-          font-size: 11.59pt;
-          text-align: left;
-          padding-left: 10px;
-          p {
-            margin-top: 12px;
-            margin-left: 55px;
-          }
-
-          div {
-            width: 48px;
-            height: 48px;
-            float: left;
-            padding: 0;
-            img {
-              width: 48px;
-              height: 48px;
-            }
-          }
-        }
-
-        div:last-child {
-          color: #61b52c;
-        }
-
-      }
-
-      .position:first-child > div:first-child {
-        background-color: #f8d907;
-      }
-
-      .position:nth-child(2) > div:first-child {
-        background-color: #f4f3f3;
-      }
-
-      .position:nth-child(3) > div:first-child {
-        background-color: #e29849;
-      }
-
-      .position > div:first-child {
-        background-color: #8fda61;
-      }
-
-    }
-
-    .table-footer {
-      background-color: #e7e6e6;
-      height: 100px;
-      padding-top: 30px;
-      .new-game-button {
-        background-color: #61b52c;
-        border-radius: 5px;
-        color: #FFFFFF;
-        font-size: 16px;
-        width: 415px;
-        margin: 0 auto;
-      }
-    }
-
-  }
-
-}
-
-.profile {
-  width: 540px;
-  min-width: 360px;
-  .header {
-    height: 65px;
-    background-color: #f8d907;
-    font-size: 15pt;
-    text-align: center;
-    font-weight: bold;
-    margin: 0;
-    border-bottom: 1px solid #b4b4b4;
-    padding-top: 5px;
-  }
-  .footer {
-    height: 65px;
-    background-color: #e7e6e6;
-    font-size: 15pt;
-    text-align: center;
-    font-weight: bold;
-    padding-top: 5px;
-    margin: 0;
-    border-bottom: 1px solid #b4b4b4;
-    .new-game-button {
-      background-color: #61b52c;
-      border-radius: 5px;
-      color: #FFFFFF;
-      font-size: 16px;
-      width: 415px;
-      margin: 0 auto;
-    }
-
-  }
-
-  .close {
-    position: absolute;
-    right: -60px;
-    top: 15px;
-  }
-
-  .content {
-    margin: 0;
-    background-color: #e7e6e6;
-    .description {
-      margin: 0;
-      border-bottom: 1px solid #b4b4b4;
-      padding: 45px;
-
-      p.level {
-        text-align: center;
-        font-weight: bold;
-        font-size: 15pt;
-        padding-left: 10px;
-      }
-      .name {
-        font-weight: bold;
-        font-size: 30pt;
-        line-height: 40px;
-      }
-      .text {
-        color: #5e5e5e;
-        font-size: 10.4pt;
-        b {
-          color: #000000;
-          font-weight: bold;
-        }
-      }
-    }
-    .achievements {
-      margin: 0;
-      height: 240px;
-      padding-top: 20px;
-      width: 540px;
-      min-width: 360px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      .achievement {
-        display: inline-table;
-        white-space: normal;
-        width: 180px;
-
-        img {
-          margin-left: 50px;
-        }
-
-        p.name {
-          text-align: center;
-          font-size: 15.05pt;
-          font-weight: bold;
-        }
-
-        p.desc {
-          height: 45px;
-          text-align: center;
-          font-size: 10.03pt;
-          font-weight: bold;
-          color: #696969;
-        }
-
-        p.date {
-          text-align: center;
-          font-size: 9pt;
-          font-weight: bold;
-          color: #696969;
-        }
-      }
-    }
-  }
 }
 
 .game-dashboard {
@@ -1123,32 +1556,6 @@ div.circle {
     }
   }
 
-}
-
-.ngdialog.ngdialog-theme-plain .ngdialog-content {
-  background: transparent;
-  color: #444;
-  font-family: 'Helvetica Neue', sans-serif;
-  font-size: 1.1em;
-  line-height: 1.5em;
-  margin: 0 auto;
-  padding: 0;
-  position: fixed;
-  top: 90px;
-  left: 0;
-  right: 0;
-}
-
-.ngdialog-overlay {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.4);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  -webkit-backface-visibility: hidden;
-  -webkit-animation: ngdialog-fadein 0.5s;
-  animation: ngdialog-fadein 0.5s;
 }
 
 .two {

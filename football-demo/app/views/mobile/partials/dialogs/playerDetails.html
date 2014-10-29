@@ -12,10 +12,11 @@
                     <img class="profile-img"
                          ng-src="{{'../../media/'+ (currentUser.photo ? currentUser.photo : 'photo.png' )}}" alt="">
                 </div>
-                <p class="level">{{currentUser.level}}</p>
             </div>
             <div class="col-xs-7">
                 <p class="name">{{currentUser.username}}</p>
+
+                <p class="level">{{currentUser.level}}</p>
 
                 <p class="text">Выиграно игр: <b>{{currentUser.win}}</b> из <b>{{currentUser.count_games}}</b></p>
 

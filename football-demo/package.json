@@ -16,7 +16,8 @@
     "session": "*",
     "serialport": "*",
     "imagemagick": "*",
-    "q": "*"
+    "q": "*",
+    "mobile-detect": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

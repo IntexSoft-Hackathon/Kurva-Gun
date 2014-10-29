@@ -1,0 +1,22 @@
+<div class="row-fluid player-list" ng-init="getPlayers()">
+    <div class="row header">
+        ВЫБОР ИГРОКА
+        <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
+    </div>
+    <div class="row filter">
+        <input type="text" placeholder="ФИЛЬТР" autofocus ng-model="search.username">
+    </div>
+    <div class="row content">
+        <div class="position" ng-repeat="player in players | filter:search:strict | orderBy:'username'"
+             ng-click="confirm(player) ">
+            <div class="col-sm-12 player">
+                <div class="circle shadow">
+                    <img class="profile-img" ng-src="{{'../../media/'+player.photo}}" alt="">
+                </div>
+                <p>
+                    {{player.username}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
