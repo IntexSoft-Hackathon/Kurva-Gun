@@ -5,7 +5,7 @@
     </div>
     <div class="row content">
         <div class="position" ng-repeat="queue in queues">
-            <div class="col-sm-6 player" ng-click="showQueuePlayerList('attack', $index)">
+            <div class="col-xs-12 player" ng-click="showQueuePlayerList('attack', $index)">
                 <div class="circle shadow">
                     <img class="profile-img" ng-src="{{'../../media/'+(queue.attack.photo||'add_player.png')}}" alt="">
                 </div>
@@ -13,7 +13,7 @@
                     {{queue.attack.username}}
                 </p>
             </div>
-            <div class="col-sm-6 player">
+            <div class="col-xs-12 player">
                 <div class="circle shadow" ng-click="showQueuePlayerList('defend', $index)">
                     <img class="profile-img" ng-src="{{'../../media/'+(queue.defend.photo||'add_player.png')}}" alt="">
                 </div>

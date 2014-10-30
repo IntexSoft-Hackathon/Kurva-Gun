@@ -3,9 +3,6 @@
         ВЫБОР ИГРОКА
         <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
     </div>
-    <div class="row filter">
-        <input type="text" placeholder="ФИЛЬТР" autofocus ng-model="search.username">
-    </div>
     <div class="row content">
         <div class="position" ng-repeat="player in players | filter:search:strict | orderBy:'username'"
              ng-click="confirm(player) ">

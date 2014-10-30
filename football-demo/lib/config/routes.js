@@ -49,10 +49,9 @@ module.exports = function (app) {
     function checkForMobile(req, res, next) {
         // check to see if the caller is a mobile device
         var md = new mobileDetect(req.headers['user-agent']);
-
-        var isMobile = md.mobile();
-
-        if (isMobile) {
+        console.log(md.mobile());
+        console.log(md.tablet());
+        if ((md.mobile() || md.mobile() === "UnknownMobile") && md.mobile() !== "iPad") {
             console.log("Going mobile");
             var requestedView = path.join('./mobile/', req.url);
             res.render(requestedView);
