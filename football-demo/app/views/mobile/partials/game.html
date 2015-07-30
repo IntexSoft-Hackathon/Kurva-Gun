@@ -1,0 +1,102 @@
+<div class="row-fluid game-dashboard" ng-init="getGame()">
+    <div class="container">
+        <div class="head">
+            НОВАЯ
+            <img src="media/ball.png">
+            ИГРА
+            <span class="queue" ng-click="showQueue()">Очередь</span>
+        </div>
+        <div class="content">
+            <div class="row" style="margin:0">
+                <div class="col-xs-5 right-side">
+                    <div class="row side">
+                    </div>
+                </div>
+                <div class="col-xs-2 center">
+                    <div class="row time">
+                        <img src="../../media/watch.png">
+                        <timer class="cloak" ng-if="game.game_status === 'IN_PROGRESS'"
+                               start-time="toTimestamp(game.start_time)">{{mminutes}}:{{sseconds}}
+                        </timer>
+                    </div>
+                </div>
+                <div class="col-xs-5 left-side">
+                    <div class="row side">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;display:flex;">
+                <div class="col-xs-5 right-side">
+                    <div class="row players">
+                        <div class="circle shadow">
+                            <img class="profile-img"
+                                 ng-src="{{'../../media/'+(game.team_white.players[0].photo||'add_player.png')}}"
+                                 ng-click="openListPlayers('white', 0)" alt="">
+                        </div>
+                        <p>{{game.team_white.players[0].username}}</p>
+                    </div>
+                    <div class="row players">
+                        <div class="circle shadow">
+                            <img class="profile-img"
+                                 ng-src="{{'../../media/'+(game.team_white.players[1].photo||'add_player.png')}}"
+                                 ng-click="openListPlayers('white', 1)" alt="">
+                        </div>
+                        <p>{{game.team_white.players[1].username}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2 center">
+                    <div class="row vs">
+                        VS
+                    </div>
+                </div>
+                <div class="col-xs-5 left-side">
+                    <div class="row players">
+                        <div class="circle shadow">
+                            <img class="profile-img"
+                                 ng-src="{{'../../media/' +(game.team_blue.players[0].photo||'add_player.png')}}"
+                                 ng-click="openListPlayers('blue', 0)" alt="">
+                        </div>
+                        <p>{{game.team_blue.players[0].username}}</p>
+                    </div>
+                    <div class="row players">
+                        <div class="circle shadow">
+                            <img class="profile-img"
+                                 ng-src="{{'../../media/'+ (game.team_blue.players[1].photo||'add_player.png')}}"
+                                 ng-click="openListPlayers('blue', 1)" alt="">
+                        </div>
+                        <p>{{game.team_blue.players[1].username}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0">
+                <div class="col-xs-5 right-side">
+                    <div ng-if="game.game_status === 'IN_PROGRESS'" class="row result">
+                        <p>{{game.team_white.score}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2 center">
+                    <div ng-if="game.game_status == 'IN_PROGRESS'" class="row colon">
+                        :
+                    </div>
+                </div>
+                <div class="col-xs-5 left-side">
+                    <div ng-if="game.game_status === 'IN_PROGRESS'" class="row result">
+                        <p>{{game.team_blue.score}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0">
+                <div ng-if="game.game_status !== 'IN_PROGRESS'" class="row buttons">
+                    <button ng-if="canStart" class="btn btn-lg btn-block start-button" ng-click="start()">СТАРТ
+                    </button>
+                </div>
+                <div class="row buttons">
+                    <button ng-if="game.game_status !== 'IN_PROGRESS' || canCancel()"
+                            class="btn btn-lg btn-block cancel-button" ng-click="stop()">{{game.game_status ==
+                        'IN_PROGRESS' ? "ОТМЕНА" : "НАЗАД"}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

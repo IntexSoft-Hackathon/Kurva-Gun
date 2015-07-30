@@ -1,0 +1,26 @@
+<div class="row-fluid queue-list" ng-init="getPlayers()">
+    <div class="row header">
+        ОЧЕРЕДЬ
+        <img class="close" src="../../media/close.png" ng-click="closeThisDialog()">
+    </div>
+    <div class="row content">
+        <div class="position" ng-repeat="queue in queues">
+            <div class="col-xs-12 player" ng-click="showQueuePlayerList('attack', $index)">
+                <div class="circle shadow">
+                    <img class="profile-img" ng-src="{{'../../media/'+(queue.attack.photo||'add_player.png')}}" alt="">
+                </div>
+                <p>
+                    {{queue.attack.username}}
+                </p>
+            </div>
+            <div class="col-xs-12 player">
+                <div class="circle shadow" ng-click="showQueuePlayerList('defend', $index)">
+                    <img class="profile-img" ng-src="{{'../../media/'+(queue.defend.photo||'add_player.png')}}" alt="">
+                </div>
+                <p>
+                    {{queue.defend.username}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

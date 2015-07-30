@@ -1,0 +1,31 @@
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="NavbarCtrl" ng-init="findProject();checkLocation();">
+    <div class="row navbar-style">
+        <div class="navbar-header pull-left" style="position: absolute;margin:-0.5% 0 0 0">
+            <img class="navbar-logo navbar-brand"
+                 src='../../media/logo_symbol.png'>
+        </div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav pull-right" ng-show="currentUser">
+                <li>
+                    <a ng-click="openNewGame()">НОВАЯ ИГРА</a>
+                </li>
+                <li>
+                    <a href="/players">РЕЙТИНГ</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" style="width:120px;">Welcome, {{ currentUser.username }}</a>
+                    <ul class="dropdown-menu">
+                        <li ng-if="isAdmin"><a href="/admin/user-manage">User Managment</a></li>
+                        <li><a ng-click="logout()"><span class="glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
